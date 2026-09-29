@@ -1,0 +1,10 @@
+{
+  "name": "@donutland/site-05-the-donut-counter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The Donut Counter - Classic 1950s Americana Diner & Franchise Brand",
+  "main": "brand.config.ts",
+  "dependencies": {
+    "@donutland/ui": "workspace:*"
+  }
+}

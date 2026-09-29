@@ -1,0 +1,10 @@
+{
+  "name": "@donutland/site-04-doughboyz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DoughBoyz - Urban Streetwear, Skate & Nightlife Brand",
+  "main": "brand.config.ts",
+  "dependencies": {
+    "@donutland/ui": "workspace:*"
+  }
+}

@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: var(--font-anton), Anton, sans-serif;
+  --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+
+  --color-brand-pink: #f54f95;
+  --color-brand-red: #f21d33;
+  --color-brand-blue: #3b89ff;
+  --color-brand-yellow: #eeae23;
+  --color-brand-purple: #686ad7;
+  --color-brand-chocolate: #6e2f10;
+  --color-brand-mocha: #945439;
+  --color-brand-green: #1ac500;
+  --color-brand-slate: #2a3440;
+  --color-brand-black: #1b1b1b;
+  --color-brand-cream: #f5f6f4;
+  --color-brand-vanilla: #fff5ea;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-plus-jakarta), 'Plus Jakarta Sans', sans-serif;
+  color: #1b1b1b;
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-anton), Anton, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+}

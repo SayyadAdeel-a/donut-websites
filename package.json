@@ -1,0 +1,17 @@
+{
+  "name": "donutland-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "start": "pnpm --filter web start",
+    "lint": "pnpm --filter web lint",
+    "test": "pnpm dlx tsx --test apps/web/tests/verification.test.mjs packages/ui/tests/cart.test.mjs"
+  },
+  "packageManager": "pnpm@11.5.2",
+  "devDependencies": {
+    "tsx": "^4.23.15",
+    "typescript": "^5.7.3"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@donutland/site-01-sprinklespree",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SprinkleSpree - Playful Kids & Party Confectionery Brand",
+  "main": "brand.config.ts",
+  "dependencies": {
+    "@donutland/ui": "workspace:*"
+  }
+}

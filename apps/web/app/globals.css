@@ -54,6 +54,125 @@ h1, h2, h3, h4, h5, h6, .font-display {
   animation-play-state: paused;
 }
 
+/* ==========================================================================
+   Webflow Interactive Micro-Interactions & Transitions
+   ========================================================================== */
+
+/* Continuous Seamless Marquees */
+.marquee-horizontal-panel-wrapper {
+  display: flex !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+.marquee-horizontal-panel {
+  display: flex !important;
+  flex-shrink: 0 !important;
+  animation: webflow-marquee 25s linear infinite !important;
+  will-change: transform;
+}
+
+.marquee-horizontal-panel:hover {
+  animation-play-state: paused;
+}
+
+@keyframes webflow-marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* Tactile Neo-Brutalist Button Hover Physics */
+.general-button {
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.35s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease !important;
+  transform: scale(1.03);
+}
+
+.general-button:hover {
+  transform: scale(1) !important;
+  box-shadow: 0 0 0 0 transparent !important;
+}
+
+.general-button:active {
+  transform: scale(0.97) !important;
+}
+
+/* Plus Sign 45deg Spin on Product and Team Cards */
+.plus-sign-shop-now,
+.plus-sign-image-wrapper {
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease !important;
+}
+
+.product-card-container:hover .plus-sign-shop-now,
+.shop-now-plus-icon:hover .plus-sign-shop-now,
+.team-card-container:hover .plus-sign-image-wrapper {
+  transform: rotate(45deg) !important;
+}
+
+/* Product Card Elevation on Hover */
+.product-card-wrapper {
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease !important;
+}
+
+.product-card-container:hover .product-card-wrapper {
+  transform: translateY(-8px) !important;
+}
+
+.product-card-container:hover .homepage-slider-product-image img {
+  transform: scale(1.08) !important;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.homepage-slider-product-image img {
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* Shop Now Button Flavor Hover Inversion */
+.shop-now-button {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, transform 0.35s ease !important;
+}
+
+.product-card-container:hover .shop-now-button.pink,
+.shop-now-button.pink:hover {
+  background-color: #f54f95 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+.product-card-container:hover .shop-now-button.dark-red,
+.shop-now-button.dark-red:hover {
+  background-color: #cb0011 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+.product-card-container:hover .shop-now-button.tan-orange,
+.shop-now-button.tan-orange:hover {
+  background-color: #fe944b !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+.product-card-container:hover .shop-now-button.brown,
+.shop-now-button.brown:hover {
+  background-color: #6e2f11 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+/* Category Circle Card Hover Lift */
+.homepage-category {
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.category-link-block:hover .homepage-category {
+  transform: translateY(-8px) scale(1.03) !important;
+}
+
+/* Reduced Motion Compliance */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
@@ -61,7 +180,8 @@ h1, h2, h3, h4, h5, h6, .font-display {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .animate-marquee {
+  .animate-marquee,
+  .marquee-horizontal-panel {
     animation: none !important;
   }
 }

@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'motion/react';
 import { useCart } from '../../hooks/useCart';
 
 export interface WebflowHeaderProps {
@@ -62,8 +63,17 @@ const cmsLinks = [
 export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark = false }) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const openCart = useCart((state) => state.openCart);
   const totalCount = useCart((state) => state.getTotalCount());
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 80);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navDropdowns = [
     { id: 'home', label: 'Home', links: homeLinks },
@@ -75,7 +85,28 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
   ];
 
   return (
-    <nav className="header-navigation" style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 100 }}>
+    <motion.nav
+      className={`header-navigation ${isScrolled ? 'header-scrolled' : ''}`}
+      animate={{
+        backgroundColor: isScrolled
+          ? isDark
+            ? 'rgba(255, 255, 255, 0.95)'
+            : 'rgba(245, 79, 149, 0.96)'
+          : 'transparent',
+        boxShadow: isScrolled ? '0 4px 20px rgba(0, 0, 0, 0.12)' : 'none',
+        backdropFilter: isScrolled ? 'blur(10px)' : 'none',
+        paddingTop: isScrolled ? '8px' : '16px',
+        paddingBottom: isScrolled ? '8px' : '16px',
+      }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      style={{
+        position: isScrolled ? 'fixed' : 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+      }}
+    >
       <div
         data-collapse="medium"
         data-animation="default"
@@ -95,7 +126,7 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
               alt="Donutland"
               width={224}
               height={42}
-              className={`brand-logo-image ${isDark ? 'filter invert brightness-0' : ''}`}
+              className={`brand-logo-image ${isDark && !isScrolled ? 'filter invert brightness-0' : ''}`}
               priority
               unoptimized
             />
@@ -109,17 +140,18 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
                 className={`header-main-index-link homepage w-nav-link ${
                   activePath === '/' ? 'w--current' : ''
                 }`}
-                style={{ color: isDark ? '#1b1b1b' : '#ffffff' }}
+                style={{ color: isDark && !isScrolled ? '#1b1b1b' : '#ffffff' }}
               >
                 Main Index
               </Link>
 
               {navDropdowns.map((dd) => {
                 const isOpen = openDropdown === dd.id;
+                const textColor = isDark && !isScrolled ? '#1b1b1b' : '#ffffff';
                 return (
                   <div
                     key={dd.id}
-                    className="header-navigation-dropdown w-dropdown"
+                    className="header-navigation-dropdown w-dropdown relative"
                     onMouseEnter={() => setOpenDropdown(dd.id)}
                     onMouseLeave={() => setOpenDropdown(null)}
                   >
@@ -129,40 +161,54 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
                       tabIndex={0}
                       aria-expanded={isOpen}
                       onClick={() => setOpenDropdown(isOpen ? null : dd.id)}
-                      style={{ color: isDark ? '#1b1b1b' : '#ffffff', cursor: 'pointer' }}
+                      style={{ color: textColor, cursor: 'pointer' }}
                     >
-                      <div className="chevron-icon w-icon-dropdown-toggle" aria-hidden="true" />
+                      <motion.div
+                        className="chevron-icon w-icon-dropdown-toggle"
+                        aria-hidden="true"
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.25 }}
+                      />
                       <div className="label-dropdown">{dd.label}</div>
                     </div>
 
-                    {isOpen && (
-                      <nav
-                        className="dropdown-list w-dropdown-list w--open"
-                        style={{
-                          display: 'block',
-                          opacity: 1,
-                          visibility: 'visible',
-                          pointerEvents: 'auto',
-                        }}
-                      >
-                        <div className="dropdown-background" style={{ height: '100%' }} />
-                        {dd.links.map((link) => (
-                          <Link
-                            key={link.href}
-                            href={link.href}
-                            className={`dropdown-link w-dropdown-link ${
-                              activePath === link.href ? 'w--current' : ''
-                            }`}
-                            style={{
-                              opacity: 1,
-                              transform: 'none',
-                            }}
-                          >
-                            {link.text}
-                          </Link>
-                        ))}
-                      </nav>
-                    )}
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.nav
+                          className="dropdown-list w-dropdown-list w--open"
+                          initial={{ opacity: 0, scaleY: 0.85, y: -10 }}
+                          animate={{ opacity: 1, scaleY: 1, y: 0 }}
+                          exit={{ opacity: 0, scaleY: 0.85, y: -10 }}
+                          transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+                          style={{
+                            display: 'block',
+                            position: 'absolute',
+                            transformOrigin: 'top center',
+                            pointerEvents: 'auto',
+                            overflow: 'hidden',
+                          }}
+                        >
+                          <div className="dropdown-background" style={{ height: '100%' }} />
+                          {dd.links.map((link, idx) => (
+                            <motion.div
+                              key={link.href}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: idx * 0.04, duration: 0.25 }}
+                            >
+                              <Link
+                                href={link.href}
+                                className={`dropdown-link w-dropdown-link ${
+                                  activePath === link.href ? 'w--current' : ''
+                                }`}
+                              >
+                                {link.text}
+                              </Link>
+                            </motion.div>
+                          ))}
+                        </motion.nav>
+                      )}
+                    </AnimatePresence>
                   </div>
                 );
               })}
@@ -183,10 +229,33 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
                 viewBox="0 0 66 66"
                 width="34"
                 height="34"
-                className="w-full h-full"
+                className="w-full h-full text-white"
               >
-                <g fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round">
-                  <path d="M5 12h56M5 33h56M5 54h56" />
+                <g fill="none" stroke="currentColor" strokeWidth="7" strokeLinecap="round">
+                  <motion.line
+                    x1="8"
+                    y1="16"
+                    x2="58"
+                    y2="16"
+                    animate={mobileMenuOpen ? { y1: 33, y2: 33, rotate: 45, transformOrigin: '33px 33px' } : { y1: 16, y2: 16, rotate: 0 }}
+                    transition={{ duration: 0.25 }}
+                  />
+                  <motion.line
+                    x1="8"
+                    y1="33"
+                    x2="58"
+                    y2="33"
+                    animate={mobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  />
+                  <motion.line
+                    x1="8"
+                    y1="50"
+                    x2="58"
+                    y2="50"
+                    animate={mobileMenuOpen ? { y1: 33, y2: 33, rotate: -45, transformOrigin: '33px 33px' } : { y1: 50, y2: 50, rotate: 0 }}
+                    transition={{ duration: 0.25 }}
+                  />
                 </g>
               </svg>
             </div>
@@ -205,7 +274,7 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
                 alt="Cart"
                 width={42}
                 height={42}
-                className="cart-icon"
+                className="cart-icon hover:scale-105 transition-transform"
                 unoptimized
               />
               <div className="w-commerce-commercecartopenlinkcount cart-quantity">
@@ -216,36 +285,58 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
         </div>
 
         {/* Mobile Nav Overlay */}
-        {mobileMenuOpen && (
-          <div
-            className="w-nav-overlay"
-            style={{ display: 'block', height: '100vh', position: 'fixed', top: 60, left: 0, right: 0, backgroundColor: '#f54f95', padding: '24px', zIndex: 9999, overflowY: 'auto' }}
-          >
-            <nav className="flex flex-col gap-4 text-white">
-              <Link href="/" className="text-xl font-bold py-2 border-b border-white/20" onClick={() => setMobileMenuOpen(false)}>
-                Main Index
-              </Link>
-              {navDropdowns.map((dd) => (
-                <div key={dd.id} className="py-2 border-b border-white/20">
-                  <div className="text-lg font-bold uppercase tracking-wider mb-2 text-white/80">{dd.label}</div>
-                  <div className="flex flex-col pl-4 gap-2">
-                    {dd.links.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className="text-white hover:text-black py-1 font-medium"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {link.text}
-                      </Link>
-                    ))}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              className="w-nav-overlay"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: '100vh' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
+              style={{
+                display: 'block',
+                position: 'fixed',
+                top: 60,
+                left: 0,
+                right: 0,
+                backgroundColor: '#f54f95',
+                padding: '24px',
+                zIndex: 9999,
+                overflowY: 'auto',
+              }}
+            >
+              <nav className="flex flex-col gap-4 text-white">
+                <Link
+                  href="/"
+                  className="text-xl font-bold py-2 border-b border-white/20"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Main Index
+                </Link>
+                {navDropdowns.map((dd) => (
+                  <div key={dd.id} className="py-2 border-b border-white/20">
+                    <div className="text-lg font-bold uppercase tracking-wider mb-2 text-white/80">
+                      {dd.label}
+                    </div>
+                    <div className="flex flex-col pl-4 gap-2">
+                      {dd.links.map((link) => (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className="text-white hover:text-black py-1 font-medium transition-colors"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {link.text}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </nav>
-          </div>
-        )}
+                ))}
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </nav>
+    </motion.nav>
   );
 };

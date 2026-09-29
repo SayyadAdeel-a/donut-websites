@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Anton, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import './donutland.original.css';
-import { CartDrawer } from '@donutland/ui';
+import { CartDrawer, WebflowInteractions } from '@donutland/ui';
 
 export const anton = Anton({
   weight: '400',
@@ -40,6 +40,7 @@ export default function RootLayout({
       <body className="antialiased min-h-screen flex flex-col font-sans">
         {children}
         <CartDrawer />
+        <WebflowInteractions />
       </body>
     </html>
   );

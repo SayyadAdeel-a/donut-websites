@@ -17,6 +17,7 @@ interface MegaDropdownProps {
   items: DropdownItem[];
   className?: string;
   activePath?: string;
+  textColor?: string;
 }
 
 export const MegaDropdown: React.FC<MegaDropdownProps> = ({
@@ -24,6 +25,7 @@ export const MegaDropdown: React.FC<MegaDropdownProps> = ({
   items,
   className,
   activePath,
+  textColor,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -48,7 +50,8 @@ export const MegaDropdown: React.FC<MegaDropdownProps> = ({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 px-3 py-2 font-display text-sm font-bold uppercase tracking-wider text-black hover:text-[#f54f95] transition-colors cursor-pointer select-none"
+        className="flex items-center gap-1.5 px-3 py-2 font-display text-sm font-bold uppercase tracking-wider hover:text-[#f54f95] transition-colors cursor-pointer select-none"
+        style={{ color: textColor || '#1b1b1b' }}
         aria-expanded={isOpen}
       >
         <span>{label}</span>

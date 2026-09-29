@@ -151,7 +151,7 @@ export const products: ProductItem[] = [
     description:
       'Hot pink bubblegum glaze overloaded with rainbow confetti sprinkles. Pure festive birthday happiness!',
     image:
-      'https://cdn.prod.website-files.com/656b5d82ccb09777ebd75c88_pdp-image-3.webp',
+      'https://cdn.prod.website-files.com/656a2e8a88537d8c45eeab81/656b5d82ccb09777ebd75c88_pdp-image-3.webp',
     bgColor: '#ffe6f0',
     rating: 5.0,
     reviewCount: 230,

@@ -120,20 +120,43 @@ export const GlobalHeader: React.FC<{ config?: HeaderConfig; activePath?: string
             className="flex items-center gap-2 group transition-transform hover:scale-105"
             aria-label={`${brandName} home`}
           >
-            {logoUrl.endsWith('.svg') || logoUrl.endsWith('.webp') || logoUrl.endsWith('.png') ? (
+            {config?.logoUrl ? (
+              <Image
+                src={config.logoUrl}
+                alt={brandName}
+                width={160}
+                height={35}
+                className={twMerge(
+                  'h-8 md:h-10 w-auto object-contain transition-all',
+                  (isScrolled || config?.textColor === '#1b1b1b' || config?.bgColor === '#ffffff' || config?.bgColor === '#f5f6f4')
+                    ? 'filter invert brightness-0'
+                    : ''
+                )}
+                priority
+                unoptimized
+              />
+            ) : brandName !== 'Donutland' ? (
+              <div className="flex items-center gap-2">
+                <span
+                  className="font-display text-2xl md:text-3xl font-bold tracking-tight uppercase"
+                  style={{ color: config?.textColor || '#1b1b1b' }}
+                >
+                  {brandName}
+                </span>
+              </div>
+            ) : (
               <Image
                 src={logoUrl}
                 alt={brandName}
                 width={160}
                 height={35}
-                className="h-8 md:h-10 w-auto object-contain"
+                className={twMerge(
+                  'h-8 md:h-10 w-auto object-contain transition-all',
+                  isScrolled ? 'filter invert brightness-0' : ''
+                )}
                 priority
                 unoptimized
               />
-            ) : (
-              <span className="font-display text-2xl font-bold tracking-tight uppercase text-black">
-                {brandName}
-              </span>
             )}
           </Link>
 
@@ -141,22 +164,24 @@ export const GlobalHeader: React.FC<{ config?: HeaderConfig; activePath?: string
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
             <Link
               href="/"
-              className="px-3 py-2 font-display text-sm font-bold uppercase tracking-wider text-black hover:text-[#f54f95] transition-colors"
+              className="px-3 py-2 font-display text-sm font-bold uppercase tracking-wider hover:text-[#f54f95] transition-colors"
+              style={{ color: isScrolled ? '#1b1b1b' : (config?.textColor || '#1b1b1b') }}
             >
               Main Index
             </Link>
 
-            <MegaDropdown label="Home" items={defaultHomeItems} activePath={activePath} />
-            <MegaDropdown label="About" items={defaultAboutItems} activePath={activePath} />
-            <MegaDropdown label="Contact" items={defaultContactItems} activePath={activePath} />
-            <MegaDropdown label="Subscribe" items={defaultSubscribeItems} activePath={activePath} />
-            <MegaDropdown label="Why" items={defaultWhyItems} activePath={activePath} />
-            <MegaDropdown label="CMS" items={defaultCmsItems} activePath={activePath} />
+            <MegaDropdown label="Home" items={defaultHomeItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
+            <MegaDropdown label="About" items={defaultAboutItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
+            <MegaDropdown label="Contact" items={defaultContactItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
+            <MegaDropdown label="Subscribe" items={defaultSubscribeItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
+            <MegaDropdown label="Why" items={defaultWhyItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
+            <MegaDropdown label="CMS" items={defaultCmsItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
             <MegaDropdown
               label="5 Brands"
               items={defaultBrandItems}
               activePath={activePath}
-              className="border-l-2 border-black/10 pl-2"
+              textColor={isScrolled ? '#1b1b1b' : config?.textColor}
+              className="border-l-2 border-current/20 pl-2"
             />
           </nav>
 

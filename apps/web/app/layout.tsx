@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Anton, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
+import './donutland.original.css';
 import { CartDrawer } from '@donutland/ui';
 
 export const anton = Anton({

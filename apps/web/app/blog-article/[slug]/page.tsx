@@ -1,98 +1,15 @@
+'use client';
+
 import React from 'react';
-import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import Link from 'next/link';
-import { GlobalHeader, GlobalFooter, DripDivider, Button } from '@donutland/ui';
-import { articles } from '../../../content/articles';
-import { Clock, User, ArrowLeft, ShareNetwork } from '@phosphor-icons/react/dist/ssr';
+import { WebflowHeader, WebflowFooter } from '@donutland/ui';
 
-export function generateStaticParams() {
-  return articles.map((a) => ({ slug: a.slug }));
-}
-
-export default async function BlogArticlePage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const article = articles.find((a) => a.slug === slug) || articles[0];
-
+export default function BlogArticleOurTopFiveBestSellingDonutsPage() {
   return (
-    <div className="flex-1 flex flex-col bg-white text-black">
-      <GlobalHeader activePath="/all-blogs" />
-
-      <main className="max-w-[1000px] mx-auto px-6 md:px-12 pt-32 md:pt-40 pb-20">
-        {/* Back Link */}
-        <Link
-          href="/all-blogs"
-          className="inline-flex items-center gap-2 font-display text-sm uppercase tracking-wider text-gray-500 hover:text-black mb-8"
-        >
-          <ArrowLeft size={16} weight="bold" />
-          <span>Back to All Articles</span>
-        </Link>
-
-        {/* Article Header */}
-        <div className="space-y-4 mb-8">
-          <span className="inline-block px-3.5 py-1 rounded-full bg-[#eeae23] text-black font-sans font-extrabold text-xs uppercase tracking-wider border border-black shadow-[2px_2px_0_0_#000000]">
-            {article.category}
-          </span>
-          <h1 className="font-display text-4xl sm:text-6xl font-bold uppercase tracking-tight text-black leading-[1.05]">
-            {article.title}
-          </h1>
-
-          <div className="flex flex-wrap items-center gap-4 text-xs font-sans text-gray-600 pt-2 border-b-2 border-black/10 pb-4">
-            <span className="font-bold text-black">{article.author.name} ({article.author.role})</span>
-            <span>•</span>
-            <span className="flex items-center gap-1">
-              <Clock size={14} />
-              <span>{article.readTime}</span>
-            </span>
-            <span>•</span>
-            <span>Published on {article.date}</span>
-          </div>
-        </div>
-
-        {/* Hero Featured Image */}
-        <div className="relative aspect-16/9 w-full rounded-[28px] overflow-hidden border-4 border-black mb-12 shadow-[8px_8px_0_0_#000000]">
-          <Image
-            src={article.image}
-            alt={article.title}
-            width={1000}
-            height={560}
-            className="object-cover w-full h-full"
-            priority
-            unoptimized
-          />
-        </div>
-
-        {/* Article Content */}
-        <div className="space-y-6 font-sans text-base md:text-lg text-gray-800 leading-relaxed max-w-[800px] mx-auto">
-          {article.content.map((paragraph, idx) => (
-            <p key={idx}>{paragraph}</p>
-          ))}
-          <p>
-            Every pastry we craft stands as proof that baking does not require shortcuts. Join us in celebrating honest craftsmanship, wild sourdough starter, and joyful bakery memories.
-          </p>
-        </div>
-
-        {/* Share & Author Card */}
-        <div className="mt-16 p-8 rounded-[24px] border-2 border-black bg-[#f5f6f4] flex flex-col sm:flex-row items-center justify-between gap-6 max-w-[800px] mx-auto">
-          <div>
-            <h4 className="font-display text-lg font-bold uppercase tracking-tight text-black">
-              Written by {article.author.name}
-            </h4>
-            <p className="font-sans text-xs text-gray-600">{article.author.role} at Donutland.</p>
-          </div>
-          <Link href="/all-blogs">
-            <Button variant="pink" size="sm" rounded="full">
-              Explore More Stories
-            </Button>
-          </Link>
-        </div>
-      </main>
-
-      <GlobalFooter />
-    </div>
+    <>
+      <WebflowHeader activePath="/blog-article/our-top-five-best-selling-donuts" />
+      <div className="page-wrapper"><section style={{"backgroundImage":"url('https://cdn.prod.website-files.com/656a2e8a88537d8c45eeab81/658369056b4158ecace1ea6e_pexels-pavel-danilyuk-8422824%20(1).jpg')"}} className="section blog-post-hero"><div className="w-layout-blockcontainer container blog-post-hero w-container"><div className="blog-post-hero-heading-box-wrapper"><div className="blog-category-buttons-container"><a href="/blog-category/company" className="blog-categroy-button w-inline-block"><div className="button-text">Company</div></a></div><div className="text-box"><h1 className="h1-heading blog-post-hero-h1">Our Top Five Best Selling Donuts</h1><div className="text-box"><div className="text-block white">December 20, 2023</div></div></div></div></div><div className="image-wrapper white-drip-background"><img src="https://cdn.prod.website-files.com/6569d73055568668783bf587/657c81193e3b0011f5383ff5_smaller-white-wave.webp" loading="lazy" sizes="100vw" srcSet="https://cdn.prod.website-files.com/6569d73055568668783bf587/657c81193e3b0011f5383ff5_smaller-white-wave-p-500.webp 500w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657c81193e3b0011f5383ff5_smaller-white-wave-p-800.webp 800w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657c81193e3b0011f5383ff5_smaller-white-wave-p-1080.webp 1080w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657c81193e3b0011f5383ff5_smaller-white-wave.webp 1446w" alt="" className="content-image _100-width-height display-none-desktop-laptop-tablet"/><img src="https://cdn.prod.website-files.com/6569d73055568668783bf587/657c6f0a399e3802cdc89117_white-wave-svg%201.webp" loading="lazy" sizes="(max-width: 2526px) 100vw, 2526px" srcSet="https://cdn.prod.website-files.com/6569d73055568668783bf587/657c6f0a399e3802cdc89117_white-wave-svg%201-p-500.webp 500w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657c6f0a399e3802cdc89117_white-wave-svg%201-p-800.webp 800w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657c6f0a399e3802cdc89117_white-wave-svg%201-p-1080.webp 1080w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657c6f0a399e3802cdc89117_white-wave-svg%201.webp 2526w" alt="" className="content-image _100-width-height display-none-mobile"/></div></section><section className="section _2px-top-margin white-background"><div className="w-layout-blockcontainer container w-container"><div className="article-text-wrapper"><div className="blog-post-rich-text post-body w-richtext"><h2>This is an H2</h2><p>Elementum curabitur vitae nunc sed velit dignissim sodales ut eu. Porta non pulvinar neque laoreet. Tincidunt lobortis feugiat vivamus at. Tortor pretium viverra suspendisse potenti. Amet porttitor eget dolor morbi non arcu risus quis.</p><ul role="list"><li>Malesuada bibendum arcu vitae elementum</li><li>A scelerisque purus semper eget duis</li><li>Vitae nunc sed velit dignissim sodales ut eu</li></ul><h3>This is an H3</h3><p>Odio pellentesque diam volutpat commodo. Ut venenatis tellus in metus. Maecenas pharetra convallis posuere morbi leo. Tortor at auctor urna nunc. Dolor morbi non arcu risus quis varius quam.</p><blockquote>&quot;Dolor magna eget est lorem ipsum dolor sit amet consectetur. Vel orci porta non pulvinar neque laoreet. Cursus euismod quis viverra nibh cras pulvinar mattis nunc sed. Duis tristique sollicitudin nibh sit amet commodo.&quot;</blockquote><p>It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p><ol role="list"><li>Enim facilisis gravida neque convallis a cras semper</li><li>Tortor at auctor urna nunc</li><li>Massa sed elementum tempus venenatis</li><li>Dignissim suspendisse in est ante in nibh mauris cursus mattis</li></ol><h4>This is an H4</h4><figure style={{"maxWidth":"1800px"}} className="w-richtext-align-fullwidth w-richtext-figure-type-image"><div><img loading="lazy" alt="" src="https://cdn.prod.website-files.com/656a2e8a88537d8c45eeab81/6583692902fd9ee9933adbf8_6557ced21ce596acebf1a07b_64fcc0b3a1040710e6140a5d_64ea181a21e59074990db015_sample-image.png"/></div><figcaption>This is a caption for the image. <a href="http://www.webflow.com">Click here to learn more about the image.</a></figcaption></figure><p>Sed id semper risus in hendrerit gravida rutrum. Iaculis at erat pellentesque adipiscing commodo elit at imperdiet. Enim sed faucibus turpis in eu mi. Pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus. Duis tristique sollicitudin nibh sit amet commodo. Eget velit aliquet sagittis id. Quisque non tellus orci ac auctor. Facilisis sed odio morbi quis commodo odio aenean sed adipiscing. At urna condimentum mattis pellentesque id nibh tortor id. Interdum velit euismod in pellentesque massa placerat duis ultricies lacus. Quam viverra orci sagittis eu volutpat odio facilisis mauris. Condimentum lacinia quis vel eros donec ac odio. Leo vel fringilla est ullamcorper eget nulla facilisi etiam dignissim.</p><h5>This is an H5</h5><p>Massa tempor nec feugiat nisl. Donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Dignissim convallis aenean et tortor at. Est placerat in egestas erat imperdiet sed euismod nisi. Volutpat odio facilisis mauris sit amet massa vitae tortor. In aliquam sem fringilla ut morbi. Massa massa ultricies mi quis hendrerit dolor. Dignissim convallis aenean et tortor at risus viverra adipiscing.</p><h6>This is an H6</h6><p>Vitae auctor eu augue ut lectus. Amet est placerat in egestas erat imperdiet sed euismod nisi. Pretium nibh ipsum consequat nisl vel pretium lectus quam. Amet consectetur adipiscing elit pellentesque habitant morbi tristique. Tristique et egestas quis ipsum suspendisse ultrices. Varius quam quisque id diam vel quam elementum. Egestas dui id ornare arcu. Risus ultricies tristique nulla aliquet. Ac ut consequat semper viverra nam libero justo laoreet. Pretium aenean pharetra magna ac placerat vestibulum.</p><p></p></div></div></div></section></div>
+      <WebflowFooter />
+    </>
   );
 }

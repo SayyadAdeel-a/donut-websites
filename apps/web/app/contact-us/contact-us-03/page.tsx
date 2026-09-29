@@ -1,100 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
-import { GlobalHeader, GlobalFooter, Button, Input } from '@donutland/ui';
-import { Check } from '@phosphor-icons/react';
+import React from 'react';
+import Link from 'next/link';
+import { WebflowHeader, WebflowFooter } from '@donutland/ui';
 
-export default function Contact03Page() {
-  const [inquiryType, setInquiryType] = useState<'feedback' | 'franchise'>('franchise');
-  const [submitted, setSubmitted] = useState(false);
-
+export default function ContactUsContactUs03Page() {
   return (
-    <div className="flex-1 flex flex-col bg-[#fff5ea] text-black">
-      <GlobalHeader activePath="/contact-us/contact-us-03" />
-      <section className="pt-36 pb-16 px-6 text-center max-w-4xl mx-auto">
-        <span className="inline-block px-4 py-1 rounded-full bg-[#3b89ff] text-white font-sans font-bold text-xs uppercase tracking-widest mb-4 border border-black">
-          Americana Diner Routing
-        </span>
-        <h1 className="font-display text-5xl sm:text-7xl font-bold uppercase tracking-tight text-black mb-4">
-          Franchise & Feedback
-        </h1>
-        <p className="font-sans text-base md:text-xl text-gray-700 font-medium">
-          Interested in bringing a Donut Counter franchise to your town, or sharing your diner feedback?
-        </p>
-
-        {/* Toggle Pills */}
-        <div className="flex items-center justify-center gap-3 mt-8">
-          <button
-            type="button"
-            onClick={() => setInquiryType('franchise')}
-            className={`px-6 py-2 rounded-full font-display text-sm uppercase tracking-wider border-2 border-black transition-all cursor-pointer ${
-              inquiryType === 'franchise' ? 'bg-[#3b89ff] text-white shadow-[3px_3px_0_0_#000000]' : 'bg-white text-black'
-            }`}
-          >
-            Franchise Application
-          </button>
-          <button
-            type="button"
-            onClick={() => setInquiryType('feedback')}
-            className={`px-6 py-2 rounded-full font-display text-sm uppercase tracking-wider border-2 border-black transition-all cursor-pointer ${
-              inquiryType === 'feedback' ? 'bg-[#eeae23] text-black shadow-[3px_3px_0_0_#000000]' : 'bg-white text-black'
-            }`}
-          >
-            Guest Feedback
-          </button>
-        </div>
-      </section>
-
-      <section className="py-12 px-6 md:px-12 max-w-[800px] mx-auto flex-1 w-full">
-        <div className="rounded-[28px] border-4 border-black p-8 md:p-12 bg-white shadow-[8px_8px_0_0_#3b89ff]">
-          {submitted ? (
-            <div className="p-8 text-center space-y-4">
-              <div className="w-16 h-16 rounded-full bg-[#3b89ff]/10 text-[#3b89ff] flex items-center justify-center mx-auto border-2 border-[#3b89ff]">
-                <Check size={32} weight="bold" />
-              </div>
-              <h3 className="font-display text-2xl font-bold uppercase tracking-tight text-black">
-                {inquiryType === 'franchise' ? 'Franchise Dossier Received' : 'Thank You For Your Feedback'}
-              </h3>
-              <p className="font-sans text-sm text-gray-600">
-                Our franchise development officer will review your territory qualifications shortly.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="font-display text-xs font-bold uppercase tracking-wider block mb-2">Full Name</label>
-                  <Input required placeholder="Robert Miller" />
-                </div>
-                <div>
-                  <label className="font-display text-xs font-bold uppercase tracking-wider block mb-2">Email Address</label>
-                  <Input required type="email" placeholder="robert@example.com" />
-                </div>
-              </div>
-              {inquiryType === 'franchise' && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="font-display text-xs font-bold uppercase tracking-wider block mb-2">Desired Territory</label>
-                    <Input required placeholder="City, State" />
-                  </div>
-                  <div>
-                    <label className="font-display text-xs font-bold uppercase tracking-wider block mb-2">Liquid Capital Range</label>
-                    <Input required placeholder="$100k - $250k" />
-                  </div>
-                </div>
-              )}
-              <div>
-                <label className="font-display text-xs font-bold uppercase tracking-wider block mb-2">Message or Notes</label>
-                <textarea rows={4} required placeholder="Tell us about your background or visit experience..." className="w-full px-5 py-3.5 rounded-[12px] border-2 border-black/10 focus:border-[#3b89ff] focus:outline-none" />
-              </div>
-              <Button type="submit" size="lg" className="w-full bg-[#3b89ff] text-white border-2 border-black">
-                Submit {inquiryType === 'franchise' ? 'Franchise Inquiry' : 'Feedback'}
-              </Button>
-            </form>
-          )}
-        </div>
-      </section>
-      <GlobalFooter config={{ bgColor: '#3b89ff', dripColor: '#3b89ff' }} />
-    </div>
+    <>
+      <WebflowHeader activePath="/contact-us/contact-us-03" />
+      <div className="page-wrapper"><section className="section overflow-hidden"><div className="w-layout-blockcontainer container contact-us-03 w-container"><div className="grid-wrapper"><div className="w-layout-grid content-grid one-column"><div id="w-node-_674de557-2909-4e9d-39e2-9ffd1bf7de4f-988a182f" className="grid-block"><div className="text-box"><h1 className="h1-heading hot-pink contact-03-hero">Contact Us</h1><div className="text-box _24rem contact-us-03-sub"><p className="paragraph hot-pink no-margin">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse variu</p></div></div></div><div id="w-node-_674de557-2909-4e9d-39e2-9ffd1bf7de56-988a182f" className="grid-block center-aligned relative"><div className="image-wrapper stack-chocolate-pink-donuts"><img src="https://cdn.prod.website-files.com/6569d73055568668783bf587/65833a9a79feb5fd7c7ccdae_pink-stacked-chocolate-glaze-doughnut-color-wall-PhotoRoom%20(2).webp" loading="lazy" sizes="(max-width: 479px) 93vw, (max-width: 767px) 96vw, (max-width: 991px) 94vw, (max-width: 1279px) 90vw, (max-width: 1439px) 1144px, (max-width: 1919px) 1304px, 1824px" srcSet="https://cdn.prod.website-files.com/6569d73055568668783bf587/65833a9a79feb5fd7c7ccdae_pink-stacked-chocolate-glaze-doughnut-color-wall-PhotoRoom%20(2)-p-500.webp 500w, https://cdn.prod.website-files.com/6569d73055568668783bf587/65833a9a79feb5fd7c7ccdae_pink-stacked-chocolate-glaze-doughnut-color-wall-PhotoRoom%20(2)-p-800.webp 800w, https://cdn.prod.website-files.com/6569d73055568668783bf587/65833a9a79feb5fd7c7ccdae_pink-stacked-chocolate-glaze-doughnut-color-wall-PhotoRoom%20(2)-p-1080.webp 1080w, https://cdn.prod.website-files.com/6569d73055568668783bf587/65833a9a79feb5fd7c7ccdae_pink-stacked-chocolate-glaze-doughnut-color-wall-PhotoRoom%20(2).webp 1280w" alt="" className="content-image _100-width-height"/></div></div></div></div></div></section><section className="section"><div className="w-layout-blockcontainer container no-top-padding w-container"><div className="content-wrapper contact-form"><div className="contact-content-wrapper"><div className="contact-form-block w-form"><form id="wf-form-Contact-Form" name="wf-form-Contact-Form" data-name="Contact Form" method="get" className="contact-form contact-us-03" data-wf-page-id="6583389916a0edd7988a182f" data-wf-element-id="5b6f0b1e-e5aa-c734-4841-3bfa920cb25d" data-turnstile-sitekey="0x4AAAAAAAQTptj2So4dx43e"><div className="form-input-wrapper first-name-last-name"><div className="first-name"><label htmlFor="First-Name" className="form-label white">First Name</label><input className="form-field white-border w-input" maxLength={256} name="First-Name" data-name="First Name" placeholder="First name" type="text" id="First-Name" required={true}/></div><div className="last-name"><label htmlFor="Last-Name" className="form-label white">Last Name</label><input className="form-field white-border w-input" maxLength={256} name="Last-Name" data-name="Last Name" placeholder="Last name" type="text" id="Last-Name" required={true}/></div></div><div className="form-input-wrapper"><div className="form-email"><label htmlFor="Email" className="form-label white">E-mail</label><input className="form-field email white-border w-input" maxLength={256} name="Email" data-name="Email" placeholder="Enter your email" type="email" id="Email" required={true}/></div></div><div className="form-input-wrapper"><div className="form-brief"><label htmlFor="Message" className="form-label white">Message</label><textarea id="Message" name="Message" maxLength={5000} data-name="Message" placeholder="Enter your message" className="form-field message-input white-border w-input"></textarea></div></div><input type="submit" data-wait="Please wait..." className="general-button white-pink w-button" value="Submit"/></form><div className="success-message w-form-done"><div className="text-block success-message">Thank you! Your submission has been received!</div></div><div className="error-message w-form-fail"><div className="text-block">Oops! Something went wrong while submitting the form.</div></div></div></div></div></div></section><section className="section"><div className="w-layout-blockcontainer container no-top-bottom-padding w-container"><div className="grid-wrapper"><div className="w-layout-grid contact-icons-grid contact-us-03"><div id="w-node-_927935bd-f131-49f6-e873-3499ca156875-988a182f" className="grid-block center-aligned contact-us-hot-pink-boxes"><div className="text-box"><h2 className="contact-title white">Sales</h2></div><p className="paragraph white">Lorem ipsum dolor sit amet, consectet.</p><div className="button-wrapper"><a href="mailto:hello@donutland.com" className="general-button white-pink w-button">Contact</a></div></div><div id="w-node-_927935bd-f131-49f6-e873-3499ca15687e-988a182f" className="grid-block center-aligned contact-us-hot-pink-boxes"><div className="text-box"><h2 className="contact-title white">Support</h2></div><p className="paragraph white">Lorem ipsum dolor sit amet, consectet.</p><div className="button-wrapper"><a href="mailto:hello@donutland.com" className="general-button white-pink w-button">Contact</a></div></div><div id="w-node-_927935bd-f131-49f6-e873-3499ca156887-988a182f" className="grid-block center-aligned contact-us-hot-pink-boxes"><div className="text-box"><h2 className="contact-title white">Press</h2></div><p className="paragraph white">Lorem ipsum dolor sit amet, consectet.</p><div className="button-wrapper"><a href="mailto:hello@donutland.com" className="general-button white-pink w-button">Contact</a></div></div></div></div></div></section><section className="section overflow-hidden"><div className="w-layout-blockcontainer container w-container"><div className="grid-wrapper"><div className="w-layout-grid content-grid one-column"><div id="w-node-_8217dba0-8a1f-b5bb-669e-983d7668e9b8-988a182f" className="grid-block center-aligned"><div className="text-box _45rem _50rem-desktop"><h2 className="h2-heading hot-pink">See our locations</h2><div className="text-box center-aligned"><p className="paragraph hot-pink">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse variu</p><div className="button-wrapper"><a href="/contact-us/contact-us-01" className="general-button white-pink reversed w-button">View Locations</a></div></div></div></div></div></div><div className="contact-us-image-content-container contact-us-03"><div className="contact-us-images-content-wrapper contact-us-03-image-02"><img src="https://cdn.prod.website-files.com/6569d73055568668783bf587/657efc228d8a3149077898ff_history-5.webp" loading="eager" sizes="(max-width: 479px) 91vw, (max-width: 767px) 329.18463134765625px, (max-width: 1919px) 455.3739929199219px, 24vw" srcSet="https://cdn.prod.website-files.com/6569d73055568668783bf587/657efc228d8a3149077898ff_history-5-p-500.webp 500w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657efc228d8a3149077898ff_history-5-p-800.webp 800w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657efc228d8a3149077898ff_history-5-p-1080.webp 1080w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657efc228d8a3149077898ff_history-5.webp 1610w" alt="" className="content-image"/></div><div className="contact-us-images-content-wrapper contact-us-03-image-01"><img src="https://cdn.prod.website-files.com/6569d73055568668783bf587/657e12fd993824f037fb10a5_pink-donut-woman.webp" loading="eager" sizes="(max-width: 479px) 180px, (max-width: 767px) 350px, 475px" srcSet="https://cdn.prod.website-files.com/6569d73055568668783bf587/657e12fd993824f037fb10a5_pink-donut-woman-p-500.webp 500w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657e12fd993824f037fb10a5_pink-donut-woman-p-800.webp 800w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657e12fd993824f037fb10a5_pink-donut-woman-p-1080.webp 1080w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657e12fd993824f037fb10a5_pink-donut-woman.webp 1391w" alt="" className="content-image"/></div><div className="contact-us-images-content-wrapper contact-us-03-image-03"><img src="https://cdn.prod.website-files.com/6569d73055568668783bf587/657efc211e8318870ce0b0cc_history-1.webp" loading="eager" sizes="(max-width: 479px) 91vw, (max-width: 767px) 69vw, (max-width: 991px) 455.3740234375px, (max-width: 1279px) 46vw, (max-width: 1439px) 455.37396240234375px, (max-width: 1919px) 32vw, 24vw" srcSet="https://cdn.prod.website-files.com/6569d73055568668783bf587/657efc211e8318870ce0b0cc_history-1-p-500.webp 500w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657efc211e8318870ce0b0cc_history-1-p-800.webp 800w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657efc211e8318870ce0b0cc_history-1-p-1080.webp 1080w, https://cdn.prod.website-files.com/6569d73055568668783bf587/657efc211e8318870ce0b0cc_history-1.webp 1610w" alt="" className="content-image"/></div></div></div></section></div>
+      <WebflowFooter />
+    </>
   );
 }

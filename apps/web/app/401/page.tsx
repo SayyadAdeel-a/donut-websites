@@ -1,30 +1,15 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import { GlobalHeader, GlobalFooter, Button, Input } from '@donutland/ui';
-import { LockSimple } from '@phosphor-icons/react/dist/ssr';
 
-export default function ProtectedPage() {
+
+export default function Page401Page() {
   return (
-    <div className="flex-1 flex flex-col bg-[#f5f6f4] text-black">
-      <GlobalHeader />
-      <main className="max-w-md mx-auto px-6 pt-40 pb-24 text-center flex-1 flex flex-col justify-center">
-        <div className="w-16 h-16 rounded-full bg-[#eeae23] text-black border-2 border-black flex items-center justify-center mx-auto mb-6 shadow-[4px_4px_0_0_#000000]">
-          <LockSimple size={32} weight="bold" />
-        </div>
-        <h1 className="font-display text-4xl font-bold uppercase tracking-tight text-black mb-3">
-          Protected Page
-        </h1>
-        <p className="font-sans text-sm text-gray-600 mb-8">
-          This area requires internal staff authorization to inspect recipes and production batches.
-        </p>
-        <form className="space-y-4">
-          <Input type="password" placeholder="Enter bakery passkey" />
-          <Button variant="pink" size="lg" className="w-full">
-            Unlock Content
-          </Button>
-        </form>
-      </main>
-      <GlobalFooter />
-    </div>
+    <>
+      
+      <div className="utility-page-wrap"><div className="utility-page-content w-password-page w-form"><form action="/.wf_auth" method="post" id="email-form" name="email-form" data-name="Email Form" className="utility-page-form w-password-page" data-wf-page-id="658482c023c662b48b760ad4" data-wf-element-id="658482c023c662b48b760ad700000000000c"><div className="image-wrapper password-image"><img src="https://cdn.prod.website-files.com/6569d73055568668783bf587/6581e3ee48eaac1b0d8166fd_pink-shadow-donut.webp" alt="" sizes="(max-width: 479px) 90vw, (max-width: 767px) 85vw, (max-width: 991px) 72vw, (max-width: 1439px) 49vw, (max-width: 1919px) 40vw, 27vw" srcSet="https://cdn.prod.website-files.com/6569d73055568668783bf587/6581e3ee48eaac1b0d8166fd_pink-shadow-donut-p-500.webp 500w, https://cdn.prod.website-files.com/6569d73055568668783bf587/6581e3ee48eaac1b0d8166fd_pink-shadow-donut-p-800.webp 800w, https://cdn.prod.website-files.com/6569d73055568668783bf587/6581e3ee48eaac1b0d8166fd_pink-shadow-donut-p-1080.webp 1080w, https://cdn.prod.website-files.com/6569d73055568668783bf587/6581e3ee48eaac1b0d8166fd_pink-shadow-donut.webp 1302w" className="content-image"/></div><h2 className="h1-heading hot-pink">Protected Page</h2><div className="password-content-wrapper"><label htmlFor="pass" className="password-label w-password-page">Password</label><input className="form-field w-password-page w-input" autoFocus={true} maxLength={256} name="pass" data-name="field" placeholder="Enter your password" type="password" id="pass"/><input type="submit" data-wait="Please wait..." className="general-button white-pink password w-password-page w-button" value="Submit"/></div><div className="w-password-page w-form-fail"><div>Incorrect password. Please try again.</div></div><div style={{"display":"none"}} className="w-password-page w-embed w-script"><input type="hidden" name="path" defaultValue="" /><input type="hidden" name="page" defaultValue="" /></div><div style={{"display":"none"}} className="w-password-page w-embed w-script"></div></form></div></div>
+      
+    </>
   );
 }

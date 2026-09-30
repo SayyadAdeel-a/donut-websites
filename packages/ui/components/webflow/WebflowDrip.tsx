@@ -6,11 +6,14 @@ export interface WebflowDripProps {
 }
 
 export const WebflowDrip: React.FC<WebflowDripProps> = ({
-  fillColor = 'currentColor',
+  fillColor,
   className = '',
 }) => {
   return (
-    <div className={`svg-drip w-embed ${className}`} style={{ color: fillColor }}>
+    <div
+      className={`svg-drip w-embed ${className}`}
+      style={fillColor && fillColor !== 'currentColor' ? { color: fillColor } : undefined}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"

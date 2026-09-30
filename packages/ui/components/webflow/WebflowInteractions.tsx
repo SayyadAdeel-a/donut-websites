@@ -32,14 +32,26 @@ export const WebflowInteractions: React.FC = () => {
         let currentIndex = 0;
         const totalSlides = slides.length;
 
-        // Ensure proper mask and slide styles
-        mask.style.overflow = 'hidden';
+        // Preserve CSS overflow (Webflow uses overflow: visible on multi-card masks like .best-sellers)
+        const computedOverflow = window.getComputedStyle(mask).overflow;
+        if (computedOverflow !== 'visible' && !mask.classList.contains('best-sellers')) {
+          mask.style.overflow = 'hidden';
+        }
         mask.style.position = 'relative';
 
         const updateSlides = () => {
+          const firstSlide = slides[0];
+          const secondSlide = slides[1];
+          let stride = firstSlide ? firstSlide.offsetWidth : 0;
+          if (firstSlide && secondSlide) {
+            const firstRect = firstSlide.getBoundingClientRect();
+            const secondRect = secondSlide.getBoundingClientRect();
+            const distance = Math.abs(secondRect.left - firstRect.left);
+            if (distance > 0) stride = distance;
+          }
           slides.forEach((slide) => {
             slide.style.transition = 'transform 0.55s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease';
-            slide.style.transform = `translateX(-${currentIndex * 100}%)`;
+            slide.style.transform = `translateX(-${currentIndex * stride}px)`;
           });
         };
 
@@ -94,9 +106,9 @@ export const WebflowInteractions: React.FC = () => {
     // 2. ACCORDION CONTROLLER
     // --------------------------------------------------------------------------
     const initAccordions = () => {
-      // Product Page Accordions
+      // Product Page & FAQ Accordions
       const productAccordionItems = document.querySelectorAll<HTMLElement>(
-        '.product-page-accordion-item, .faq-accordion-item'
+        '.product-page-accordion-item, .faq-accordion-item, .faq-item'
       );
 
       productAccordionItems.forEach((item) => {
@@ -104,13 +116,13 @@ export const WebflowInteractions: React.FC = () => {
         item.dataset.accordionInitialized = 'true';
 
         const toggle = item.querySelector<HTMLElement>(
-          '.product-page-detail-accordion-toggle, .faq-accordion-toggle, [role="button"]'
+          '.product-page-detail-accordion-toggle, .faq-accordion-toggle, .faq-toggle, [role="button"]'
         );
         const content = item.querySelector<HTMLElement>(
-          '.product-page-accordion-inner-content, .faq-accordion-content, .w-dropdown-list'
+          '.product-page-accordion-inner-content, .faq-accordion-content, .faq-content, .w-dropdown-list'
         );
         const chevron = item.querySelector<HTMLElement>(
-          '.product-accordion-chevron-wrapper, .chevron-icon, .plus-sign-image-wrapper'
+          '.product-accordion-chevron-wrapper, .chevron-icon, .plus-sign-image-wrapper, .faq-arrow'
         );
 
         if (!toggle || !content) return;
@@ -259,14 +271,6 @@ export const WebflowInteractions: React.FC = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const scrollY = window.scrollY;
-
-          // Parallax floating candies and background items
-          const floatItems = document.querySelectorAll<HTMLElement>('.homepage-01-intro-float');
-          floatItems.forEach((item, idx) => {
-            const factor = idx % 2 === 0 ? 0.12 : -0.12;
-            const rotateFactor = idx % 2 === 0 ? 0.08 : -0.08;
-            item.style.transform = `translate3d(0, ${scrollY * factor}px, 0) rotate(${scrollY * rotateFactor}deg)`;
-          });
 
           // Floating CTA boxes & magnifying glass (Home 02)
           const magnifyGlass = document.querySelector<HTMLElement>('.magnify-glass-image');

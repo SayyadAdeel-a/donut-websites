@@ -9,6 +9,7 @@ import { useCart } from '../../hooks/useCart';
 export interface WebflowHeaderProps {
   activePath?: string;
   isDark?: boolean;
+  hasHotPinkNav?: boolean;
 }
 
 const homeLinks = [
@@ -60,7 +61,17 @@ const cmsLinks = [
   { text: 'All Donuts', href: '/all-donuts' },
 ];
 
-export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark = false }) => {
+export const WebflowHeader: React.FC<WebflowHeaderProps> = ({
+  activePath,
+  isDark = false,
+  hasHotPinkNav,
+}) => {
+  const isHotPink =
+    hasHotPinkNav ??
+    (activePath === '/contact-us/contact-us-03' ||
+      activePath === '/contact-us/contact-us-05' ||
+      activePath === '/why-donutland/why-donutland-05');
+
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -85,26 +96,15 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
   ];
 
   return (
-    <motion.nav
-      className={`header-navigation ${isScrolled ? 'header-scrolled' : ''}`}
-      animate={{
-        backgroundColor: isScrolled
-          ? isDark
-            ? 'rgba(255, 255, 255, 0.95)'
-            : 'rgba(245, 79, 149, 0.96)'
-          : 'transparent',
-        boxShadow: isScrolled ? '0 4px 20px rgba(0, 0, 0, 0.12)' : 'none',
-        backdropFilter: isScrolled ? 'blur(10px)' : 'none',
-        paddingTop: isScrolled ? '8px' : '16px',
-        paddingBottom: isScrolled ? '8px' : '16px',
-      }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+    <nav
+      className="header-navigation"
       style={{
-        position: isScrolled ? 'fixed' : 'absolute',
+        position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         zIndex: 100,
+        backgroundColor: 'transparent',
       }}
     >
       <div
@@ -112,11 +112,12 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
         data-animation="default"
         data-duration="400"
         role="banner"
-        className="header-navigation-bar w-nav"
+        className={`header-navigation-bar ${isHotPink ? 'background-header' : ''} w-nav`}
       >
-        <div className="w-layout-grid header-navigation-grid">
+        <div className={`w-layout-grid header-navigation-grid ${isHotPink ? 'hot-pink-background' : ''}`}>
           {/* Logo */}
           <Link
+            id="w-node-e246f4b1-1b28-6ce2-91bd-e65bb05b6d4e-b05b6d4b"
             href="/"
             className="company-logo-link-block w-nav-brand"
             aria-label="home"
@@ -133,16 +134,21 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
           </Link>
 
           {/* Desktop Nav Menu */}
-          <nav role="navigation" className="header-navigation-menu w-nav-menu">
+          <nav
+            id="w-node-e246f4b1-1b28-6ce2-91bd-e65bb05b6d50-b05b6d4b"
+            role="navigation"
+            className="header-navigation-menu w-nav-menu"
+            style={{ gridColumn: '2 / 4' }}
+          >
             <div className="main-header-navigation-bar">
               <Link
                 href="/"
                 className={`header-main-index-link homepage w-nav-link ${
                   activePath === '/' ? 'w--current' : ''
                 }`}
-                style={{ color: isDark && !isScrolled ? '#1b1b1b' : '#ffffff' }}
+                style={{ color: isDark && !isScrolled ? '#1b1b1b' : '#ffffff', whiteSpace: 'nowrap' }}
               >
-                Main Index
+                Main&nbsp;Index
               </Link>
 
               {navDropdowns.map((dd) => {
@@ -217,6 +223,7 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
 
           {/* Mobile Menu Hamburger */}
           <div
+            id="w-node-e246f4b1-1b28-6ce2-91bd-e65bb05b6dc0-b05b6d4b"
             className="menu-button w-nav-button"
             aria-label="menu"
             role="button"
@@ -262,7 +269,10 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
           </div>
 
           {/* Cart Icon & Quantity Counter */}
-          <div className="w-commerce-commercecartwrapper cart">
+          <div
+            id="w-node-e246f4b1-1b28-6ce2-91bd-e65bb05b6dc3-b05b6d4b"
+            className="w-commerce-commercecartwrapper cart"
+          >
             <button
               type="button"
               className="w-commerce-commercecartopenlink cart-button w-inline-block border-none bg-transparent cursor-pointer relative"
@@ -337,6 +347,6 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({ activePath, isDark
           )}
         </AnimatePresence>
       </div>
-    </motion.nav>
+    </nav>
   );
 };

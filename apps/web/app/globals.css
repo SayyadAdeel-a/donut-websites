@@ -172,6 +172,39 @@ h1, h2, h3, h4, h5, h6, .font-display {
   transform: translateY(-8px) scale(1.03) !important;
 }
 
+/* Introductory Floating Candies (Home 01) */
+@keyframes floatIntroCandy10 {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -45px, 0) rotate(-15deg);
+  }
+}
+
+@keyframes floatIntroCandy09 {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0);
+  }
+  50% {
+    transform: translate3d(0, 35px, 0);
+  }
+}
+
+.image-wrapper.candy .homepage-01-intro-float {
+  animation: floatIntroCandy10 4s ease-in-out infinite;
+}
+
+.image-wrapper.toothpaste .homepage-01-intro-float {
+  animation: floatIntroCandy09 4s ease-in-out infinite;
+}
+
+/* SVG Drip Exact Webflow Geometry */
+.svg-drip svg {
+  display: inline !important;
+  vertical-align: baseline !important;
+}
+
 /* Reduced Motion Compliance */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

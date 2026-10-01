@@ -436,12 +436,62 @@ export const WebflowInteractions: React.FC = () => {
       });
     };
 
+    // --------------------------------------------------------------------------
+    // 6. LOTTIE ANIMATIONS (.lottie-animation, data-animation-type="lottie")
+    // --------------------------------------------------------------------------
+    const initLottie = () => {
+      const lottieElements = document.querySelectorAll<HTMLElement>(
+        '[data-animation-type="lottie"], .lottie-animation'
+      );
+      if (lottieElements.length === 0) return;
+
+      const renderAll = () => {
+        // @ts-ignore
+        const lottie = window.lottie;
+        if (!lottie) return;
+
+        lottieElements.forEach((el) => {
+          if (el.dataset.lottieLoaded === 'true') return;
+          const src = el.getAttribute('data-src');
+          if (!src) return;
+
+          el.dataset.lottieLoaded = 'true';
+          lottie.loadAnimation({
+            container: el,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: src,
+          });
+        });
+      };
+
+      // @ts-ignore
+      if (window.lottie) {
+        renderAll();
+      } else {
+        const existingScript = document.querySelector('script[src*="lottie-web"]');
+        if (!existingScript) {
+          const script = document.createElement('script');
+          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js';
+          script.async = true;
+          script.onload = () => {
+            renderAll();
+          };
+          document.head.appendChild(script);
+        } else {
+          existingScript.addEventListener('load', renderAll);
+        }
+      }
+    };
+
     // Initial setup
     initSliders();
     initAccordions();
     initTabs();
     initHeroAnimations();
     initAddToCart();
+    initLottie();
     window.addEventListener('scroll', handleScrollParallax, { passive: true });
 
     // Also observe DOM changes for dynamically loaded routes
@@ -451,6 +501,7 @@ export const WebflowInteractions: React.FC = () => {
       initTabs();
       initHeroAnimations();
       initAddToCart();
+      initLottie();
     });
 
     observer.observe(document.body, { childList: true, subtree: true });

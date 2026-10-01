@@ -111,6 +111,32 @@ h1, h2, h3, h4, h5, h6, .font-display {
   animation-play-state: paused;
 }
 
+/* Home 04 Marquees Reverse Motion (Rightward) */
+.section.homepage-04-best-sellers .marquee-horizontal-panel-wrapper,
+.marquee-horizontal.homepage-04 .marquee-horizontal-panel-wrapper {
+  display: flex !important;
+  justify-content: flex-end !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+}
+
+.section.homepage-04-best-sellers .marquee-horizontal-panel,
+.marquee-horizontal.homepage-04 .marquee-horizontal-panel {
+  display: flex !important;
+  flex-shrink: 0 !important;
+  animation: webflow-marquee-reverse 25s linear infinite !important;
+  will-change: transform;
+}
+
+.marquee-horizontal.homepage-04 .marquee-horizontal-panel {
+  animation-duration: 40s !important;
+}
+
+.section.homepage-04-best-sellers .marquee-horizontal-panel:hover,
+.marquee-horizontal.homepage-04 .marquee-horizontal-panel:hover {
+  animation-play-state: paused;
+}
+
 @keyframes webflow-marquee {
   0% {
     transform: translate3d(0, 0, 0);

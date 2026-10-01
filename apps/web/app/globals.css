@@ -81,12 +81,51 @@ h1, h2, h3, h4, h5, h6, .font-display {
   animation-play-state: paused;
 }
 
+.marquee-horizontal-panel-slow {
+  display: flex !important;
+  flex-shrink: 0 !important;
+  animation: webflow-marquee 35s linear infinite !important;
+  will-change: transform;
+}
+
+.marquee-horizontal-panel-slow:hover {
+  animation-play-state: paused;
+}
+
+/* Why Donutland 03 Hero Marquee Reverse Motion */
+.marquee-horizontal.why-donutland-03-hero .marquee-horizontal-panel-wrapper {
+  display: flex !important;
+  justify-content: flex-end !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+}
+
+.marquee-horizontal.why-donutland-03-hero .marquee-horizontal-panel-slow {
+  display: flex !important;
+  flex-shrink: 0 !important;
+  animation: webflow-marquee-reverse 45s linear infinite !important;
+  will-change: transform;
+}
+
+.marquee-horizontal.why-donutland-03-hero .marquee-horizontal-panel-slow:hover {
+  animation-play-state: paused;
+}
+
 @keyframes webflow-marquee {
   0% {
     transform: translate3d(0, 0, 0);
   }
   100% {
     transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes webflow-marquee-reverse {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(100%, 0, 0);
   }
 }
 
@@ -219,7 +258,8 @@ h1, h2, h3, h4, h5, h6, .font-display {
     scroll-behavior: auto !important;
   }
   .animate-marquee,
-  .marquee-horizontal-panel {
+  .marquee-horizontal-panel,
+  .marquee-horizontal-panel-slow {
     animation: none !important;
   }
 }

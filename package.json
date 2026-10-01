@@ -7,10 +7,28 @@
     "build": "pnpm --filter web build",
     "start": "pnpm --filter web start",
     "lint": "pnpm --filter web lint",
-    "test": "pnpm dlx tsx --test apps/web/tests/verification.test.mjs packages/ui/tests/cart.test.mjs"
+    "test": "pnpm dlx tsx --test apps/web/tests/verification.test.mjs packages/ui/tests/cart.test.mjs",
+    "dev:site-01": "cross-env NEXT_PUBLIC_BRAND_ID=site-01 pnpm --filter web dev",
+    "dev:site-02": "cross-env NEXT_PUBLIC_BRAND_ID=site-02 pnpm --filter web dev",
+    "dev:site-03": "cross-env NEXT_PUBLIC_BRAND_ID=site-03 pnpm --filter web dev",
+    "dev:site-04": "cross-env NEXT_PUBLIC_BRAND_ID=site-04 pnpm --filter web dev",
+    "dev:site-05": "cross-env NEXT_PUBLIC_BRAND_ID=site-05 pnpm --filter web dev",
+    "dev:master": "cross-env NEXT_PUBLIC_BRAND_ID=master pnpm --filter web dev",
+    "build:site-01": "cross-env NEXT_PUBLIC_BRAND_ID=site-01 NEXT_EXPORT=true pnpm --filter web build",
+    "build:site-02": "cross-env NEXT_PUBLIC_BRAND_ID=site-02 NEXT_EXPORT=true pnpm --filter web build",
+    "build:site-03": "cross-env NEXT_PUBLIC_BRAND_ID=site-03 NEXT_EXPORT=true pnpm --filter web build",
+    "build:site-04": "cross-env NEXT_PUBLIC_BRAND_ID=site-04 NEXT_EXPORT=true pnpm --filter web build",
+    "build:site-05": "cross-env NEXT_PUBLIC_BRAND_ID=site-05 NEXT_EXPORT=true pnpm --filter web build",
+    "build:master": "cross-env NEXT_PUBLIC_BRAND_ID=master pnpm --filter web build",
+    "export:site-01": "cross-env NEXT_PUBLIC_BRAND_ID=site-01 NEXT_EXPORT=true pnpm --filter web build",
+    "export:site-02": "cross-env NEXT_PUBLIC_BRAND_ID=site-02 NEXT_EXPORT=true pnpm --filter web build",
+    "export:site-03": "cross-env NEXT_PUBLIC_BRAND_ID=site-03 NEXT_EXPORT=true pnpm --filter web build",
+    "export:site-04": "cross-env NEXT_PUBLIC_BRAND_ID=site-04 NEXT_EXPORT=true pnpm --filter web build",
+    "export:site-05": "cross-env NEXT_PUBLIC_BRAND_ID=site-05 NEXT_EXPORT=true pnpm --filter web build"
   },
   "packageManager": "pnpm@11.5.2",
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "tsx": "^4.23.15",
     "typescript": "^5.7.3"
   }

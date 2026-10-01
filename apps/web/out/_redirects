@@ -1,0 +1,14 @@
+# ==============================================================================
+# Cloudflare Pages Static Redirect Rules — Isolated Brand: site-05
+# Generated automatically by scripts/prune-brand-export.mjs
+# ==============================================================================
+/homepages/*            /                   301
+/about-us/*             /about              301
+/contact-us/*           /contact            301
+/subscribe-save/*       /subscribe          301
+/why-donutland/*        /why                301
+/brand/*                /                   301
+/admin/style-guide      /                   301
+/401                    /404                301
+/blog-categories/events /blog-category/event 301
+/blog/:slug             /blog-article/:slug 301

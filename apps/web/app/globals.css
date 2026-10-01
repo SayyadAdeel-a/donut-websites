@@ -95,8 +95,8 @@ h1, h2, h3, h4, h5, h6, .font-display {
 /* Why Donutland 03 Hero Marquee Reverse Motion */
 .marquee-horizontal.why-donutland-03-hero .marquee-horizontal-panel-wrapper {
   display: flex !important;
-  justify-content: flex-end !important;
-  overflow: visible !important;
+  justify-content: flex-start !important;
+  overflow: hidden !important;
   white-space: nowrap !important;
 }
 
@@ -111,12 +111,12 @@ h1, h2, h3, h4, h5, h6, .font-display {
   animation-play-state: paused;
 }
 
-/* Home 04 Marquees Reverse Motion (Rightward) */
+/* Home 04 & Subscribe 04 Marquees Reverse Motion (Rightward) */
 .section.homepage-04-best-sellers .marquee-horizontal-panel-wrapper,
 .marquee-horizontal.homepage-04 .marquee-horizontal-panel-wrapper {
   display: flex !important;
-  justify-content: flex-end !important;
-  overflow: visible !important;
+  justify-content: flex-start !important;
+  overflow: hidden !important;
   white-space: nowrap !important;
 }
 
@@ -148,10 +148,10 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 @keyframes webflow-marquee-reverse {
   0% {
-    transform: translate3d(0%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
   }
   100% {
-    transform: translate3d(100%, 0, 0);
+    transform: translate3d(0%, 0, 0);
   }
 }
 
@@ -242,13 +242,13 @@ h1, h2, h3, h4, h5, h6, .font-display {
   transform: translateY(-8px) scale(1.03) !important;
 }
 
-/* Introductory Floating Candies (Home 01) */
+/* Introductory Floating Candies (Home 01 - IX2 a-26) */
 @keyframes floatIntroCandy10 {
   0%, 100% {
     transform: translate3d(0, 0px, 0) rotate(0deg);
   }
   50% {
-    transform: translate3d(0, -45px, 0) rotate(-15deg);
+    transform: translate3d(0, -65px, 0) rotate(-21deg);
   }
 }
 
@@ -257,17 +257,88 @@ h1, h2, h3, h4, h5, h6, .font-display {
     transform: translate3d(0, 0px, 0);
   }
   50% {
-    transform: translate3d(0, 35px, 0);
+    transform: translate3d(0, 45px, 0);
   }
 }
 
-.image-wrapper.candy .homepage-01-intro-float {
+.image-wrapper.candy .homepage-01-intro-float,
+.image-wrapper.candy img {
   animation: floatIntroCandy10 4s ease-in-out infinite;
+  will-change: transform;
 }
 
-.image-wrapper.toothpaste .homepage-01-intro-float {
+.image-wrapper.toothpaste .homepage-01-intro-float,
+.image-wrapper.toothpaste img {
   animation: floatIntroCandy09 4s ease-in-out infinite;
+  will-change: transform;
 }
+
+/* Home 01 Float Box Animation (IX2 a-27) */
+@keyframes floatSubDonutBox {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0);
+  }
+  50% {
+    transform: translate3d(0, 30px, 0);
+  }
+}
+
+.image-wrapper.subscription-donut-box img,
+[data-w-id*="4155dda3-d1d6-522f-351c-798b9777f38f"] {
+  animation: floatSubDonutBox 3.4s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Home 02 CTA Boxes Animations - Donut & Magnifying Glass (IX2 a-36, a-40) */
+@keyframes floatPinkDonutBox {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0);
+  }
+  50% {
+    transform: translate3d(0, -34px, 0);
+  }
+}
+
+@keyframes floatMagnifyGlass {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, 34px, 0) rotate(18deg);
+  }
+}
+
+.pink-donut-box,
+.image-wrapper.cta-donut-box img,
+[data-w-id*="49200c94-4ec0-3d60-d70c-edb067db983d"] {
+  animation: floatPinkDonutBox 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.magnify-glass-image,
+.image-wrapper.cta-box-magnify-glass img,
+[data-w-id*="5778dea2-41fb-1bcb-2abd-6e22c87e3cf1"] {
+  animation: floatMagnifyGlass 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Rotate Vector Shape Badge (IX2 a-20) */
+@keyframes rotateVectorShape {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.image-wrapper.vector-shape img,
+[data-w-id*="66605865-c869-aae1-9b75-3727f6a2d2ac"],
+.rotate-vector-shape {
+  animation: rotateVectorShape 4s linear infinite;
+  will-change: transform;
+}
+
 
 /* SVG Drip Exact Webflow Geometry */
 .svg-drip svg {
@@ -338,5 +409,30 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 .w-tab-pane {
   transition: opacity 0.35s ease !important;
+}
+
+/* Rich Text Typography & List Formatting */
+.w-richtext ul,
+.rich-text ul {
+  list-style-type: disc !important;
+  padding-left: 40px !important;
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
+}
+
+.w-richtext ol,
+.rich-text ol {
+  list-style-type: decimal !important;
+  padding-left: 40px !important;
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
+}
+
+.w-richtext blockquote,
+.rich-text blockquote {
+  border-left: 5px solid rgb(226, 226, 226) !important;
+  padding-left: 20px !important;
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
 }
 

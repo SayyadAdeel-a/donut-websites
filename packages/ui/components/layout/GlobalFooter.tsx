@@ -171,7 +171,7 @@ export const GlobalFooter: React.FC<{ config?: FooterConfig }> = ({ config }) =>
 
         {/* Bottom Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between pt-8 text-xs font-sans opacity-80 gap-4">
-          <p>© {new Date().getFullYear()} {brandName}. All rights reserved. Built with Next.js 15 & Adeel Dev Standard.</p>
+          <p>© {new Date().getFullYear()} {brandName}. All rights reserved. Created by Sayyad Studio.</p>
           <button
             type="button"
             onClick={scrollToTop}

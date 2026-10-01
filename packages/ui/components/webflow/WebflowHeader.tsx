@@ -3,13 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import { useCart } from '../../hooks/useCart';
+import { getActiveBrand, BrandConfig } from '../../tokens/brands';
 
 export interface WebflowHeaderProps {
   activePath?: string;
   isDark?: boolean;
   hasHotPinkNav?: boolean;
+  brandConfig?: BrandConfig | null;
 }
 
 const homeLinks = [
@@ -65,12 +68,17 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({
   activePath,
   isDark = false,
   hasHotPinkNav,
+  brandConfig,
 }) => {
+  const pathname = usePathname();
+  const currentPath = activePath || pathname || '/';
+  const brand = brandConfig !== undefined ? brandConfig : getActiveBrand();
+
   const isHotPink =
     hasHotPinkNav ??
-    (activePath === '/contact-us/contact-us-03' ||
-      activePath === '/contact-us/contact-us-05' ||
-      activePath === '/why-donutland/why-donutland-05');
+    (currentPath === '/contact-us/contact-us-03' ||
+      currentPath === '/contact-us/contact-us-05' ||
+      currentPath === '/why-donutland/why-donutland-05');
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -85,6 +93,16 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const brandNavLinks = [
+    { text: 'Home', href: '/' },
+    { text: 'About', href: '/about' },
+    { text: 'Menu', href: '/all-donuts' },
+    { text: 'Subscribe', href: '/subscribe' },
+    { text: 'Why Us', href: '/why' },
+    { text: 'Blog', href: '/all-blogs' },
+    { text: 'Contact', href: '/contact' },
+  ];
 
   const navDropdowns = [
     { id: 'home', label: 'Home', links: homeLinks },
@@ -116,22 +134,40 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({
       >
         <div className={`w-layout-grid header-navigation-grid ${isHotPink ? 'hot-pink-background' : ''}`}>
           {/* Logo */}
-          <Link
-            id="w-node-e246f4b1-1b28-6ce2-91bd-e65bb05b6d4e-b05b6d4b"
-            href="/"
-            className="company-logo-link-block w-nav-brand"
-            aria-label="home"
-          >
-            <Image
-              src="https://cdn.prod.website-files.com/6569d73055568668783bf587/65858231295addff597bd02b_small%20logo.webp"
-              alt="Donutland"
-              width={224}
-              height={42}
-              className={`brand-logo-image ${isDark && !isScrolled ? 'filter invert brightness-0' : ''}`}
-              priority
-              unoptimized
-            />
-          </Link>
+          {brand ? (
+            <Link
+              id="w-node-e246f4b1-1b28-6ce2-91bd-e65bb05b6d4e-b05b6d4b"
+              href="/"
+              className="company-logo-link-block w-nav-brand flex items-center no-underline"
+              aria-label={brand.name}
+            >
+              <span
+                className="brand-logo-text font-display uppercase tracking-wider text-2xl lg:text-3xl transition-colors"
+                style={{
+                  color: isDark && !isScrolled ? (brand.theme.textColor || '#1b1b1b') : '#ffffff',
+                }}
+              >
+                {brand.name}
+              </span>
+            </Link>
+          ) : (
+            <Link
+              id="w-node-e246f4b1-1b28-6ce2-91bd-e65bb05b6d4e-b05b6d4b"
+              href="/"
+              className="company-logo-link-block w-nav-brand"
+              aria-label="home"
+            >
+              <Image
+                src="https://cdn.prod.website-files.com/6569d73055568668783bf587/65858231295addff597bd02b_small%20logo.webp"
+                alt="Donutland"
+                width={224}
+                height={42}
+                className={`brand-logo-image ${isDark && !isScrolled ? 'filter invert brightness-0' : ''}`}
+                priority
+                unoptimized
+              />
+            </Link>
+          )}
 
           {/* Desktop Nav Menu */}
           <nav
@@ -141,85 +177,111 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({
             style={{ gridColumn: '2 / 4' }}
           >
             <div className="main-header-navigation-bar">
-              <Link
-                href="/"
-                className={`header-main-index-link homepage w-nav-link ${
-                  activePath === '/' ? 'w--current' : ''
-                }`}
-                style={{ color: isDark && !isScrolled ? '#1b1b1b' : '#ffffff', whiteSpace: 'nowrap' }}
-              >
-                Main&nbsp;Index
-              </Link>
-
-              {navDropdowns.map((dd) => {
-                const isOpen = openDropdown === dd.id;
-                const textColor = isDark && !isScrolled ? '#1b1b1b' : '#ffffff';
-                return (
-                  <div
-                    key={dd.id}
-                    className="header-navigation-dropdown w-dropdown relative"
-                    onMouseEnter={() => setOpenDropdown(dd.id)}
-                    onMouseLeave={() => setOpenDropdown(null)}
-                  >
-                    <div
-                      className="header-navigation-dropdown-toggle w-dropdown-toggle"
-                      role="button"
-                      tabIndex={0}
-                      aria-expanded={isOpen}
-                      onClick={() => setOpenDropdown(isOpen ? null : dd.id)}
-                      style={{ color: textColor, cursor: 'pointer' }}
+              {brand ? (
+                brandNavLinks.map((link) => {
+                  const isActive = currentPath === link.href;
+                  const textColor = isDark && !isScrolled ? (brand.theme.textColor || '#1b1b1b') : '#ffffff';
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`header-main-index-link w-nav-link ${
+                        isActive ? 'w--current' : ''
+                      }`}
+                      style={{
+                        color: textColor,
+                        whiteSpace: 'nowrap',
+                        fontWeight: isActive ? 700 : 500,
+                      }}
                     >
-                      <motion.div
-                        className="chevron-icon w-icon-dropdown-toggle"
-                        aria-hidden="true"
-                        animate={{ rotate: isOpen ? 180 : 0 }}
-                        transition={{ duration: 0.25 }}
-                      />
-                      <div className="label-dropdown">{dd.label}</div>
-                    </div>
+                      {link.text}
+                    </Link>
+                  );
+                })
+              ) : (
+                <>
+                  <Link
+                    href="/"
+                    className={`header-main-index-link homepage w-nav-link ${
+                      currentPath === '/' ? 'w--current' : ''
+                    }`}
+                    style={{ color: isDark && !isScrolled ? '#1b1b1b' : '#ffffff', whiteSpace: 'nowrap' }}
+                  >
+                    Main&nbsp;Index
+                  </Link>
 
-                    <AnimatePresence>
-                      {isOpen && (
-                        <motion.nav
-                          className="dropdown-list w-dropdown-list w--open"
-                          initial={{ opacity: 0, scaleY: 0.85, y: -10 }}
-                          animate={{ opacity: 1, scaleY: 1, y: 0 }}
-                          exit={{ opacity: 0, scaleY: 0.85, y: -10 }}
-                          transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
-                          style={{
-                            display: 'block',
-                            position: 'absolute',
-                            transformOrigin: 'top center',
-                            pointerEvents: 'auto',
-                            overflow: 'hidden',
-                          }}
+                  {navDropdowns.map((dd) => {
+                    const isOpen = openDropdown === dd.id;
+                    const textColor = isDark && !isScrolled ? '#1b1b1b' : '#ffffff';
+                    return (
+                      <div
+                        key={dd.id}
+                        className="header-navigation-dropdown w-dropdown relative"
+                        onMouseEnter={() => setOpenDropdown(dd.id)}
+                        onMouseLeave={() => setOpenDropdown(null)}
+                      >
+                        <div
+                          className="header-navigation-dropdown-toggle w-dropdown-toggle"
+                          role="button"
+                          tabIndex={0}
+                          aria-expanded={isOpen}
+                          onClick={() => setOpenDropdown(isOpen ? null : dd.id)}
+                          style={{ color: textColor, cursor: 'pointer' }}
                         >
-                          <div className="dropdown-background" style={{ height: '100%' }} />
-                          {dd.links.map((link, idx) => (
-                            <motion.div
-                              key={link.href}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: idx * 0.04, duration: 0.25 }}
+                          <motion.div
+                            className="chevron-icon w-icon-dropdown-toggle"
+                            aria-hidden="true"
+                            animate={{ rotate: isOpen ? 180 : 0 }}
+                            transition={{ duration: 0.25 }}
+                          />
+                          <div className="label-dropdown">{dd.label}</div>
+                        </div>
+
+                        <AnimatePresence>
+                          {isOpen && (
+                            <motion.nav
+                              className="dropdown-list w-dropdown-list w--open"
+                              initial={{ opacity: 0, scaleY: 0.85, y: -10 }}
+                              animate={{ opacity: 1, scaleY: 1, y: 0 }}
+                              exit={{ opacity: 0, scaleY: 0.85, y: -10 }}
+                              transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+                              style={{
+                                display: 'block',
+                                position: 'absolute',
+                                transformOrigin: 'top center',
+                                pointerEvents: 'auto',
+                                overflow: 'hidden',
+                              }}
                             >
-                              <Link
-                                href={link.href}
-                                className={`dropdown-link w-dropdown-link ${
-                                  activePath === link.href ? 'w--current' : ''
-                                }`}
-                              >
-                                {link.text}
-                              </Link>
-                            </motion.div>
-                          ))}
-                        </motion.nav>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
+                              <div className="dropdown-background" style={{ height: '100%' }} />
+                              {dd.links.map((link, idx) => (
+                                <motion.div
+                                  key={link.href}
+                                  initial={{ opacity: 0, x: -10 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ delay: idx * 0.04, duration: 0.25 }}
+                                >
+                                  <Link
+                                    href={link.href}
+                                    className={`dropdown-link w-dropdown-link ${
+                                      currentPath === link.href ? 'w--current' : ''
+                                    }`}
+                                  >
+                                    {link.text}
+                                  </Link>
+                                </motion.div>
+                              ))}
+                            </motion.nav>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })}
+                </>
+              )}
             </div>
           </nav>
+
 
           {/* Mobile Menu Hamburger */}
           <div
@@ -316,33 +378,49 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({
               }}
             >
               <nav className="flex flex-col gap-4 text-white">
-                <Link
-                  href="/"
-                  className="text-xl font-bold py-2 border-b border-white/20"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Main Index
-                </Link>
-                {navDropdowns.map((dd) => (
-                  <div key={dd.id} className="py-2 border-b border-white/20">
-                    <div className="text-lg font-bold uppercase tracking-wider mb-2 text-white/80">
-                      {dd.label}
-                    </div>
-                    <div className="flex flex-col pl-4 gap-2">
-                      {dd.links.map((link) => (
-                        <Link
-                          key={link.href}
-                          href={link.href}
-                          className="text-white hover:text-black py-1 font-medium transition-colors"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {link.text}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                {brand ? (
+                  brandNavLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="text-xl font-bold py-2 border-b border-white/20 hover:text-black transition-colors"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {link.text}
+                    </Link>
+                  ))
+                ) : (
+                  <>
+                    <Link
+                      href="/"
+                      className="text-xl font-bold py-2 border-b border-white/20"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Main Index
+                    </Link>
+                    {navDropdowns.map((dd) => (
+                      <div key={dd.id} className="py-2 border-b border-white/20">
+                        <div className="text-lg font-bold uppercase tracking-wider mb-2 text-white/80">
+                          {dd.label}
+                        </div>
+                        <div className="flex flex-col pl-4 gap-2">
+                          {dd.links.map((link) => (
+                            <Link
+                              key={link.href}
+                              href={link.href}
+                              className="text-white hover:text-black py-1 font-medium transition-colors"
+                              onClick={() => setMobileMenuOpen(false)}
+                            >
+                              {link.text}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
               </nav>
+
             </motion.div>
           )}
         </AnimatePresence>

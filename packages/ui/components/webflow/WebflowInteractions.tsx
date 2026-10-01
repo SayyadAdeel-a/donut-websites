@@ -373,29 +373,139 @@ export const WebflowInteractions: React.FC = () => {
     };
 
     // --------------------------------------------------------------------------
-    // 4. SCROLL PARALLAX FLOATING ELEMENTS
+    // 4. SCROLL PARALLAX & CONTINUOUS SCROLL-LINKED SCRUBBING ENGINE
     // --------------------------------------------------------------------------
     let ticking = false;
     const handleScrollParallax = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const scrollY = window.scrollY;
+          const winHeight = window.innerHeight;
+          const maxDocScroll = Math.max(1, document.documentElement.scrollHeight - winHeight);
+          const docProgress = scrollY / maxDocScroll;
 
-          // Floating CTA boxes & magnifying glass (Home 02)
-          const ctaSection = document.querySelector<HTMLElement>('.homepage-02-subscribe-cta-boxes');
-          if (ctaSection) {
-            const rect = ctaSection.getBoundingClientRect();
-            const winHeight = window.innerHeight;
-            if (rect.top < winHeight && rect.bottom > 0) {
-              const progress = (winHeight - rect.top) / (winHeight + rect.height);
-              const offset = (progress - 0.5) * 60; // gentle float between -30px and +30px
-              const magnifyGlass = ctaSection.querySelector<HTMLElement>('.magnify-glass-image');
-              if (magnifyGlass) {
-                magnifyGlass.style.transform = `translate3d(0, ${-offset * 0.8}px, 0) rotate(${offset * 0.3}deg)`;
+          // 1. Home 01 Sprinkles Parallax (IX2 a-14: 0% to 16% doc scroll -> 0px to 256px)
+          const sprinkles = document.querySelector<HTMLElement>('.hero-sprinkles-background, [data-w-id*="0bd21076"]');
+          if (sprinkles) {
+            const p = Math.min(1, Math.max(0, docProgress / 0.16));
+            const y = p * 256;
+            sprinkles.style.transform = `translate3d(0px, ${y.toFixed(2)}px, 0px)`;
+          }
+
+          // 2. Home 01 Hand Holding Donut (IX2 a-21: 31% to 81% section progress -> -202px to 0px, 0deg to 26deg)
+          const hand01 = document.querySelector<HTMLElement>('.hand-holding-donut-images-container');
+          if (hand01) {
+            const section = hand01.closest('section') || hand01.closest('.section') || hand01.parentElement;
+            if (section) {
+              const rect = section.getBoundingClientRect();
+              if (rect.top < winHeight && rect.bottom > 0) {
+                const sectionProgress = Math.min(1, Math.max(0, (winHeight - rect.top) / (winHeight + rect.height)));
+                let p = 0;
+                if (sectionProgress <= 0.31) p = 0;
+                else if (sectionProgress >= 0.81) p = 1;
+                else p = (sectionProgress - 0.31) / (0.81 - 0.31);
+
+                const x = -202 * (1 - p);
+                const rotate = 26 * p;
+                hand01.style.transform = `translate3d(${x.toFixed(2)}px, 0px, 0px) rotate(${rotate.toFixed(2)}deg)`;
+              } else if (rect.top >= winHeight) {
+                hand01.style.transform = `translate3d(-202px, 0px, 0px) rotate(0deg)`;
+              } else if (rect.bottom <= 0) {
+                hand01.style.transform = `translate3d(0px, 0px, 0px) rotate(26deg)`;
               }
-              const donutBox = ctaSection.querySelector<HTMLElement>('.pink-donut-box');
-              if (donutBox) {
-                donutBox.style.transform = `translate3d(0, ${offset * 0.8}px, 0)`;
+            }
+          }
+
+          // 3. Home 02 Hand Holding Donut (IX2 a-136: 0% to 49% section progress -> -202px to 0px, 0deg to 26deg)
+          const hand02 = document.querySelector<HTMLElement>('.image-wrapper.hand-holding-donut-image._02');
+          if (hand02) {
+            const section = hand02.closest('section') || hand02.closest('.section') || hand02.parentElement;
+            if (section) {
+              const rect = section.getBoundingClientRect();
+              if (rect.top < winHeight && rect.bottom > 0) {
+                const sectionProgress = Math.min(1, Math.max(0, (winHeight - rect.top) / (winHeight + rect.height)));
+                const p = Math.min(1, Math.max(0, sectionProgress / 0.49));
+                const x = -202 * (1 - p);
+                const rotate = 26 * p;
+                hand02.style.transform = `translate3d(${x.toFixed(2)}px, 0px, 0px) rotate(${rotate.toFixed(2)}deg)`;
+              } else if (rect.top >= winHeight) {
+                hand02.style.transform = `translate3d(-202px, 0px, 0px) rotate(0deg)`;
+              } else if (rect.bottom <= 0) {
+                hand02.style.transform = `translate3d(0px, 0px, 0px) rotate(26deg)`;
+              }
+            }
+          }
+
+          // 4. Home 03 Review Donuts (IX2 a-143: 0% to 41% section progress -> -317px/317px to 0px)
+          const reviewDonut01 = document.querySelector<HTMLElement>('.review-donut-01 img, [data-w-id*="cebd1a3e"]');
+          const reviewDonut02 = document.querySelector<HTMLElement>('.review-donut-02 img, [data-w-id*="3688c1a3"]');
+          if (reviewDonut01 || reviewDonut02) {
+            const section = reviewDonut01?.closest('section') || reviewDonut02?.closest('section');
+            if (section) {
+              const rect = section.getBoundingClientRect();
+              if (rect.top < winHeight && rect.bottom > 0) {
+                const sectionProgress = Math.min(1, Math.max(0, (winHeight - rect.top) / (winHeight + rect.height)));
+                const p = Math.min(1, Math.max(0, sectionProgress / 0.41));
+                const leftX = -317 * (1 - p);
+                const rightX = 317 * (1 - p);
+                if (reviewDonut01) {
+                  reviewDonut01.style.transform = `translate3d(${leftX.toFixed(2)}px, 0px, 0px)`;
+                }
+                if (reviewDonut02) {
+                  reviewDonut02.style.transform = `translate3d(${rightX.toFixed(2)}px, 0px, 0px)`;
+                }
+              } else if (rect.top >= winHeight) {
+                if (reviewDonut01) reviewDonut01.style.transform = `translate3d(-317px, 0px, 0px)`;
+                if (reviewDonut02) reviewDonut02.style.transform = `translate3d(317px, 0px, 0px)`;
+              } else if (rect.bottom <= 0) {
+                if (reviewDonut01) reviewDonut01.style.transform = `translate3d(0px, 0px, 0px)`;
+                if (reviewDonut02) reviewDonut02.style.transform = `translate3d(0px, 0px, 0px)`;
+              }
+            }
+          }
+
+          // 5. About Us 05 Customers Photo Strips (IX2 a-95: 0% to 100% -> top: -2% to 5%, bottom: 2% to -5%)
+          const multiContainer = document.querySelector<HTMLElement>('.scroll-multi-image-content-container, [data-w-id*="93593344"]');
+          if (multiContainer) {
+            const section = multiContainer.closest('section') || multiContainer.parentElement;
+            if (section) {
+              const rect = section.getBoundingClientRect();
+              const topRow = multiContainer.querySelector<HTMLElement>('.scroll-multi-image-content-wrapper.top');
+              const botRow = multiContainer.querySelector<HTMLElement>('.scroll-multi-image-content-wrapper.bottom');
+              if (rect.top < winHeight && rect.bottom > 0) {
+                const sectionProgress = Math.min(1, Math.max(0, (winHeight - rect.top) / (winHeight + rect.height)));
+                const topX = -2 + (7 * sectionProgress);
+                const botX = 2 - (7 * sectionProgress);
+                if (topRow) {
+                  topRow.style.transform = `translate3d(${topX.toFixed(2)}%, 0px, 0px)`;
+                }
+                if (botRow) {
+                  botRow.style.transform = `translate3d(${botX.toFixed(2)}%, 0px, 0px)`;
+                }
+              } else if (rect.top >= winHeight) {
+                if (topRow) topRow.style.transform = `translate3d(-2%, 0px, 0px)`;
+                if (botRow) botRow.style.transform = `translate3d(2%, 0px, 0px)`;
+              } else if (rect.bottom <= 0) {
+                if (topRow) topRow.style.transform = `translate3d(5%, 0px, 0px)`;
+                if (botRow) botRow.style.transform = `translate3d(-5%, 0px, 0px)`;
+              }
+            }
+          }
+
+          // 6. Banner Background Image Parallax (IX2 a-91: 0% to 100% -> y: -10% to 10%)
+          const bannerBg = document.querySelector<HTMLElement>('.scroll-background-image');
+          if (bannerBg) {
+            const bannerContent = bannerBg.closest('.banner-wrapper-content') || bannerBg.parentElement;
+            if (bannerContent) {
+              const rect = bannerContent.getBoundingClientRect();
+              if (rect.top < winHeight && rect.bottom > 0) {
+                const sectionProgress = Math.min(1, Math.max(0, (winHeight - rect.top) / (winHeight + rect.height)));
+                const y = -10 + (20 * sectionProgress);
+                bannerBg.style.transform = `translate3d(0px, ${y.toFixed(2)}%, 0px)`;
+              } else if (rect.top >= winHeight) {
+                bannerBg.style.transform = `translate3d(0px, -10%, 0px)`;
+              } else if (rect.bottom <= 0) {
+                bannerBg.style.transform = `translate3d(0px, 10%, 0px)`;
               }
             }
           }
@@ -403,6 +513,88 @@ export const WebflowInteractions: React.FC = () => {
           ticking = false;
         });
         ticking = true;
+      }
+    };
+
+    // --------------------------------------------------------------------------
+    // 5. SCROLL-INTO-VIEW SECTION REVEALS (IX2 a-137, a-138, a-141)
+    // --------------------------------------------------------------------------
+    const initScrollReveals = () => {
+      // Home 02 About Us Intro (IX2 a-137)
+      const about02Section = document.querySelector<HTMLElement>('.homepage-02-about-us, [data-w-id*="938e6f38"]');
+      if (about02Section && about02Section.dataset.revealBound !== 'true') {
+        about02Section.dataset.revealBound = 'true';
+        const img = about02Section.querySelector<HTMLElement>('.content-image._100-width-height');
+        if (img) {
+          img.style.transform = 'translate3d(0, 700px, 0)';
+          img.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+          const observer = new IntersectionObserver(
+            (entries) => {
+              if (entries[0].isIntersecting) {
+                img.style.transform = 'translate3d(0, 0, 0)';
+                observer.disconnect();
+              }
+            },
+            { threshold: 0.15 }
+          );
+          observer.observe(about02Section);
+        }
+      }
+
+      // Home 02 Review Intro (IX2 a-138)
+      const review02Section = document.querySelector<HTMLElement>('.homepage-02-reviews, [data-w-id*="e9a0b7df"]');
+      if (review02Section && review02Section.dataset.revealBound !== 'true') {
+        review02Section.dataset.revealBound = 'true';
+        const img = review02Section.querySelector<HTMLElement>('.content-image._100-width-height.review-box-main-image-01');
+        const container = review02Section.querySelector<HTMLElement>('.review-rectangle-boxes-container');
+        if (img) {
+          img.style.transform = 'translate3d(0, 401px, 0)';
+          img.style.opacity = '0';
+          img.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease';
+        }
+        if (container) {
+          container.style.opacity = '0';
+          container.style.transition = 'opacity 1.1s ease 0.3s';
+        }
+        const observer = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting) {
+              if (img) {
+                img.style.transform = 'translate3d(0, 0, 0)';
+                img.style.opacity = '1';
+              }
+              if (container) {
+                container.style.opacity = '1';
+              }
+              observer.disconnect();
+            }
+          },
+          { threshold: 0.15 }
+        );
+        observer.observe(review02Section);
+      }
+
+      // Home 03 Donut Wheel Intro (IX2 a-141)
+      const wheelSection = document.querySelector<HTMLElement>('.donut-wheel')?.closest('section');
+      if (wheelSection && wheelSection.dataset.revealBound !== 'true') {
+        wheelSection.dataset.revealBound = 'true';
+        const wheelImg = wheelSection.querySelector<HTMLElement>('.donut-wheel img');
+        if (wheelImg) {
+          wheelImg.style.transform = 'scale(0.7) translate3d(0, 500px, 0)';
+          wheelImg.style.opacity = '0';
+          wheelImg.style.transition = 'transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1s ease';
+          const observer = new IntersectionObserver(
+            (entries) => {
+              if (entries[0].isIntersecting) {
+                wheelImg.style.transform = 'scale(1) translate3d(0, 0, 0)';
+                wheelImg.style.opacity = '1';
+                observer.disconnect();
+              }
+            },
+            { threshold: 0.15 }
+          );
+          observer.observe(wheelSection);
+        }
       }
     };
 
@@ -492,6 +684,8 @@ export const WebflowInteractions: React.FC = () => {
     initHeroAnimations();
     initAddToCart();
     initLottie();
+    initScrollReveals();
+    handleScrollParallax();
     window.addEventListener('scroll', handleScrollParallax, { passive: true });
 
     // Also observe DOM changes for dynamically loaded routes
@@ -502,6 +696,8 @@ export const WebflowInteractions: React.FC = () => {
       initHeroAnimations();
       initAddToCart();
       initLottie();
+      initScrollReveals();
+      handleScrollParallax();
     });
 
     observer.observe(document.body, { childList: true, subtree: true });

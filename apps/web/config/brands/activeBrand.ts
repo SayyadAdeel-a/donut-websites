@@ -33,3 +33,13 @@ export function getAllBrands(): BrandConfig[] {
     donutCounterBrand,
   ];
 }
+
+export function getActiveBrand(overrideId?: string): BrandConfig | null {
+  const brandId =
+    overrideId ||
+    (typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_BRAND_ID : undefined);
+  if (!brandId || brandId === 'master' || brandId === 'none' || brandId === '') {
+    return null;
+  }
+  return allBrands[brandId.toLowerCase()] || null;
+}

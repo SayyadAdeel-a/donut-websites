@@ -2,8 +2,14 @@
   "name": "@donutland/site-02-glaze-and-co",
   "version": "1.0.0",
   "private": true,
-  "description": "Glaze & Co. - Artisanal Gourmet Patisserie Brand",
+  "description": "Glaze & Co. - Artisanal Sourdough Patisserie Brand",
   "main": "brand.config.ts",
+  "scripts": {
+    "dev": "cross-env NEXT_PUBLIC_BRAND_ID=site-02 pnpm --filter web dev",
+    "build": "cross-env NEXT_PUBLIC_BRAND_ID=site-02 pnpm --filter web build",
+    "start": "cross-env NEXT_PUBLIC_BRAND_ID=site-02 pnpm --filter web start",
+    "export": "cross-env NEXT_PUBLIC_BRAND_ID=site-02 NEXT_EXPORT=true pnpm --filter web build"
+  },
   "dependencies": {
     "@donutland/ui": "workspace:*"
   }

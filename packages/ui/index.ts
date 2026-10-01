@@ -2,6 +2,7 @@
 export * from './tokens/colors';
 export * from './tokens/typography';
 export * from './tokens/svgDrips';
+export * from './tokens/brands';
 
 // Hooks
 export * from './hooks/useCart';

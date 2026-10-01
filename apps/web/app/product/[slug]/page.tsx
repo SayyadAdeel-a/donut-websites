@@ -1,13 +1,32 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import { WebflowHeader, WebflowFooter } from '@donutland/ui';
 
-export default function ProductPeanutMcrunchPage() {
+export function generateStaticParams() {
+  return [
+    { slug: 'peanut-mcrunch' },
+    { slug: 'chocoglaze' },
+    { slug: 'chocolate-marsh' },
+    { slug: 'froststrawberry' },
+    { slug: 'jelipowder' },
+    { slug: 'powderii' },
+    { slug: 'raspberry-flake' },
+    { slug: 'sprinkstrawey' },
+    { slug: 'strawberry-sprinkle' },
+    { slug: 'strawsprinkle' },
+    { slug: 'vanillafrost' },
+  ];
+}
+
+export default async function ProductPeanutMcrunchPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   return (
     <>
-      <WebflowHeader activePath="/product/peanut-mcrunch" />
+      <WebflowHeader activePath={`/product/${slug}`} />
       <div className="page-wrapper"><section style={{"backgroundColor":"#fe944b"}} className="section"><div className="w-layout-blockcontainer container product-page-hero w-container"><div className="grid-wrapper"><div className="w-layout-grid product-detail-grid"><div id="w-node-_0130c851-4fc0-9a56-979a-fcebe31860ad-45eeac24" className="grid-block"><div className="product-information-box-wrapper"><div className="text-box"><h1 className="h1-heading product-page-name">Mcrunch</h1><div className="w-layout-hflex _5-stars-inner-content-wrapper"><img src="https://cdn.prod.website-files.com/6569d73055568668783bf587/6575ab42bbf8d02c1d667299_6575aaf85f51682c8f62e4e6_5-stars.webp" loading="lazy" alt="" className="content-image _5-stars"/><div className="text-block _5-star-review-text">4 Reviews</div></div></div><div className="text-box _28rem"><div data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_price_%22%2C%22to%22%3A%22innerHTML%22%7D%5D" className="price-text">$ 12.00 USD</div><p className="paragraph white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun.</p></div><div className="options-content-wrapper"><div className="add-to-cart-content-container"><div className="add-to-cart"><form data-node-type="commerce-add-to-cart-form" data-commerce-sku-id="6574d4be8e33e5e913737dbb" data-commerce-product-id="6574d4bef22229e900c6d80b" className="w-commerce-commerceaddtocartform default-state"><div className="quantity-variant-holder"><div data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_sku_values_3dr%22%2C%22to%22%3A%22optionValues%22%7D%5D" data-commerce-product-sku-values="%7B%2211af6948861a03e6826d4e0c7a34d841%22%3A%22bde7a8b06d49520c5034cdb6858ea5e2%22%7D" data-node-type="commerce-add-to-cart-option-list" data-commerce-product-id="6574d4bef22229e900c6d80b" data-preselect-default-variant="true" className="options-list" role="group"><div className="options" role="group"><label data-wf-bindings="%5B%7B%22innerHTML%22%3A%7B%22type%22%3A%22PlainText%22%2C%22filter%22%3A%7B%22type%22%3A%22identity%22%2C%22params%22%3A%5B%5D%7D%2C%22dataPath%22%3A%22name%22%7D%7D%5D" className="text-block white">Boxes</label><div id="option-set-11af6948861a03e6826d4e0c7a34d841" data-node-type="commerce-add-to-cart-pill-group" data-commerce-option-set-id="11af6948861a03e6826d4e0c7a34d841" className="w-commerce-commerceaddtocartoptionpillgroup options-button-group-wrapper" role="radiogroup" aria-label="Boxes"><div data-node-type="commerce-add-to-cart-pill" className="w-commerce-commerceaddtocartoptionpill selector-buttons" role="radio" aria-checked={false} aria-disabled={false} tabIndex={-1} data-option-id="bde7a8b06d49520c5034cdb6858ea5e2"><div data-wf-bindings="%5B%7B%22innerHTML%22%3A%7B%22type%22%3A%22PlainText%22%2C%22filter%22%3A%7B%22type%22%3A%22identity%22%2C%22params%22%3A%5B%5D%7D%2C%22dataPath%22%3A%22name%22%7D%7D%5D">2</div></div><div data-node-type="commerce-add-to-cart-pill" className="w-commerce-commerceaddtocartoptionpill selector-buttons" role="radio" aria-checked={false} aria-disabled={false} tabIndex={-1} data-option-id="fe910b019386e39fc99e513bd530b8fd"><div data-wf-bindings="%5B%7B%22innerHTML%22%3A%7B%22type%22%3A%22PlainText%22%2C%22filter%22%3A%7B%22type%22%3A%22identity%22%2C%22params%22%3A%5B%5D%7D%2C%22dataPath%22%3A%22name%22%7D%7D%5D">4</div></div></div></div></div><div className="quantity-wrapper"><label htmlFor="quantity-85f8274b3749b42e81f9f16d717da2d3" className="text-block white">Quantity</label><input type="number" pattern="^[0-9]+$" inputMode="numeric" id="quantity-85f8274b3749b42e81f9f16d717da2d3" name="commerce-add-to-cart-quantity-input" min="1" className="w-commerce-commerceaddtocartquantityinput quantity" value="1"/></div></div><input type="submit" style={{"backgroundColor":"#fe944b"}} data-node-type="commerce-add-to-cart-button" data-loading-text="Adding to cart..." aria-busy={false} aria-haspopup="dialog" className="w-commerce-commerceaddtocartbutton general-button product-page" value="Add to Cart"/></form><div style={{"display":"none"}} className="w-commerce-commerceaddtocartoutofstock out-of-stock-state" tabIndex={0}><div className="out-of-stock-text">This product is out of stock.</div></div><div aria-live="assertive" data-node-type="commerce-add-to-cart-error" style={{"display":"none"}} className="w-commerce-commerceaddtocarterror error-state"><div data-node-type="commerce-add-to-cart-error" className="error-message" data-w-add-to-cart-quantity-error="Product is not available in this quantity." data-w-add-to-cart-general-error="Something went wrong when adding this item to the cart." data-w-add-to-cart-mixed-cart-error="You can’t purchase another product with a subscription." data-w-add-to-cart-buy-now-error="Something went wrong when trying to purchase this item." data-w-add-to-cart-checkout-disabled-error="Checkout is disabled on this site." data-w-add-to-cart-select-all-options-error="Please select an option in each set.">Product is not available in this quantity.</div></div></div></div></div><div className="product-page-accordion-container"><div data-delay="0" data-hover="false" className="product-page-accordion-item _02 w-dropdown"><div className="product-page-detail-accordion-toggle hero w-dropdown-toggle"><div className="product-detail-box-accordion-title-wrapper"><div className="product-accordion-chevron-wrapper black"><div className="chevron-arrow black w-embed"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M11.9998 15L7.75684 10.757L9.17184 9.34302L11.9998 12.172L14.8278 9.34302L16.2428 10.757L11.9998 15Z" fill="currentColor"/>
 </svg></div></div><div className="text-block">Returns</div></div></div><nav className="product-page-accordion-inner-content w-dropdown-list"><div className="product-page-accordion-content-wrapper empty-background-color"><p className="small-paragraph product-accordion">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div></nav></div><div data-delay="0" data-hover="false" className="product-page-accordion-item _02 w-dropdown"><div className="product-page-detail-accordion-toggle hero w-dropdown-toggle"><div className="product-detail-box-accordion-title-wrapper"><div className="product-accordion-chevron-wrapper black"><div className="chevron-arrow black w-embed"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

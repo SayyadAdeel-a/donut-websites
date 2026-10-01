@@ -169,7 +169,116 @@ export const WebflowInteractions: React.FC = () => {
     };
 
     // --------------------------------------------------------------------------
-    // 3. HERO ENTRANCE SEQUENCES
+    // 3. TABS CONTROLLER (.w-tabs, .w-tab-link, .w-tab-pane)
+    // --------------------------------------------------------------------------
+    const initTabs = () => {
+      const tabsContainers = document.querySelectorAll<HTMLElement>('.w-tabs');
+
+      tabsContainers.forEach((tabs) => {
+        if (tabs.dataset.tabsInitialized === 'true') return;
+        tabs.dataset.tabsInitialized = 'true';
+
+        const tabLinks = Array.from(tabs.querySelectorAll<HTMLElement>('.w-tab-link'));
+        const tabContent = tabs.querySelector<HTMLElement>('.w-tab-content');
+        const tabPanes = tabContent
+          ? Array.from(tabContent.querySelectorAll<HTMLElement>(':scope > .w-tab-pane'))
+          : Array.from(tabs.querySelectorAll<HTMLElement>('.w-tab-pane'));
+
+        const numberWrapper =
+          tabs.parentElement?.querySelector<HTMLElement>('.tab-step-number-wrapper') ||
+          tabs.closest('.tabs-steps-content-container')?.querySelector<HTMLElement>('.tab-step-number-wrapper') ||
+          document.querySelector<HTMLElement>('.tab-step-number-wrapper');
+
+        if (tabLinks.length === 0 || tabPanes.length === 0) return;
+
+        const switchTab = (targetLink: HTMLElement, index: number) => {
+          const targetTabName = targetLink.getAttribute('data-w-tab') || `Tab ${index + 1}`;
+
+          // Update tab links
+          tabLinks.forEach((link) => {
+            const isCurrent = link === targetLink;
+            if (isCurrent) {
+              link.classList.add('w--current');
+              link.setAttribute('aria-selected', 'true');
+
+              // Why Donutland 01 text reveal
+              const contentText = link.querySelector<HTMLElement>('.why-donutland-tab-content-text');
+              if (contentText) {
+                contentText.style.display = 'flex';
+                contentText.style.opacity = '1';
+              }
+
+              // Subscribe 02 arrow indicator
+              const arrow = link.querySelector<HTMLElement>('.active-tab-arrow');
+              if (arrow) {
+                arrow.style.opacity = '1';
+              }
+            } else {
+              link.classList.remove('w--current');
+              link.setAttribute('aria-selected', 'false');
+
+              // Why Donutland 01 text hide
+              const contentText = link.querySelector<HTMLElement>('.why-donutland-tab-content-text');
+              if (contentText) {
+                contentText.style.display = 'none';
+                contentText.style.opacity = '0';
+              }
+
+              // Subscribe 02 arrow indicator
+              const arrow = link.querySelector<HTMLElement>('.active-tab-arrow');
+              if (arrow) {
+                arrow.style.opacity = '0';
+              }
+            }
+          });
+
+          // Update Subscribe 02 step number indicator if present
+          if (numberWrapper) {
+            const numberTexts = Array.from(numberWrapper.querySelectorAll<HTMLElement>('.tab-number-text'));
+            numberTexts.forEach((numText, idx) => {
+              numText.style.opacity = idx === index ? '1' : '0';
+            });
+          }
+
+          // Update tab panes
+          tabPanes.forEach((pane, idx) => {
+            const paneTabName = pane.getAttribute('data-w-tab');
+            const isTarget = paneTabName ? paneTabName === targetTabName : idx === index;
+
+            if (isTarget) {
+              pane.classList.add('w--tab-active');
+              pane.style.display = 'block';
+              pane.style.opacity = '0';
+              requestAnimationFrame(() => {
+                pane.style.opacity = '1';
+              });
+            } else {
+              pane.classList.remove('w--tab-active');
+              pane.style.display = 'none';
+              pane.style.opacity = '0';
+            }
+          });
+        };
+
+        tabLinks.forEach((link, idx) => {
+          link.style.cursor = 'pointer';
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab(link, idx);
+          });
+        });
+
+        // Set initial state
+        const currentLink = tabLinks.find((l) => l.classList.contains('w--current')) || tabLinks[0];
+        if (currentLink) {
+          const currentIdx = tabLinks.indexOf(currentLink);
+          switchTab(currentLink, currentIdx);
+        }
+      });
+    };
+
+    // --------------------------------------------------------------------------
+    // 4. HERO ENTRANCE SEQUENCES
     // --------------------------------------------------------------------------
     const initHeroAnimations = () => {
       // Home 01 Hero Animation
@@ -330,6 +439,7 @@ export const WebflowInteractions: React.FC = () => {
     // Initial setup
     initSliders();
     initAccordions();
+    initTabs();
     initHeroAnimations();
     initAddToCart();
     window.addEventListener('scroll', handleScrollParallax, { passive: true });
@@ -338,6 +448,7 @@ export const WebflowInteractions: React.FC = () => {
     const observer = new MutationObserver(() => {
       initSliders();
       initAccordions();
+      initTabs();
       initHeroAnimations();
       initAddToCart();
     });

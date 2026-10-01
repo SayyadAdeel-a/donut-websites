@@ -223,3 +223,54 @@ h1, h2, h3, h4, h5, h6, .font-display {
     animation: none !important;
   }
 }
+
+/* ==========================================================================
+   Webflow Tabs Controller Styles
+   ========================================================================== */
+.w-tab-link {
+  cursor: pointer !important;
+  user-select: none;
+}
+
+.tab-content-button {
+  cursor: pointer !important;
+  transition: background-color 0.3s ease, color 0.3s ease !important;
+}
+
+.tab-content-button.w--current .why-donutland-tab-title {
+  color: #000000 !important;
+}
+
+.tab-content-button:not(.w--current) .why-donutland-tab-title {
+  color: #797979 !important;
+}
+
+.tab-link {
+  cursor: pointer !important;
+  transition: color 0.3s ease !important;
+}
+
+.tab-link.w--current .tab-title {
+  color: #f21d33 !important;
+}
+
+.tab-link:not(.w--current) .tab-title {
+  color: #929292 !important;
+}
+
+.active-tab-arrow {
+  transition: opacity 0.3s ease !important;
+}
+
+.tab-number-text {
+  transition: opacity 0.3s ease !important;
+}
+
+.why-donutland-tab-content-text {
+  transition: opacity 0.3s ease !important;
+}
+
+.w-tab-pane {
+  transition: opacity 0.35s ease !important;
+}
+

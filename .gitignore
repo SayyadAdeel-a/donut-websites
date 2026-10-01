@@ -1,7 +1,10 @@
 # Node / build artifacts
 node_modules/
 .next/
+apps/web/.next/
 dist/
+out/
+apps/web/out/
 build/
 *.log
 

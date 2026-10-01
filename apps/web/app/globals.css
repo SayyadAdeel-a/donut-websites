@@ -59,8 +59,13 @@ h1, h2, h3, h4, h5, h6, .font-display {
    ========================================================================== */
 
 /* Continuous Seamless Marquees */
+.marquee-horizontal {
+  justify-content: flex-start !important;
+}
+
 .marquee-horizontal-panel-wrapper {
   display: flex !important;
+  justify-content: flex-start !important;
   overflow: hidden !important;
   white-space: nowrap !important;
 }

@@ -273,14 +273,22 @@ export const WebflowInteractions: React.FC = () => {
           const scrollY = window.scrollY;
 
           // Floating CTA boxes & magnifying glass (Home 02)
-          const magnifyGlass = document.querySelector<HTMLElement>('.magnify-glass-image');
-          if (magnifyGlass) {
-            magnifyGlass.style.transform = `rotate(${Math.min(45, scrollY * 0.05)}deg)`;
-          }
-
-          const donutBox = document.querySelector<HTMLElement>('.pink-donut-box');
-          if (donutBox) {
-            donutBox.style.transform = `translate3d(0, ${scrollY * 0.08}px, 0)`;
+          const ctaSection = document.querySelector<HTMLElement>('.homepage-02-subscribe-cta-boxes');
+          if (ctaSection) {
+            const rect = ctaSection.getBoundingClientRect();
+            const winHeight = window.innerHeight;
+            if (rect.top < winHeight && rect.bottom > 0) {
+              const progress = (winHeight - rect.top) / (winHeight + rect.height);
+              const offset = (progress - 0.5) * 60; // gentle float between -30px and +30px
+              const magnifyGlass = ctaSection.querySelector<HTMLElement>('.magnify-glass-image');
+              if (magnifyGlass) {
+                magnifyGlass.style.transform = `translate3d(0, ${-offset * 0.8}px, 0) rotate(${offset * 0.3}deg)`;
+              }
+              const donutBox = ctaSection.querySelector<HTMLElement>('.pink-donut-box');
+              if (donutBox) {
+                donutBox.style.transform = `translate3d(0, ${offset * 0.8}px, 0)`;
+              }
+            }
           }
 
           ticking = false;

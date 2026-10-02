@@ -59,7 +59,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose, categorie
                 onClick={onClose}
                 className="block py-2 font-display text-lg uppercase tracking-wider text-black hover:text-[#f54f95]"
               >
-                Main Index
+                Home
               </Link>
 
               {categories.map((cat) => {

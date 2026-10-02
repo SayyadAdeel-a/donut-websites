@@ -4,10 +4,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import confetti from 'canvas-confetti';
-import { GlobalHeader, GlobalFooter, Button, Input, PriceTag, useCart } from '@donutland/ui';
+import { WebflowHeader, WebflowFooter, Button, Input, PriceTag, useCart } from '@donutland/ui';
 import { CheckCircle, ShoppingBag, ShieldCheck, ArrowRight } from '@phosphor-icons/react';
+import { getActiveBrand } from '../../config/brands/activeBrand';
 
 export default function CheckoutPage() {
+  const brand = getActiveBrand();
+  const brandName = brand ? brand.name : 'Store';
   const { items, getSubtotal, clearCart } = useCart();
   const subtotal = getSubtotal();
   const shipping = subtotal > 35 || subtotal === 0 ? 0 : 5.99;
@@ -28,7 +31,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="flex-1 flex flex-col bg-[#f5f6f4] text-black">
-      <GlobalHeader />
+      <WebflowHeader activePath="/checkout" hasHotPinkNav={true} />
 
       <main className="max-w-[1200px] mx-auto px-6 md:px-12 pt-32 md:pt-40 pb-20 flex-1 w-full">
         {orderComplete ? (
@@ -45,7 +48,7 @@ export default function CheckoutPage() {
             <div className="pt-4">
               <Link href="/">
                 <Button variant="pink" size="lg" rounded="full" className="flex items-center justify-center gap-2 mx-auto">
-                  <span>Return to Donutland</span>
+                  <span>Return to {brandName}</span>
                   <ArrowRight size={18} weight="bold" />
                 </Button>
               </Link>
@@ -180,7 +183,7 @@ export default function CheckoutPage() {
         )}
       </main>
 
-      <GlobalFooter />
+      <WebflowFooter />
     </div>
   );
 }

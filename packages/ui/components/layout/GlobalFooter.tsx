@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowUp, EnvelopeSimple, Check } from '@phosphor-icons/react';
 import { twMerge } from 'tailwind-merge';
 import { DripDivider } from '../composite/DripDivider';
+import { getActiveBrand } from '../../tokens/brands';
 
 export interface FooterConfig {
   bgColor?: string;
@@ -17,10 +18,12 @@ export const GlobalFooter: React.FC<{ config?: FooterConfig }> = ({ config }) =>
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
-  const bgColor = config?.bgColor || '#f54f95';
-  const textColor = config?.textColor || '#ffffff';
-  const dripColor = config?.dripColor || bgColor;
-  const brandName = config?.brandName || 'Donutland';
+  const brand = getActiveBrand(config?.brandName);
+
+  const bgColor = config?.bgColor || brand?.theme.footerBg || '#f54f95';
+  const textColor = config?.textColor || (brand ? '#ffffff' : '#ffffff');
+  const dripColor = config?.dripColor || brand?.theme.footerDrip || bgColor;
+  const brandName = config?.brandName || brand?.name || 'Donutland';
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,85 +92,155 @@ export const GlobalFooter: React.FC<{ config?: FooterConfig }> = ({ config }) =>
           </div>
         </div>
 
-        {/* 5-Column Navigation Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pb-16 border-b border-white/20">
-          {/* Brand Info */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <h4 className="font-display text-2xl font-bold uppercase tracking-tight mb-4">
-              {brandName}
-            </h4>
-            <p className="font-sans text-xs opacity-90 leading-relaxed mb-4">
-              Baking moments of pure confectionery joy since 1958. Real sourdough, authentic fruit glazes, and zero compromises.
-            </p>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider opacity-80">
-                100% Artisanal
-              </span>
+        {/* Navigation Grid */}
+        {brand ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pb-16 border-b border-white/20">
+            {/* Brand Info */}
+            <div className="col-span-2 md:col-span-3 lg:col-span-1">
+              <h4 className="font-display text-2xl font-bold uppercase tracking-tight mb-4">
+                {brand.name}
+              </h4>
+              <p className="font-sans text-xs opacity-90 leading-relaxed mb-4">
+                {brand.description || 'Baking moments of pure confectionery joy since 1958. Real sourdough, authentic fruit glazes, and zero compromises.'}
+              </p>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider opacity-80">
+                  100% Artisanal
+                </span>
+              </div>
+            </div>
+
+            {/* Navigation */}
+            <div>
+              <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
+                Navigation
+              </h5>
+              <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
+                <li><Link href="/" className="hover:underline">Home</Link></li>
+                <li><Link href="/about" className="hover:underline">About Us</Link></li>
+                <li><Link href="/why" className="hover:underline">Why Us</Link></li>
+                <li><Link href="/subscribe" className="hover:underline">Subscribe & Save</Link></li>
+                <li><Link href="/contact" className="hover:underline">Contact Us</Link></li>
+              </ul>
+            </div>
+
+            {/* Our Menu */}
+            <div>
+              <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
+                Our Menu
+              </h5>
+              <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
+                <li><Link href="/all-donuts" className="hover:underline">All Donuts</Link></li>
+                <li><Link href="/category/special" className="hover:underline">Special Collection</Link></li>
+                <li><Link href="/category/glazed" className="hover:underline">Glazed Collection</Link></li>
+                <li><Link href="/category/chocolate" className="hover:underline">Chocolate Collection</Link></li>
+              </ul>
+            </div>
+
+            {/* Stories & News */}
+            <div>
+              <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
+                Stories & News
+              </h5>
+              <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
+                <li><Link href="/all-blogs" className="hover:underline">All Stories</Link></li>
+                <li><Link href="/blog-article/our-top-five-best-selling-donuts" className="hover:underline">Featured Article</Link></li>
+                <li><Link href="/blog-category/event" className="hover:underline">Events & Community</Link></li>
+              </ul>
+            </div>
+
+            {/* Support & Info */}
+            <div>
+              <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
+                Support & Info
+              </h5>
+              <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
+                <li><Link href="/contact" className="hover:underline">Contact Support</Link></li>
+                <li><Link href="/checkout" className="hover:underline">Cart & Checkout</Link></li>
+                <li><Link href="/admin/licenses" className="hover:underline">Licenses & Credits</Link></li>
+              </ul>
             </div>
           </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pb-16 border-b border-white/20">
+            {/* Brand Info */}
+            <div className="col-span-2 md:col-span-3 lg:col-span-1">
+              <h4 className="font-display text-2xl font-bold uppercase tracking-tight mb-4">
+                {brandName}
+              </h4>
+              <p className="font-sans text-xs opacity-90 leading-relaxed mb-4">
+                Baking moments of pure confectionery joy since 1958. Real sourdough, authentic fruit glazes, and zero compromises.
+              </p>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider opacity-80">
+                  100% Artisanal
+                </span>
+              </div>
+            </div>
 
-          {/* Homepages */}
-          <div>
-            <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
-              Homepages
-            </h5>
-            <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
-              <li><Link href="/homepages/home-01" className="hover:underline">Home 01 (Tri-Donut)</Link></li>
-              <li><Link href="/homepages/home-02" className="hover:underline">Home 02 (Letter Cascade)</Link></li>
-              <li><Link href="/homepages/home-03" className="hover:underline">Home 03 (Split Directory)</Link></li>
-              <li><Link href="/homepages/home-04" className="hover:underline">Home 04 (Street Ticker)</Link></li>
-              <li><Link href="/homepages/home-05" className="hover:underline">Home 05 (Keto & Clean)</Link></li>
-            </ul>
-          </div>
+            {/* Homepages */}
+            <div>
+              <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
+                Homepages
+              </h5>
+              <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
+                <li><Link href="/homepages/home-01" className="hover:underline">Home 01 (Tri-Donut)</Link></li>
+                <li><Link href="/homepages/home-02" className="hover:underline">Home 02 (Letter Cascade)</Link></li>
+                <li><Link href="/homepages/home-03" className="hover:underline">Home 03 (Split Directory)</Link></li>
+                <li><Link href="/homepages/home-04" className="hover:underline">Home 04 (Street Ticker)</Link></li>
+                <li><Link href="/homepages/home-05" className="hover:underline">Home 05 (Keto & Clean)</Link></li>
+              </ul>
+            </div>
 
-          {/* About Us */}
-          <div>
-            <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
-              About Us
-            </h5>
-            <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
-              <li><Link href="/about-us/about-us-01" className="hover:underline">About 01 (Garage Bakery)</Link></li>
-              <li><Link href="/about-us/about-us-02" className="hover:underline">About 02 (Artisan Sourdough)</Link></li>
-              <li><Link href="/about-us/about-us-03" className="hover:underline">About 03 (Food Science Lab)</Link></li>
-              <li><Link href="/about-us/about-us-04" className="hover:underline">About 04 (Heritage Diner)</Link></li>
-              <li><Link href="/about-us/about-us-05" className="hover:underline">About 05 (Staff & Events)</Link></li>
-            </ul>
-          </div>
+            {/* About Us */}
+            <div>
+              <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
+                About Us
+              </h5>
+              <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
+                <li><Link href="/about-us/about-us-01" className="hover:underline">About 01 (Garage Bakery)</Link></li>
+                <li><Link href="/about-us/about-us-02" className="hover:underline">About 02 (Artisan Sourdough)</Link></li>
+                <li><Link href="/about-us/about-us-03" className="hover:underline">About 03 (Food Science Lab)</Link></li>
+                <li><Link href="/about-us/about-us-04" className="hover:underline">About 04 (Heritage Diner)</Link></li>
+                <li><Link href="/about-us/about-us-05" className="hover:underline">About 05 (Staff & Events)</Link></li>
+              </ul>
+            </div>
 
-          {/* Contact & Subscribe */}
-          <div>
-            <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
-              Contact & Club
-            </h5>
-            <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
-              <li><Link href="/contact-us/contact-us-01" className="hover:underline">Store Locator (01)</Link></li>
-              <li><Link href="/contact-us/contact-us-02" className="hover:underline">Concierge Catering (02)</Link></li>
-              <li><Link href="/contact-us/contact-us-05" className="hover:underline">Party Wholesale (05)</Link></li>
-              <li><Link href="/subscribe-save/subscribe-save-01" className="hover:underline">Drop Club (01)</Link></li>
-              <li><Link href="/subscribe-save/subscribe-save-03" className="hover:underline">Donut of Month (03)</Link></li>
-            </ul>
-          </div>
+            {/* Contact & Subscribe */}
+            <div>
+              <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
+                Contact & Club
+              </h5>
+              <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
+                <li><Link href="/contact-us/contact-us-01" className="hover:underline">Store Locator (01)</Link></li>
+                <li><Link href="/contact-us/contact-us-02" className="hover:underline">Concierge Catering (02)</Link></li>
+                <li><Link href="/contact-us/contact-us-05" className="hover:underline">Party Wholesale (05)</Link></li>
+                <li><Link href="/subscribe-save/subscribe-save-01" className="hover:underline">Drop Club (01)</Link></li>
+                <li><Link href="/subscribe-save/subscribe-save-03" className="hover:underline">Donut of Month (03)</Link></li>
+              </ul>
+            </div>
 
-          {/* Five Brand Websites */}
-          <div>
-            <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
-              Five Brands
-            </h5>
-            <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
-              <li><Link href="/brand/site-01" className="hover:underline">Site 1: SprinkleSpree</Link></li>
-              <li><Link href="/brand/site-02" className="hover:underline">Site 2: Glaze & Co.</Link></li>
-              <li><Link href="/brand/site-03" className="hover:underline">Site 3: PureDonut</Link></li>
-              <li><Link href="/brand/site-04" className="hover:underline">Site 4: DoughBoyz</Link></li>
-              <li><Link href="/brand/site-05" className="hover:underline">Site 5: The Donut Counter</Link></li>
-              <li className="pt-2 border-t border-white/20">
-                <Link href="/admin/licenses" className="hover:underline text-xs">Asset Licenses</Link>
-              </li>
-              <li>
-                <Link href="/admin/style-guide" className="hover:underline text-xs">Design System</Link>
-              </li>
-            </ul>
+            {/* Five Brand Websites */}
+            <div>
+              <h5 className="font-display text-base font-bold uppercase tracking-wider mb-4 border-b border-white/20 pb-1">
+                Five Brands
+              </h5>
+              <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
+                <li><Link href="/brand/site-01" className="hover:underline">Site 1: SprinkleSpree</Link></li>
+                <li><Link href="/brand/site-02" className="hover:underline">Site 2: Glaze & Co.</Link></li>
+                <li><Link href="/brand/site-03" className="hover:underline">Site 3: PureDonut</Link></li>
+                <li><Link href="/brand/site-04" className="hover:underline">Site 4: DoughBoyz</Link></li>
+                <li><Link href="/brand/site-05" className="hover:underline">Site 5: The Donut Counter</Link></li>
+                <li className="pt-2 border-t border-white/20">
+                  <Link href="/admin/licenses" className="hover:underline text-xs">Asset Licenses</Link>
+                </li>
+                <li>
+                  <Link href="/admin/style-guide" className="hover:underline text-xs">Design System</Link>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Bottom Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between pt-8 text-xs font-sans opacity-80 gap-4">

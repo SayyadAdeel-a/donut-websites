@@ -9,6 +9,7 @@ import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { useCart } from '../../hooks/useCart';
 import { MegaDropdown, DropdownItem } from '../composite/MegaDropdown';
 import { MobileNav, NavCategory } from '../composite/MobileNav';
+import { getActiveBrand, BrandConfig } from '../../tokens/brands';
 
 export interface HeaderConfig {
   logoUrl?: string;
@@ -97,11 +98,32 @@ export const GlobalHeader: React.FC<{ config?: HeaderConfig; activePath?: string
   const totalCount = useCart((state) => state.getTotalCount());
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-  const brandName = config?.brandName || 'Donutland';
+  const brand = getActiveBrand(config?.brandName);
+  const isMasterMode = process.env.NEXT_PUBLIC_BRAND_ID === 'master';
+  const isBranded = Boolean(brand || (!isMasterMode && config?.brandName && config.brandName !== 'Donutland'));
+
+  const brandName = brand ? brand.name : config?.brandName || 'Donutland';
   const brandHref = config?.brandHref || '/';
   const logoUrl =
     config?.logoUrl ||
     'https://cdn.prod.website-files.com/6569d73055568668783bf587/65858231295addff597bd02b_small%20logo.webp';
+
+  const brandNavLinks = [
+    { text: 'Home', href: '/' },
+    { text: 'About', href: '/about' },
+    { text: 'Menu', href: '/all-donuts' },
+    { text: 'Subscribe', href: '/subscribe' },
+    { text: 'Why Us', href: '/why' },
+    { text: 'Blog', href: '/all-blogs' },
+    { text: 'Contact', href: '/contact' },
+  ];
+
+  const brandMobileCategories: NavCategory[] = [
+    {
+      title: 'Navigation',
+      items: brandNavLinks.map((l) => ({ label: l.text, href: l.href })),
+    },
+  ];
 
   return (
     <>
@@ -139,7 +161,7 @@ export const GlobalHeader: React.FC<{ config?: HeaderConfig; activePath?: string
               <div className="flex items-center gap-2">
                 <span
                   className="font-display text-2xl md:text-3xl font-bold tracking-tight uppercase"
-                  style={{ color: config?.textColor || '#1b1b1b' }}
+                  style={{ color: config?.textColor || (isScrolled ? '#1b1b1b' : '#ffffff') }}
                 >
                   {brandName}
                 </span>
@@ -162,27 +184,48 @@ export const GlobalHeader: React.FC<{ config?: HeaderConfig; activePath?: string
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-            <Link
-              href="/"
-              className="px-3 py-2 font-display text-sm font-bold uppercase tracking-wider hover:text-[#f54f95] transition-colors"
-              style={{ color: isScrolled ? '#1b1b1b' : (config?.textColor || '#1b1b1b') }}
-            >
-              Main Index
-            </Link>
+            {isBranded ? (
+              brandNavLinks.map((link) => {
+                const isActive = activePath === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="px-3 py-2 font-display text-sm font-bold uppercase tracking-wider hover:text-[#f54f95] transition-colors"
+                    style={{
+                      color: isScrolled ? '#1b1b1b' : (config?.textColor || '#1b1b1b'),
+                      fontWeight: isActive ? 800 : 600,
+                    }}
+                  >
+                    {link.text}
+                  </Link>
+                );
+              })
+            ) : (
+              <>
+                <Link
+                  href="/"
+                  className="px-3 py-2 font-display text-sm font-bold uppercase tracking-wider hover:text-[#f54f95] transition-colors"
+                  style={{ color: isScrolled ? '#1b1b1b' : (config?.textColor || '#1b1b1b') }}
+                >
+                  Main Index
+                </Link>
 
-            <MegaDropdown label="Home" items={defaultHomeItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
-            <MegaDropdown label="About" items={defaultAboutItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
-            <MegaDropdown label="Contact" items={defaultContactItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
-            <MegaDropdown label="Subscribe" items={defaultSubscribeItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
-            <MegaDropdown label="Why" items={defaultWhyItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
-            <MegaDropdown label="CMS" items={defaultCmsItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
-            <MegaDropdown
-              label="5 Brands"
-              items={defaultBrandItems}
-              activePath={activePath}
-              textColor={isScrolled ? '#1b1b1b' : config?.textColor}
-              className="border-l-2 border-current/20 pl-2"
-            />
+                <MegaDropdown label="Home" items={defaultHomeItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
+                <MegaDropdown label="About" items={defaultAboutItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
+                <MegaDropdown label="Contact" items={defaultContactItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
+                <MegaDropdown label="Subscribe" items={defaultSubscribeItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
+                <MegaDropdown label="Why" items={defaultWhyItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
+                <MegaDropdown label="CMS" items={defaultCmsItems} activePath={activePath} textColor={isScrolled ? '#1b1b1b' : config?.textColor} />
+                <MegaDropdown
+                  label="5 Brands"
+                  items={defaultBrandItems}
+                  activePath={activePath}
+                  textColor={isScrolled ? '#1b1b1b' : config?.textColor}
+                  className="border-l-2 border-current/20 pl-2"
+                />
+              </>
+            )}
           </nav>
 
           {/* Right Action Buttons */}
@@ -218,7 +261,7 @@ export const GlobalHeader: React.FC<{ config?: HeaderConfig; activePath?: string
       <MobileNav
         isOpen={mobileNavOpen}
         onClose={() => setMobileNavOpen(false)}
-        categories={navCategories}
+        categories={isBranded ? brandMobileCategories : navCategories}
       />
     </>
   );

@@ -61,9 +61,78 @@ export function generateDecapCms(brandId, targetDir) {
   const isMaster = !brandConfigs[brandId];
   const activeId = isMaster ? 'site-01' : brandId;
 
+  // Read existing brand configuration JSON if available
+  const brandJsonPath = path.resolve(process.cwd(), `content/brands/${activeId}.json`);
+  let brandData = {
+    id: activeId,
+    name: brand.name,
+    tagline: brand.tagline,
+    description: `${brand.name} — Handcrafted artisanal donuts and celebration bakery.`,
+    primaryColor: brand.primaryColor,
+    secondaryColor: brand.secondaryColor,
+    accentColor: '#abd1ff',
+    footerBg: brand.primaryColor,
+    currencySymbol: '$',
+    shippingThreshold: 35,
+    announcement: {
+      enabled: true,
+      badge: 'SPECIAL OFFER',
+      message: 'Free 2-Day Priority Delivery on all orders over $35!',
+      linkText: 'Order Now',
+      linkUrl: '/all-donuts',
+      bgColor: brand.secondaryColor,
+      textColor: '#1b1b1b',
+    },
+    hero: {
+      badge: 'Over 100,000+ Happy Glaze Lovers',
+      title: 'DONUTS OVER EVERYTHING',
+      subtitle: 'Freshly handcrafted artisan sourdough donuts baked with passion and pure joy every morning.',
+      primaryCtaText: 'Shop Now',
+      primaryCtaUrl: '/all-donuts',
+      secondaryCtaText: 'Explore Flavors',
+      secondaryCtaUrl: '/category/special',
+    },
+    contactAndHours: {
+      phone: '+1 (555) 777-4659',
+      email: `orders@${brand.domain}`,
+      address: '124 Sugar Valley Way, CA 90210',
+      weekdayHours: 'Mon – Fri: 7:00 AM – 7:00 PM',
+      weekendHours: 'Sat – Sun: 8:00 AM – 8:30 PM',
+      holidayNotice: 'Open all holidays & celebratory weekends!',
+    },
+    promotions: {
+      enabled: true,
+      headline: 'Weekend Special: 20% Off 2+ Dozen',
+      promoCode: 'GLAZE20',
+      discountPercent: 20,
+      description: 'Add any two dozen donuts to cart and enter promo code for instant 20% savings.',
+    },
+    newsletter: {
+      headline: `Join the ${brand.name} VIP Club`,
+      subtext: 'Get free donuts on your birthday, invitations to secret flavor drops, and 15% off today.',
+      buttonText: 'Join the Club',
+      successMessage: "You're in! Check your inbox for your 15% off celebration coupon.",
+    },
+    socialLinks: {
+      instagram: 'https://instagram.com',
+      tiktok: 'https://tiktok.com',
+      facebook: 'https://facebook.com',
+      twitter: 'https://x.com',
+    },
+  };
+
+  if (fs.existsSync(brandJsonPath)) {
+    try {
+      const fileContent = JSON.parse(fs.readFileSync(brandJsonPath, 'utf8'));
+      brandData = { ...brandData, ...fileContent };
+    } catch (e) {
+      console.warn(`Could not read brand JSON at ${brandJsonPath}:`, e.message);
+    }
+  }
+
   fs.mkdirSync(targetDir, { recursive: true });
 
-  // 1. Generate config.yml
+  // 1. Generate config.yml with Clear Numbered Sections & Helpful Hints
   const configYml = `# ==============================================================================
 # Sveltia / Decap CMS Configuration — ${brand.name}
 # Generated automatically by scripts/generate-decap-cms.mjs
@@ -91,97 +160,97 @@ display_url: https://${brand.domain}
 collections:
   - name: "business_operations"
     label: "🏪 Store & Operations"
-    description: "Manage your top announcement bar, hero headlines, store opening hours, seasonal coupons, newsletter offers, and brand styling."
+    description: "Customize your brand name, tagline, theme colors, top announcement bar, homepage hero pitch, operating hours, promotions, and newsletter."
     delete: false
     files:
       - file: "content/brands/${activeId}.json"
         label: "⚙️ Edit ${brand.name} Website & Store Operations"
         name: "settings"
         fields:
-          # --- Brand Identity & Theme ---
-          - { label: "Brand Name", name: "name", widget: "string", hint: "The public business name displayed across headers, footers and tabs." }
-          - { label: "Tagline", name: "tagline", widget: "string", hint: "Short brand motto, e.g. '${brand.tagline}'" }
-          - { label: "Bio / Story Description", name: "description", widget: "text", hint: "Brand story and overview displayed in search results and footer." }
-          - { label: "Primary Brand Color", name: "primaryColor", widget: "color", hint: "Main brand color used for buttons, accents, and hero gradients." }
-          - { label: "Secondary Color", name: "secondaryColor", widget: "color", hint: "Supporting color for badges and decorative elements." }
-          - { label: "Accent Highlight Color", name: "accentColor", widget: "color", hint: "Highlight tint for stickers and rating stars." }
-          - { label: "Footer Background Color", name: "footerBg", widget: "color", hint: "Background color of your website footer." }
-          - { label: "Currency Symbol", name: "currencySymbol", widget: "string", default: "$" }
-          - { label: "Free Shipping Threshold ($)", name: "shippingThreshold", widget: "number", value_type: "float", hint: "Minimum cart total required to qualify for free shipping." }
+          # --- 🏷️ 1. Brand Identity & Theme ---
+          - { label: "🏷️ Business / Brand Name", name: "name", widget: "string", hint: "The official public business name displayed across your navigation header, browser tab, checkout, and email receipts." }
+          - { label: "✨ Catchy Brand Tagline / Motto", name: "tagline", widget: "string", hint: "Your brand motto or slogan (e.g. '${brand.tagline}')." }
+          - { label: "📖 Brand Story & About Overview", name: "description", widget: "text", hint: "Brand story and overview displayed in search results, social shares, and the footer bio." }
+          - { label: "🎨 Primary Brand Color", name: "primaryColor", widget: "color", hint: "Main brand color used for action buttons, cart drawer, and hero gradient tints." }
+          - { label: "🎨 Secondary Accent Color", name: "secondaryColor", widget: "color", hint: "Supporting color for badge tags, rating stars, and secondary buttons." }
+          - { label: "⭐ Highlight Sparkle Tint", name: "accentColor", widget: "color", hint: "Vibrant accent tint for stickers, sprinkles, and celebration confetti." }
+          - { label: "👟 Footer Background Color", name: "footerBg", widget: "color", hint: "Background color of your website footer section." }
+          - { label: "💵 Currency Symbol", name: "currencySymbol", widget: "string", default: "$", hint: "Symbol displayed before all product prices (default: $)." }
+          - { label: "🚚 Free Shipping Minimum ($)", name: "shippingThreshold", widget: "number", value_type: "float", hint: "Minimum cart order total required to qualify for free shipping." }
 
-          # --- Top Announcement & Promo Bar ---
-          - label: "📢 Top Announcement & Promo Bar"
+          # --- 📢 2. Top Announcement & Promo Bar ---
+          - label: "📢 2. Top Announcement & Promo Bar"
             name: "announcement"
             widget: "object"
             summary: "{{fields.badge}}: {{fields.message}}"
             fields:
-              - { label: "Enable Top Banner?", name: "enabled", widget: "boolean", default: true, hint: "Turn on/off to display seasonal alerts, flash sales, or holiday notices." }
-              - { label: "Badge Tag (e.g. SPECIAL OFFER)", name: "badge", widget: "string", hint: "Short pill tag like 'SPRING DROP', 'HOLIDAY HOURS', or 'FLASH SALE'." }
-              - { label: "Announcement Message", name: "message", widget: "string", hint: "Text shown across every page of your store at the very top." }
-              - { label: "Action Link Text", name: "linkText", widget: "string", default: "Order Now", hint: "Clickable button label (e.g. 'Order Now', 'View Specials')." }
-              - { label: "Action Link Destination", name: "linkUrl", widget: "string", default: "/all-donuts", hint: "Where clicking the banner button directs visitors." }
-              - { label: "Banner Background Color", name: "bgColor", widget: "color", required: false, hint: "Custom color for this banner (optional)." }
+              - { label: "Turn On Top Banner?", name: "enabled", widget: "boolean", default: true, hint: "Switch on/off to display seasonal alerts, flash sales, or holiday notices." }
+              - { label: "Pill Badge Tag", name: "badge", widget: "string", hint: "Eye-catching badge tag like 'PARTY BOX SPECIAL', 'FLASH SALE', or 'SPRING DROP'." }
+              - { label: "Announcement Message Text", name: "message", widget: "string", hint: "Promo announcement message shown at the very top of every page." }
+              - { label: "Button Label", name: "linkText", widget: "string", default: "Order Now", hint: "Clickable action label (e.g. 'Order Now', 'View Specials')." }
+              - { label: "Button Destination Link", name: "linkUrl", widget: "string", default: "/all-donuts", hint: "Where clicking the banner button directs visitors (e.g. '/all-donuts')." }
+              - { label: "Custom Banner Background", name: "bgColor", widget: "color", required: false, hint: "Optional custom background color for this announcement." }
               - { label: "Banner Text Color", name: "textColor", widget: "color", default: "#ffffff" }
 
-          # --- Homepage Hero Section & Value Proposition ---
-          - label: "🏠 Homepage Hero & Campaign Pitch"
+          # --- 🏠 3. Homepage Hero Headline & Action Pitch ---
+          - label: "🏠 3. Homepage Hero Headline & Action Pitch"
             name: "hero"
             widget: "object"
             summary: "{{fields.title}}"
             fields:
-              - { label: "Eyebrow Badge / Quote", name: "badge", widget: "string", hint: "Social proof badge e.g. 'Over 100,000+ Happy Glaze Lovers'." }
-              - { label: "Main Bold Headline", name: "title", widget: "string", hint: "The large primary headline greeting visitors on your homepage." }
-              - { label: "Supporting Value Proposition", name: "subtitle", widget: "text", hint: "Describe what makes your donuts unique and irresistible." }
+              - { label: "Eyebrow Social Proof Badge", name: "badge", widget: "string", hint: "Social proof badge e.g. 'Over 100,000+ Happy Glaze Lovers'." }
+              - { label: "Main Bold Anton Headline", name: "title", widget: "string", hint: "The primary bold headline greeting visitors on your homepage." }
+              - { label: "Supporting Value Proposition", name: "subtitle", widget: "text", hint: "Describe what makes your donuts unique, fresh, and irresistible." }
               - { label: "Primary Button Label", name: "primaryCtaText", widget: "string", default: "Shop Now" }
-              - { label: "Primary Button Link", name: "primaryCtaUrl", widget: "string", default: "/all-donuts" }
+              - { label: "Primary Button Destination", name: "primaryCtaUrl", widget: "string", default: "/all-donuts" }
               - { label: "Secondary Button Label", name: "secondaryCtaText", widget: "string", default: "Explore Flavors" }
-              - { label: "Secondary Button Link", name: "secondaryCtaUrl", widget: "string", default: "/category/special" }
+              - { label: "Secondary Button Destination", name: "secondaryCtaUrl", widget: "string", default: "/category/special" }
 
-          # --- Store Hours & Contact Operations ---
-          - label: "⏰ Store Hours, Contact & Location"
+          # --- ⏰ 4. Store Operating Hours & Bakery Address ---
+          - label: "⏰ 4. Store Operating Hours & Bakery Address"
             name: "contactAndHours"
             widget: "object"
             summary: "Hours: {{fields.weekdayHours}}"
             fields:
-              - { label: "Store Phone Number", name: "phone", widget: "string", hint: "Orders and catering telephone number displayed in footer and contact page." }
-              - { label: "Customer Inquiries Email", name: "email", widget: "string", hint: "Email address for general customer support and wholesale inquiries." }
-              - { label: "Bakery Physical Address", name: "address", widget: "string", hint: "Physical storefront address shown in store locator and footer." }
-              - { label: "Weekday Opening Hours", name: "weekdayHours", widget: "string", hint: "e.g. Mon – Fri: 7:00 AM – 7:00 PM" }
-              - { label: "Weekend Opening Hours", name: "weekendHours", widget: "string", hint: "e.g. Sat – Sun: 8:00 AM – 8:30 PM" }
-              - { label: "Holiday Hours / Special Notice", name: "holidayNotice", widget: "string", hint: "Seasonal notes (e.g. 'Open 4th of July 8 AM – 2 PM! Pre-orders recommended')." }
+              - { label: "Bakery Orders Phone Number", name: "phone", widget: "string", hint: "Phone number displayed in footer and contact page." }
+              - { label: "Support & Inquiries Email", name: "email", widget: "string", hint: "Email address for orders, customer support, and wholesale." }
+              - { label: "Physical Bakery Address", name: "address", widget: "string", hint: "Physical storefront address shown in store locator and footer." }
+              - { label: "Weekday Operating Hours", name: "weekdayHours", widget: "string", hint: "e.g. Mon – Fri: 7:00 AM – 7:00 PM" }
+              - { label: "Weekend Operating Hours", name: "weekendHours", widget: "string", hint: "e.g. Sat – Sun: 8:00 AM – 8:30 PM" }
+              - { label: "Holiday Hours / Special Notice", name: "holidayNotice", widget: "string", hint: "e.g. 'Open 4th of July 8 AM – 2 PM! Pre-orders recommended'." }
 
-          # --- Seasonal Promotions & Coupon Codes ---
-          - label: "🎁 Seasonal Promotions & Coupon Codes"
+          # --- 🎁 5. Seasonal Promotions & Coupon Codes ---
+          - label: "🎁 5. Seasonal Promotions & Coupon Codes"
             name: "promotions"
             widget: "object"
             summary: "{{fields.promoCode}} ({{fields.discountPercent}}% Off)"
             fields:
-              - { label: "Activate Promotion?", name: "enabled", widget: "boolean", default: true }
-              - { label: "Promo Headline", name: "headline", widget: "string", hint: "e.g. 'Confetti Weekend: 20% Off 2+ Dozen'" }
-              - { label: "Coupon Code (e.g. SPRINKLE20)", name: "promoCode", widget: "string", hint: "Code customers can use at checkout for instant savings." }
+              - { label: "Activate Coupon Deal?", name: "enabled", widget: "boolean", default: true }
+              - { label: "Promotion Campaign Headline", name: "headline", widget: "string", hint: "e.g. 'Confetti Weekend: 20% Off 2+ Dozen'" }
+              - { label: "Coupon Code (e.g. SPRINKLE20)", name: "promoCode", widget: "string", hint: "Discount code customers enter at checkout." }
               - { label: "Discount Percentage (%)", name: "discountPercent", widget: "number", default: 15 }
-              - { label: "Terms & Conditions / Details", name: "description", widget: "text", hint: "Rules, minimum purchase amount, or expiration date." }
+              - { label: "Coupon Terms & Details", name: "description", widget: "text", hint: "Terms, minimum purchase, or expiration date." }
 
-          # --- VIP Club & Newsletter Copy ---
-          - label: "💌 VIP Club & Newsletter Lead Magnet"
+          # --- 💌 6. VIP Birthday Club & Newsletter Lead Magnet ---
+          - label: "💌 6. VIP Birthday Club & Newsletter Lead Magnet"
             name: "newsletter"
             widget: "object"
             summary: "{{fields.headline}}"
             fields:
-              - { label: "Club / Newsletter Headline", name: "headline", widget: "string", hint: "Headline on the newsletter box in your footer, e.g. 'Join the Sprinkle VIP Club'." }
-              - { label: "Incentive / Offer Copy", name: "subtext", widget: "text", hint: "Copy explaining what subscribers get (e.g. secret menu drops, free birthday donuts)." }
-              - { label: "Button Text", name: "buttonText", widget: "string", default: "Get Started" }
-              - { label: "Confirmation Success Message", name: "successMessage", widget: "string", hint: "Notification displayed immediately after a user subscribes." }
+              - { label: "VIP Club Box Headline", name: "headline", widget: "string", hint: "Footer newsletter box headline, e.g. 'Join the Sprinkle VIP Club'." }
+              - { label: "Offer / Incentive Pitch Copy", name: "subtext", widget: "text", hint: "Copy explaining subscriber perks (e.g. free birthday donuts, secret flavors)." }
+              - { label: "Sign-Up Button Label", name: "buttonText", widget: "string", default: "Get Started" }
+              - { label: "Success Confirmation Message", name: "successMessage", widget: "string", hint: "Toast message displayed immediately after subscribing." }
 
-          # --- Social Media Channels ---
-          - label: "📱 Social Media Profiles"
+          # --- 📱 7. Social Media Channels & Links ---
+          - label: "📱 7. Social Media Channels & Links"
             name: "socialLinks"
             widget: "object"
             fields:
-              - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
-              - { label: "TikTok URL", name: "tiktok", widget: "string", required: false }
-              - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
-              - { label: "Twitter / X URL", name: "twitter", widget: "string", required: false }
+              - { label: "Instagram Profile URL", name: "instagram", widget: "string", required: false }
+              - { label: "TikTok Profile URL", name: "tiktok", widget: "string", required: false }
+              - { label: "Facebook Page URL", name: "facebook", widget: "string", required: false }
+              - { label: "Twitter / X Profile URL", name: "twitter", widget: "string", required: false }
 
   - name: "products"
     label: "🍩 Donut Menu & Catalog"
@@ -240,7 +309,10 @@ collections:
 
   fs.writeFileSync(path.join(targetDir, 'config.yml'), configYml, 'utf8');
 
-  // 2. Generate index.html with Visual Theme, Header Bar, and Business Guide Modal
+  // JSON representation of active brand data embedded into index.html
+  const embeddedBrandJson = JSON.stringify(brandData);
+
+  // 2. Generate index.html with Interactive Brand Studio, Live Simulator, and Enhanced CMS UI
   const indexHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -253,9 +325,10 @@ collections:
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --brand-primary: ${brand.primaryColor};
-      --brand-secondary: ${brand.secondaryColor};
-      --s-color-primary: ${brand.primaryColor};
+      --brand-primary: ${brandData.primaryColor || brand.primaryColor};
+      --brand-secondary: ${brandData.secondaryColor || brand.secondaryColor};
+      --brand-accent: ${brandData.accentColor || '#abd1ff'};
+      --s-color-primary: ${brandData.primaryColor || brand.primaryColor};
       --s-font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
@@ -294,7 +367,8 @@ collections:
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, ${brand.primaryColor}, ${brand.secondaryColor});
+      background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary));
+      transition: background 0.3s ease;
     }
 
     .brand-left {
@@ -307,7 +381,7 @@ collections:
       width: 38px;
       height: 38px;
       border-radius: 10px;
-      background: ${brand.primaryColor};
+      background: var(--brand-primary);
       color: #ffffff;
       font-family: 'Anton', sans-serif;
       font-size: 22px;
@@ -316,6 +390,7 @@ collections:
       justify-content: center;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
       border: 2px solid #000000;
+      transition: background-color 0.3s ease;
     }
 
     .brand-title {
@@ -339,6 +414,30 @@ collections:
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    /* Brand Studio Button */
+    .studio-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: linear-gradient(135deg, var(--brand-primary), #f98000);
+      color: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .studio-btn:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      filter: brightness(1.05);
     }
 
     .guide-btn {
@@ -367,7 +466,7 @@ collections:
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: ${brand.primaryColor};
+      background: #0f172a;
       color: #ffffff;
       text-decoration: none;
       padding: 8px 16px;
@@ -381,12 +480,862 @@ collections:
     }
 
     .live-store-link:hover {
-      opacity: 0.9;
+      background: #1e293b;
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
-    /* Business Owner Operations Modal */
+    /* ==========================================================================
+       Interactive Brand Customizer Studio Modal
+       ========================================================================== */
+    .studio-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000000;
+      padding: 24px;
+      opacity: 1;
+      transition: opacity 0.2s ease;
+    }
+
+    .studio-modal.hidden {
+      display: none;
+      opacity: 0;
+    }
+
+    .studio-modal-content {
+      background: #ffffff;
+      border-radius: 24px;
+      max-width: 1280px;
+      width: 100%;
+      height: 92vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+      border: 2px solid #0f172a;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .studio-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 28px;
+      background: #ffffff;
+      border-bottom: 2px solid #f1f5f9;
+      flex-shrink: 0;
+    }
+
+    .studio-header-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .studio-header h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 0;
+      color: #0f172a;
+    }
+
+    .studio-tag {
+      background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: #64748b;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    .close-btn:hover {
+      color: #0f172a;
+      background: #f1f5f9;
+    }
+
+    /* Main Split Body: Simulator on Left, Controls on Right */
+    .studio-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Left: Live Storefront Simulator */
+    .simulator-pane {
+      width: 48%;
+      background: #f8fafc;
+      border-right: 2px solid #e2e8f0;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .simulator-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 800;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+
+    .sim-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #16a34a;
+      font-weight: 700;
+      background: #dcfce7;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    .sim-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #16a34a;
+      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.3);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .device-mockup {
+      background: #ffffff;
+      border-radius: 18px;
+      border: 2px solid #cbd5e1;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .device-browser-bar {
+      background: #f1f5f9;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .browser-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .browser-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .browser-url-pill {
+      flex: 1;
+      background: #ffffff;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      color: #64748b;
+      font-family: monospace;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Mockup Simulated Content */
+    .sim-announcement {
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .sim-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
+    }
+
+    .sim-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+    }
+
+    .sim-brand-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 22px;
+      text-transform: uppercase;
+      color: #0f172a;
+      line-height: 1;
+    }
+
+    .sim-hero-box {
+      padding: 30px 24px;
+      background: linear-gradient(135deg, #fdf4f8, #fefae0);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.3s ease;
+    }
+
+    .sim-hero-eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--brand-primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 4px 12px;
+      border-radius: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .sim-hero-headline {
+      font-family: 'Anton', sans-serif;
+      font-size: 32px;
+      color: #0f172a;
+      margin: 0;
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sim-hero-subtitle {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.5;
+      max-width: 380px;
+      margin: 0;
+    }
+
+    .sim-hero-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .sim-btn-primary {
+      background: var(--brand-primary);
+      color: #ffffff;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      transition: background 0.2s ease;
+    }
+
+    .sim-btn-secondary {
+      background: #ffffff;
+      color: #0f172a;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid #cbd5e1;
+    }
+
+    .sim-operations-bar {
+      padding: 14px 18px;
+      background: #ffffff;
+      border-top: 1px solid #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .sim-op-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #64748b;
+    }
+
+    .sim-op-pill {
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    /* Live Color Swatches Card */
+    .swatches-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .swatches-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .swatches-list {
+      display: flex;
+      gap: 12px;
+    }
+
+    .swatch-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .swatch-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease;
+    }
+
+    .swatch-circle:hover {
+      transform: scale(1.15);
+    }
+
+    .swatch-label {
+      font-size: 10px;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* Right: Editing Controls with Tabs */
+    .controls-pane {
+      width: 52%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .tabs-bar {
+      display: flex;
+      background: #f8fafc;
+      border-bottom: 2px solid #e2e8f0;
+      padding: 8px 16px 0;
+      gap: 6px;
+      flex-shrink: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .tabs-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      border-radius: 10px 10px 0 0;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+
+    .tab-btn:hover {
+      color: #0f172a;
+      background: #f1f5f9;
+    }
+
+    .tab-btn.active {
+      color: var(--brand-primary);
+      background: #ffffff;
+      border-bottom: 3px solid var(--brand-primary);
+      font-weight: 800;
+    }
+
+    .tab-content {
+      flex: 1;
+      padding: 24px 28px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Form Card Modules */
+    .ctrl-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .ctrl-card-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .field-row {
+      margin-bottom: 14px;
+    }
+
+    .field-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-row label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .field-row input[type='text'],
+    .field-row input[type='number'],
+    .field-row textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+      background: #ffffff;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .field-row input[type='text']:focus,
+    .field-row input[type='number']:focus,
+    .field-row textarea:focus {
+      border-color: var(--brand-primary);
+      box-shadow: 0 0 0 4px rgba(245, 79, 149, 0.15);
+      outline: none;
+    }
+
+    .field-row textarea {
+      min-height: 70px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .color-input-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .color-input-group input[type='color'] {
+      width: 48px;
+      height: 40px;
+      border-radius: 10px;
+      border: 2px solid #e2e8f0;
+      padding: 2px;
+      cursor: pointer;
+      background: #ffffff;
+    }
+
+    .color-input-group input[type='text'] {
+      width: 120px;
+    }
+
+    .field-hint {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .checkbox-row input[type='checkbox'] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--brand-primary);
+      cursor: pointer;
+    }
+
+    .checkbox-row label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    /* Modal Bottom Action Bar */
+    .studio-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      background: #f8fafc;
+      border-top: 2px solid #e2e8f0;
+      flex-shrink: 0;
+    }
+
+    .footer-status {
+      font-size: 12px;
+      font-weight: 600;
+      color: #16a34a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      padding: 9px 16px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-secondary:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .btn-save {
+      background: linear-gradient(135deg, var(--brand-primary), #f98000);
+      color: #ffffff;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      transition: all 0.2s ease;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      filter: brightness(1.05);
+    }
+
+    /* Toast Notification */
+    #studio-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100000000;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: all 0.25s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #studio-toast.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       Native Sveltia CMS Layout & Form Polish
+       ========================================================================== */
+    .sui.app-shell,
+    div.app-shell,
+    #nc-root {
+      position: fixed !important;
+      top: 60px !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      height: calc(100vh - 60px) !important;
+      max-height: calc(100vh - 60px) !important;
+      overflow: hidden !important;
+    }
+
+    .sui.toolbar.primary,
+    .toolbar-wrapper > .sui.toolbar {
+      background: #ffffff !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+      min-height: 52px !important;
+      padding: 0 20px !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+    }
+
+    .sui.search-bar {
+      border-radius: 9999px !important;
+      border: 1px solid #cbd5e1 !important;
+      background: #f1f5f9 !important;
+      padding: 4px 12px !important;
+    }
+
+    .primary-sidebar,
+    aside.primary-sidebar,
+    div.primary-sidebar,
+    [class*="primary-sidebar"] {
+      width: 320px !important;
+      min-width: 300px !important;
+      max-width: 360px !important;
+      flex: 0 0 320px !important;
+      background: #ffffff !important;
+      border-right: 1px solid #e2e8f0 !important;
+    }
+
+    .primary-sidebar [role='treeitem'] .label,
+    .primary-sidebar [role='listbox'] .label,
+    .primary-sidebar .label {
+      overflow: visible !important;
+      text-overflow: clip !important;
+      white-space: normal !important;
+      word-break: break-word !important;
+      line-height: 1.35 !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+    }
+
+    .primary-sidebar [role='treeitem'] > .row {
+      min-height: 44px !important;
+      padding: 6px 12px !important;
+      border-radius: 10px !important;
+      margin-bottom: 4px !important;
+      transition: all 0.15s ease !important;
+    }
+
+    .primary-sidebar [role='treeitem'][aria-selected='true'] > .row {
+      background: rgba(245, 79, 149, 0.08) !important;
+      color: var(--brand-primary) !important;
+      font-weight: 700 !important;
+    }
+
+    .list-view,
+    .grid-view,
+    main,
+    [class*="content-pane"] {
+      background: #f8fafc !important;
+      padding: 24px 32px !important;
+    }
+
+    .list-view [role='grid'] .grid-row,
+    .list-view .grid-row,
+    [role='row'][tabindex] {
+      background: #ffffff !important;
+      border: 2px solid #e2e8f0 !important;
+      border-radius: 16px !important;
+      padding: 18px 24px !important;
+      margin-bottom: 14px !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      height: auto !important;
+    }
+
+    .list-view [role='grid'] .grid-row:hover,
+    .list-view .grid-row:hover,
+    [role='row'][tabindex]:hover {
+      border-color: var(--brand-primary) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+      background: #ffffff !important;
+    }
+
+    .list-view .grid-cell {
+      border: none !important;
+      height: auto !important;
+      white-space: normal !important;
+    }
+
+    .list-view .grid-cell.title {
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: #0f172a !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+    }
+
+    .list-view [role='grid'] .grid-row::after,
+    .list-view .grid-row::after {
+      content: '✏️ Edit Content';
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--brand-primary);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      flex-shrink: 0;
+      margin-left: 20px;
+      transition: opacity 0.15s ease;
+    }
+
+    /* Native Form View Restyling */
+    [role='document'] > section.svelte-s650n2,
+    .section.svelte-1twofal {
+      background: #ffffff !important;
+      border: 1.5px solid #e2e8f0 !important;
+      border-radius: 16px !important;
+      padding: 22px 28px !important;
+      margin-bottom: 20px !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+    }
+
+    [role='document'] > section.svelte-s650n2:focus-within,
+    .section.svelte-1twofal:focus-within {
+      border-color: var(--brand-primary) !important;
+      box-shadow: 0 8px 24px rgba(245, 79, 149, 0.08) !important;
+    }
+
+    h4.svelte-1twofal {
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 800 !important;
+      color: #0f172a !important;
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9) !important;
+      border-left: 4px solid var(--brand-primary) !important;
+      border-radius: 10px !important;
+      padding: 12px 16px !important;
+      margin: 0 0 16px 0 !important;
+    }
+
+    h4.svelte-s650n2 {
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      color: #334155 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.6px !important;
+      margin-bottom: 8px !important;
+    }
+
+    .field-wrapper input[type='text'],
+    .field-wrapper input[type='number'],
+    .field-wrapper textarea {
+      border-radius: 10px !important;
+      border: 1.5px solid #cbd5e1 !important;
+      padding: 10px 14px !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: #0f172a !important;
+      background: #ffffff !important;
+    }
+
+    .field-wrapper input[type='text']:focus,
+    .field-wrapper input[type='number']:focus,
+    .field-wrapper textarea:focus {
+      border-color: var(--brand-primary) !important;
+      box-shadow: 0 0 0 4px rgba(245, 79, 149, 0.15) !important;
+      outline: none !important;
+    }
+
+    [popover], dialog, .sui.dialog, [role='dialog'], [class*="pane-wrapper"], .sui.drawer {
+      z-index: 10000000 !important;
+    }
+
+    /* Operations Guide Modal */
     .guide-modal {
       position: fixed;
       top: 0;
@@ -398,7 +1347,7 @@ collections:
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1000000;
+      z-index: 10000000;
       padding: 20px;
       opacity: 1;
       transition: opacity 0.25s ease;
@@ -440,22 +1389,6 @@ collections:
       color: #0f172a;
     }
 
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 28px;
-      color: #64748b;
-      cursor: pointer;
-      line-height: 1;
-      padding: 0 6px;
-      border-radius: 8px;
-    }
-
-    .close-btn:hover {
-      color: #0f172a;
-      background: #f1f5f9;
-    }
-
     .guide-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -478,7 +1411,7 @@ collections:
 
     .guide-card.highlight {
       background: linear-gradient(135deg, rgba(245, 79, 149, 0.08), rgba(238, 174, 35, 0.08));
-      border: 2px dashed ${brand.primaryColor};
+      border: 2px dashed var(--brand-primary);
     }
 
     .guide-icon {
@@ -499,178 +1432,6 @@ collections:
       line-height: 1.5;
       margin: 0;
     }
-
-    /* Custom Scrollbars */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
-
-    /* ==========================================================================
-       Sveltia CMS Layout Fixes & Visual Polish
-       ========================================================================== */
-
-    /* 1. Prevent Top Header Overlap — Push Sveltia App Shell below brand header */
-    .sui.app-shell,
-    div.app-shell,
-    #nc-root {
-      position: fixed !important;
-      top: 60px !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      height: calc(100vh - 60px) !important;
-      max-height: calc(100vh - 60px) !important;
-      overflow: hidden !important;
-    }
-
-    /* 2. Top Application Toolbar Polish */
-    .sui.toolbar.primary,
-    .toolbar-wrapper > .sui.toolbar {
-      background: #ffffff !important;
-      border-bottom: 1px solid #e2e8f0 !important;
-      min-height: 52px !important;
-      padding: 0 20px !important;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
-    }
-
-    .sui.search-bar {
-      border-radius: 9999px !important;
-      border: 1px solid #cbd5e1 !important;
-      background: #f1f5f9 !important;
-      padding: 4px 12px !important;
-    }
-
-    /* 3. Widen Left Sidebar so Collection Titles Never Truncate */
-    .primary-sidebar,
-    aside.primary-sidebar,
-    div.primary-sidebar,
-    [class*="primary-sidebar"] {
-      width: 320px !important;
-      min-width: 300px !important;
-      max-width: 360px !important;
-      flex: 0 0 320px !important;
-      background: #ffffff !important;
-      border-right: 1px solid #e2e8f0 !important;
-    }
-
-    /* Un-truncate sidebar labels and give them clean breathing room */
-    .primary-sidebar [role='treeitem'] .label,
-    .primary-sidebar [role='listbox'] .label,
-    .primary-sidebar .label {
-      overflow: visible !important;
-      text-overflow: clip !important;
-      white-space: normal !important;
-      word-break: break-word !important;
-      line-height: 1.35 !important;
-      font-size: 14px !important;
-      font-weight: 600 !important;
-      color: #1e293b !important;
-    }
-
-    .primary-sidebar [role='treeitem'] > .row {
-      min-height: 44px !important;
-      padding: 6px 12px !important;
-      border-radius: 10px !important;
-      margin-bottom: 4px !important;
-      transition: all 0.15s ease !important;
-    }
-
-    .primary-sidebar [role='treeitem'][aria-selected='true'] > .row {
-      background: rgba(245, 79, 149, 0.08) !important;
-      color: ${brand.primaryColor} !important;
-      font-weight: 700 !important;
-    }
-
-    /* 4. Beautiful Spacing & Background for Main Content Area */
-    .list-view,
-    .grid-view,
-    main,
-    [class*="content-pane"] {
-      background: #f8fafc !important;
-      padding: 24px 32px !important;
-    }
-
-    /* 5. Transform File Entries & Rows into Prominent Interactive Cards */
-    .list-view [role='grid'] .grid-row,
-    .list-view .grid-row,
-    [role='row'][tabindex] {
-      background: #ffffff !important;
-      border: 2px solid #e2e8f0 !important;
-      border-radius: 16px !important;
-      padding: 18px 24px !important;
-      margin-bottom: 14px !important;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-      cursor: pointer !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      height: auto !important;
-    }
-
-    .list-view [role='grid'] .grid-row:hover,
-    .list-view .grid-row:hover,
-    [role='row'][tabindex]:hover {
-      border-color: ${brand.primaryColor} !important;
-      transform: translateY(-2px) !important;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
-      background: #ffffff !important;
-    }
-
-    .list-view .grid-cell {
-      border: none !important;
-      height: auto !important;
-      white-space: normal !important;
-    }
-
-    .list-view .grid-cell.title {
-      font-size: 16px !important;
-      font-weight: 700 !important;
-      color: #0f172a !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 12px !important;
-    }
-
-    /* Distinctive "Edit Content ✏️" Call-To-Action Pill on Cards */
-    .list-view [role='grid'] .grid-row::after,
-    .list-view .grid-row::after {
-      content: '✏️ Edit Content';
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: ${brand.primaryColor};
-      color: #ffffff;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 8px 18px;
-      border-radius: 9999px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-      flex-shrink: 0;
-      margin-left: 20px;
-      transition: opacity 0.15s ease;
-    }
-
-    .list-view [role='grid'] .grid-row:hover::after,
-    .list-view .grid-row:hover::after {
-      opacity: 0.9;
-    }
-
-    /* 6. Modal / Popover / Drawers Stacking */
-    [popover], dialog, .sui.dialog, [role='dialog'], [class*="pane-wrapper"], .sui.drawer {
-      z-index: 10000000 !important;
-    }
   </style>
 </head>
 <body>
@@ -678,13 +1439,16 @@ collections:
   <header id="admin-brand-header">
     <div class="brand-accent-line"></div>
     <div class="brand-left">
-      <div class="brand-avatar">${brand.name.charAt(0)}</div>
+      <div id="header-avatar" class="brand-avatar">${brandData.name.charAt(0)}</div>
       <div>
-        <h1 class="brand-title">${brand.name}</h1>
-        <p class="brand-tagline">${brand.tagline}</p>
+        <h1 id="header-brand-title" class="brand-title">${brandData.name}</h1>
+        <p id="header-brand-tagline" class="brand-tagline">${brandData.tagline}</p>
       </div>
     </div>
     <div class="header-actions">
+      <button id="studio-toggle-btn" class="studio-btn" type="button">
+        ✨ Brand Studio
+      </button>
       <button id="guide-toggle-btn" class="guide-btn" type="button">
         💡 Operations Guide
       </button>
@@ -693,6 +1457,337 @@ collections:
       </a>
     </div>
   </header>
+
+  <!-- Interactive Brand Customizer Studio Modal -->
+  <div id="studio-modal" class="studio-modal hidden">
+    <div class="studio-modal-content">
+      <!-- Studio Top Bar -->
+      <div class="studio-header">
+        <div class="studio-header-title">
+          <h2>🎨 <span id="studio-title-brand">${brandData.name}</span> Brand Studio</h2>
+          <span class="studio-tag">Live Customizer</span>
+        </div>
+        <button id="studio-close-btn" class="close-btn" type="button">&times;</button>
+      </div>
+
+      <!-- Studio Split Body -->
+      <div class="studio-body">
+        <!-- Left: Live Storefront Simulator -->
+        <div class="simulator-pane">
+          <div class="simulator-label">
+            <span>Live Storefront Simulation</span>
+            <span class="sim-live-badge"><span class="sim-dot"></span> Keystroke Sync</span>
+          </div>
+
+          <div class="device-mockup">
+            <div class="device-browser-bar">
+              <div class="browser-dots">
+                <div class="browser-dot" style="background: #ef4444;"></div>
+                <div class="browser-dot" style="background: #eab308;"></div>
+                <div class="browser-dot" style="background: #22c55e;"></div>
+              </div>
+              <div class="browser-url-pill">https://${brand.domain}</div>
+            </div>
+
+            <!-- Simulated Announcement Bar -->
+            <div id="sim-announcement-bar" class="sim-announcement" style="background: ${brandData.announcement?.bgColor || brandData.secondaryColor}; color: ${brandData.announcement?.textColor || '#1b1b1b'};">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span id="sim-announcement-badge" class="sim-badge">${brandData.announcement?.badge || 'SPECIAL OFFER'}</span>
+                <span id="sim-announcement-text">${brandData.announcement?.message || ''}</span>
+              </div>
+              <span id="sim-announcement-link" style="text-decoration: underline; cursor: pointer; flex-shrink: 0;">${brandData.announcement?.linkText || 'Order Now'} &rarr;</span>
+            </div>
+
+            <!-- Simulated Header -->
+            <div class="sim-header">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div id="sim-logo-avatar" class="brand-avatar" style="width: 28px; height: 28px; font-size: 16px;">${brandData.name.charAt(0)}</div>
+                <div>
+                  <div id="sim-brand-name" class="sim-brand-title" style="font-size: 18px;">${brandData.name}</div>
+                  <div id="sim-tagline-text" style="font-size: 9px; color: #64748b; font-weight: 600;">${brandData.tagline}</div>
+                </div>
+              </div>
+              <div id="sim-shipping-pill" style="font-size: 10px; font-weight: 700; background: #f1f5f9; padding: 4px 8px; border-radius: 12px; color: #334155;">
+                🚚 Free shipping on $${brandData.shippingThreshold}+
+              </div>
+            </div>
+
+            <!-- Simulated Hero Section -->
+            <div id="sim-hero-section" class="sim-hero-box">
+              <span id="sim-hero-badge" class="sim-hero-eyebrow">${brandData.hero?.badge || 'Handcrafted With Love'}</span>
+              <h1 id="sim-hero-headline" class="sim-hero-headline">${brandData.hero?.title || 'DONUTS OVER EVERYTHING'}</h1>
+              <p id="sim-hero-subtitle" class="sim-hero-subtitle">${brandData.hero?.subtitle || ''}</p>
+              <div class="sim-hero-buttons">
+                <button id="sim-hero-primary-btn" class="sim-btn-primary" type="button">${brandData.hero?.primaryCtaText || 'Shop Now'}</button>
+                <button id="sim-hero-secondary-btn" class="sim-btn-secondary" type="button">${brandData.hero?.secondaryCtaText || 'Explore Flavors'}</button>
+              </div>
+            </div>
+
+            <!-- Simulated Operations Bar -->
+            <div class="sim-operations-bar">
+              <div class="sim-op-row">
+                <span>⏰ Weekday Hours:</span>
+                <span id="sim-hours-weekday" class="sim-op-pill">${brandData.contactAndHours?.weekdayHours || '7:00 AM – 7:00 PM'}</span>
+              </div>
+              <div class="sim-op-row">
+                <span>📞 Order Hotline:</span>
+                <span id="sim-contact-phone" class="sim-op-pill">${brandData.contactAndHours?.phone || ''}</span>
+              </div>
+              <div class="sim-op-row">
+                <span>🎁 Active Promo:</span>
+                <span id="sim-promo-code" class="sim-op-pill" style="color: var(--brand-primary); font-weight: 800;">${brandData.promotions?.promoCode || 'SAVE15'} (${brandData.promotions?.discountPercent || 15}% OFF)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Color Swatches Card -->
+          <div class="swatches-card">
+            <span class="swatches-title">Active Color Tokens</span>
+            <div class="swatches-list">
+              <div class="swatch-item">
+                <div id="swatch-primary" class="swatch-circle" style="background: ${brandData.primaryColor};"></div>
+                <span class="swatch-label">Primary</span>
+              </div>
+              <div class="swatch-item">
+                <div id="swatch-secondary" class="swatch-circle" style="background: ${brandData.secondaryColor};"></div>
+                <span class="swatch-label">Secondary</span>
+              </div>
+              <div class="swatch-item">
+                <div id="swatch-accent" class="swatch-circle" style="background: ${brandData.accentColor};"></div>
+                <span class="swatch-label">Accent</span>
+              </div>
+              <div class="swatch-item">
+                <div id="swatch-footer" class="swatch-circle" style="background: ${brandData.footerBg};"></div>
+                <span class="swatch-label">Footer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Tabbed Editing Controls -->
+        <div class="controls-pane">
+          <!-- Tabs Navigation -->
+          <div class="tabs-bar">
+            <button class="tab-btn active" data-tab="tab-identity" type="button">🏷️ 1. Brand & Palette</button>
+            <button class="tab-btn" data-tab="tab-hero" type="button">📢 2. Announcement & Hero</button>
+            <button class="tab-btn" data-tab="tab-operations" type="button">⏰ 3. Hours & Location</button>
+            <button class="tab-btn" data-tab="tab-promos" type="button">🎁 4. Deals & VIP Club</button>
+          </div>
+
+          <!-- Tab 1: Brand Identity & Colors -->
+          <div id="tab-identity" class="tab-content active">
+            <div class="ctrl-card">
+              <div class="ctrl-card-title">🏷️ Brand Name & Public Story</div>
+              <div class="field-row">
+                <label>Business / Brand Name</label>
+                <input id="in-name" type="text" value="${brandData.name}" />
+                <div class="field-hint">Displays across navigation, browser title, tabs, and checkout receipts.</div>
+              </div>
+              <div class="field-row">
+                <label>Brand Tagline Motto</label>
+                <input id="in-tagline" type="text" value="${brandData.tagline}" />
+                <div class="field-hint">Short punchy slogan displayed beneath the brand title.</div>
+              </div>
+              <div class="field-row">
+                <label>Brand Story / Bio Description</label>
+                <textarea id="in-description">${brandData.description}</textarea>
+                <div class="field-hint">Brand overview displayed in SEO meta search snippets and the website footer.</div>
+              </div>
+            </div>
+
+            <div class="ctrl-card">
+              <div class="ctrl-card-title">🎨 Theme Colors & Visual Palette</div>
+              <div class="field-row">
+                <label>Primary Brand Color</label>
+                <div class="color-input-group">
+                  <input id="in-primaryColor" type="color" value="${brandData.primaryColor}" />
+                  <input id="in-primaryColor-txt" type="text" value="${brandData.primaryColor}" />
+                </div>
+                <div class="field-hint">Buttons, cart drawer accents, and hero highlights.</div>
+              </div>
+              <div class="field-row">
+                <label>Secondary Brand Color</label>
+                <div class="color-input-group">
+                  <input id="in-secondaryColor" type="color" value="${brandData.secondaryColor}" />
+                  <input id="in-secondaryColor-txt" type="text" value="${brandData.secondaryColor}" />
+                </div>
+                <div class="field-hint">Announcement bar, rating badges, and secondary elements.</div>
+              </div>
+              <div class="field-row">
+                <label>Accent Highlight Tint</label>
+                <div class="color-input-group">
+                  <input id="in-accentColor" type="color" value="${brandData.accentColor}" />
+                  <input id="in-accentColor-txt" type="text" value="${brandData.accentColor}" />
+                </div>
+                <div class="field-hint">Decorative stickers, rating stars, and confetti sparkles.</div>
+              </div>
+              <div class="field-row">
+                <label>Footer Background Color</label>
+                <div class="color-input-group">
+                  <input id="in-footerBg" type="color" value="${brandData.footerBg}" />
+                  <input id="in-footerBg-txt" type="text" value="${brandData.footerBg}" />
+                </div>
+                <div class="field-hint">Background color of the bottom footer on every page.</div>
+              </div>
+              <div class="field-row">
+                <label>Free Shipping Minimum Threshold ($)</label>
+                <input id="in-shippingThreshold" type="number" value="${brandData.shippingThreshold}" />
+                <div class="field-hint">Minimum order cart total required to qualify for free delivery.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Announcement & Hero Section -->
+          <div id="tab-hero" class="tab-content">
+            <div class="ctrl-card">
+              <div class="ctrl-card-title">📢 Top Announcement Bar</div>
+              <div class="checkbox-row">
+                <input id="in-announcement-enabled" type="checkbox" ${brandData.announcement?.enabled ? 'checked' : ''} />
+                <label for="in-announcement-enabled">Enable Announcement Banner on Website</label>
+              </div>
+              <div class="field-row">
+                <label>Badge Tag (e.g. SPECIAL OFFER)</label>
+                <input id="in-announcement-badge" type="text" value="${brandData.announcement?.badge || ''}" />
+              </div>
+              <div class="field-row">
+                <label>Announcement Message</label>
+                <input id="in-announcement-message" type="text" value="${brandData.announcement?.message || ''}" />
+              </div>
+              <div class="field-row">
+                <label>Button Action Text</label>
+                <input id="in-announcement-linkText" type="text" value="${brandData.announcement?.linkText || 'Order Now'}" />
+              </div>
+              <div class="field-row">
+                <label>Button Destination Link</label>
+                <input id="in-announcement-linkUrl" type="text" value="${brandData.announcement?.linkUrl || '/all-donuts'}" />
+              </div>
+            </div>
+
+            <div class="ctrl-card">
+              <div class="ctrl-card-title">🏠 Homepage Hero Pitch</div>
+              <div class="field-row">
+                <label>Social Proof Eyebrow Quote</label>
+                <input id="in-hero-badge" type="text" value="${brandData.hero?.badge || ''}" />
+              </div>
+              <div class="field-row">
+                <label>Main Bold Anton Headline</label>
+                <input id="in-hero-title" type="text" value="${brandData.hero?.title || ''}" />
+              </div>
+              <div class="field-row">
+                <label>Supporting Value Proposition</label>
+                <textarea id="in-hero-subtitle">${brandData.hero?.subtitle || ''}</textarea>
+              </div>
+              <div class="field-row">
+                <label>Primary Button Label</label>
+                <input id="in-hero-primaryCtaText" type="text" value="${brandData.hero?.primaryCtaText || 'Shop Now'}" />
+              </div>
+              <div class="field-row">
+                <label>Secondary Button Label</label>
+                <input id="in-hero-secondaryCtaText" type="text" value="${brandData.hero?.secondaryCtaText || 'Explore Flavors'}" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Store Operating Hours & Location -->
+          <div id="tab-operations" class="tab-content">
+            <div class="ctrl-card">
+              <div class="ctrl-card-title">⏰ Store Operating Hours</div>
+              <div class="field-row">
+                <label>Weekday Opening Hours</label>
+                <input id="in-weekdayHours" type="text" value="${brandData.contactAndHours?.weekdayHours || ''}" />
+                <div class="field-hint">e.g. Mon – Fri: 7:00 AM – 7:00 PM</div>
+              </div>
+              <div class="field-row">
+                <label>Weekend Opening Hours</label>
+                <input id="in-weekendHours" type="text" value="${brandData.contactAndHours?.weekendHours || ''}" />
+                <div class="field-hint">e.g. Sat – Sun: 8:00 AM – 8:30 PM</div>
+              </div>
+              <div class="field-row">
+                <label>Holiday Notice / Seasonal Note</label>
+                <input id="in-holidayNotice" type="text" value="${brandData.contactAndHours?.holidayNotice || ''}" />
+              </div>
+            </div>
+
+            <div class="ctrl-card">
+              <div class="ctrl-card-title">📍 Physical Location & Inquiries</div>
+              <div class="field-row">
+                <label>Orders Phone Number</label>
+                <input id="in-phone" type="text" value="${brandData.contactAndHours?.phone || ''}" />
+              </div>
+              <div class="field-row">
+                <label>Customer Support Email</label>
+                <input id="in-email" type="text" value="${brandData.contactAndHours?.email || ''}" />
+              </div>
+              <div class="field-row">
+                <label>Physical Bakery Storefront Address</label>
+                <input id="in-address" type="text" value="${brandData.contactAndHours?.address || ''}" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 4: Promotions & VIP Club -->
+          <div id="tab-promos" class="tab-content">
+            <div class="ctrl-card">
+              <div class="ctrl-card-title">🎁 Seasonal Discount & Coupon Codes</div>
+              <div class="checkbox-row">
+                <input id="in-promo-enabled" type="checkbox" ${brandData.promotions?.enabled ? 'checked' : ''} />
+                <label for="in-promo-enabled">Activate Coupon Code Deal</label>
+              </div>
+              <div class="field-row">
+                <label>Coupon Code (e.g. SPRINKLE20)</label>
+                <input id="in-promoCode" type="text" value="${brandData.promotions?.promoCode || ''}" />
+              </div>
+              <div class="field-row">
+                <label>Discount Percentage (%)</label>
+                <input id="in-discountPercent" type="number" value="${brandData.promotions?.discountPercent || 15}" />
+              </div>
+              <div class="field-row">
+                <label>Campaign Headline</label>
+                <input id="in-promoHeadline" type="text" value="${brandData.promotions?.headline || ''}" />
+              </div>
+              <div class="field-row">
+                <label>Terms & Conditions / Rules</label>
+                <textarea id="in-promoDescription">${brandData.promotions?.description || ''}</textarea>
+              </div>
+            </div>
+
+            <div class="ctrl-card">
+              <div class="ctrl-card-title">💌 VIP Club & Social Media</div>
+              <div class="field-row">
+                <label>VIP Club Headline</label>
+                <input id="in-newsletterHeadline" type="text" value="${brandData.newsletter?.headline || ''}" />
+              </div>
+              <div class="field-row">
+                <label>Subscriber Incentive Copy</label>
+                <textarea id="in-newsletterSubtext">${brandData.newsletter?.subtext || ''}</textarea>
+              </div>
+              <div class="field-row">
+                <label>Instagram URL</label>
+                <input id="in-instagram" type="text" value="${brandData.socialLinks?.instagram || ''}" />
+              </div>
+              <div class="field-row">
+                <label>TikTok URL</label>
+                <input id="in-tiktok" type="text" value="${brandData.socialLinks?.tiktok || ''}" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Footer Bar -->
+      <div class="studio-footer">
+        <div class="footer-status">
+          <span class="sim-dot"></span>
+          <span>Live Keystroke Sync Active &bull; Changes update preview in real-time</span>
+        </div>
+        <div class="footer-actions">
+          <button id="btn-copy-json" class="btn-secondary" type="button">📋 Copy JSON</button>
+          <button id="btn-download-json" class="btn-secondary" type="button">📥 Download JSON</button>
+          <button id="btn-save-changes" class="btn-save" type="button">💾 Save & Apply Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Interactive Operations Guide Modal -->
   <div id="guide-modal" class="guide-modal hidden">
@@ -746,26 +1841,325 @@ collections:
     </div>
   </div>
 
-  <script>
-    // Modal toggle interactions
-    const toggleBtn = document.getElementById('guide-toggle-btn');
-    const closeBtn = document.getElementById('guide-close-btn');
-    const modal = document.getElementById('guide-modal');
+  <!-- Toast Notification -->
+  <div id="studio-toast">✅ Settings Saved Successfully!</div>
 
-    if (toggleBtn && modal) {
-      toggleBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+  <!-- Embedded Brand Controller Script -->
+  <script>
+    // Embedded Active Brand Configuration
+    window.CURRENT_BRAND_DATA = ${embeddedBrandJson};
+    window.ACTIVE_BRAND_ID = "${activeId}";
+
+    // Modal Toggles
+    const studioModal = document.getElementById('studio-modal');
+    const studioOpenBtn = document.getElementById('studio-toggle-btn');
+    const studioCloseBtn = document.getElementById('studio-close-btn');
+
+    const guideModal = document.getElementById('guide-modal');
+    const guideOpenBtn = document.getElementById('guide-toggle-btn');
+    const guideCloseBtn = document.getElementById('guide-close-btn');
+
+    if (studioOpenBtn && studioModal) {
+      studioOpenBtn.addEventListener('click', () => studioModal.classList.remove('hidden'));
     }
-    if (closeBtn && modal) {
-      closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    if (studioCloseBtn && studioModal) {
+      studioCloseBtn.addEventListener('click', () => studioModal.classList.add('hidden'));
     }
-    if (modal) {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.add('hidden');
+    if (studioModal) {
+      studioModal.addEventListener('click', (e) => {
+        if (e.target === studioModal) studioModal.classList.add('hidden');
+      });
+    }
+
+    if (guideOpenBtn && guideModal) {
+      guideOpenBtn.addEventListener('click', () => guideModal.classList.remove('hidden'));
+    }
+    if (guideCloseBtn && guideModal) {
+      guideCloseBtn.addEventListener('click', () => guideModal.classList.add('hidden'));
+    }
+    if (guideModal) {
+      guideModal.addEventListener('click', (e) => {
+        if (e.target === guideModal) guideModal.classList.add('hidden');
+      });
+    }
+
+    // Tab Switching inside Studio
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-tab');
+        tabBtns.forEach((b) => b.classList.remove('active'));
+        tabContents.forEach((c) => c.classList.remove('active'));
+        btn.classList.add('active');
+        const targetContent = document.getElementById(targetId);
+        if (targetContent) targetContent.classList.add('active');
+      });
+    });
+
+    // Real-Time Simulator Sync
+    function syncSimulator() {
+      const data = window.CURRENT_BRAND_DATA;
+
+      // Header & Brand
+      const name = document.getElementById('in-name')?.value || data.name;
+      const tagline = document.getElementById('in-tagline')?.value || data.tagline;
+      const primaryColor = document.getElementById('in-primaryColor')?.value || data.primaryColor;
+      const secondaryColor = document.getElementById('in-secondaryColor')?.value || data.secondaryColor;
+      const accentColor = document.getElementById('in-accentColor')?.value || data.accentColor;
+      const footerBg = document.getElementById('in-footerBg')?.value || data.footerBg;
+      const threshold = document.getElementById('in-shippingThreshold')?.value || data.shippingThreshold;
+
+      // Update Root CSS Variables
+      document.documentElement.style.setProperty('--brand-primary', primaryColor);
+      document.documentElement.style.setProperty('--brand-secondary', secondaryColor);
+      document.documentElement.style.setProperty('--brand-accent', accentColor);
+
+      // Update Header Bar
+      const headerTitle = document.getElementById('header-brand-title');
+      const headerTagline = document.getElementById('header-brand-tagline');
+      const headerAvatar = document.getElementById('header-avatar');
+      if (headerTitle) headerTitle.textContent = name;
+      if (headerTagline) headerTagline.textContent = tagline;
+      if (headerAvatar) {
+        headerAvatar.textContent = name.charAt(0);
+        headerAvatar.style.background = primaryColor;
+      }
+
+      // Update Studio Header
+      const studioTitleBrand = document.getElementById('studio-title-brand');
+      if (studioTitleBrand) studioTitleBrand.textContent = name;
+
+      // Update Simulated Mockup
+      const simBrandName = document.getElementById('sim-brand-name');
+      const simTagline = document.getElementById('sim-tagline-text');
+      const simAvatar = document.getElementById('sim-logo-avatar');
+      const simShipping = document.getElementById('sim-shipping-pill');
+
+      if (simBrandName) simBrandName.textContent = name;
+      if (simTagline) simTagline.textContent = tagline;
+      if (simAvatar) {
+        simAvatar.textContent = name.charAt(0);
+        simAvatar.style.background = primaryColor;
+      }
+      if (simShipping) simShipping.textContent = '🚚 Free shipping on $' + threshold + '+';
+
+      // Announcement Bar
+      const annEnabled = document.getElementById('in-announcement-enabled')?.checked ?? true;
+      const annBar = document.getElementById('sim-announcement-bar');
+      const annBadge = document.getElementById('sim-announcement-badge');
+      const annMsg = document.getElementById('sim-announcement-text');
+      const annLink = document.getElementById('sim-announcement-link');
+
+      if (annBar) {
+        annBar.style.display = annEnabled ? 'flex' : 'none';
+        annBar.style.background = secondaryColor;
+      }
+      if (annBadge) annBadge.textContent = document.getElementById('in-announcement-badge')?.value || 'SPECIAL';
+      if (annMsg) annMsg.textContent = document.getElementById('in-announcement-message')?.value || '';
+      if (annLink) annLink.textContent = (document.getElementById('in-announcement-linkText')?.value || 'Order Now') + ' →';
+
+      // Hero Section
+      const heroBadge = document.getElementById('sim-hero-badge');
+      const heroTitle = document.getElementById('sim-hero-headline');
+      const heroSub = document.getElementById('sim-hero-subtitle');
+      const heroPrimaryBtn = document.getElementById('sim-hero-primary-btn');
+      const heroSecBtn = document.getElementById('sim-hero-secondary-btn');
+
+      if (heroBadge) heroBadge.textContent = document.getElementById('in-hero-badge')?.value || '';
+      if (heroTitle) heroTitle.textContent = document.getElementById('in-hero-title')?.value || 'HOT FRESH DONUTS';
+      if (heroSub) heroSub.textContent = document.getElementById('in-hero-subtitle')?.value || '';
+      if (heroPrimaryBtn) {
+        heroPrimaryBtn.textContent = document.getElementById('in-hero-primaryCtaText')?.value || 'Shop Now';
+        heroPrimaryBtn.style.background = primaryColor;
+      }
+      if (heroSecBtn) heroSecBtn.textContent = document.getElementById('in-hero-secondaryCtaText')?.value || 'Explore Flavors';
+
+      // Operations
+      const simWeekday = document.getElementById('sim-hours-weekday');
+      const simPhone = document.getElementById('sim-contact-phone');
+      const simPromo = document.getElementById('sim-promo-code');
+
+      if (simWeekday) simWeekday.textContent = document.getElementById('in-weekdayHours')?.value || '';
+      if (simPhone) simPhone.textContent = document.getElementById('in-phone')?.value || '';
+      if (simPromo) {
+        const code = document.getElementById('in-promoCode')?.value || 'SAVE15';
+        const pct = document.getElementById('in-discountPercent')?.value || '15';
+        simPromo.textContent = code + ' (' + pct + '% OFF)';
+      }
+
+      // Swatches
+      const swPrimary = document.getElementById('swatch-primary');
+      const swSecondary = document.getElementById('swatch-secondary');
+      const swAccent = document.getElementById('swatch-accent');
+      const swFooter = document.getElementById('swatch-footer');
+
+      if (swPrimary) swPrimary.style.background = primaryColor;
+      if (swSecondary) swSecondary.style.background = secondaryColor;
+      if (swAccent) swAccent.style.background = accentColor;
+      if (swFooter) swFooter.style.background = footerBg;
+    }
+
+    // Attach real-time input listeners
+    const inputsToSync = document.querySelectorAll('.controls-pane input, .controls-pane textarea');
+    inputsToSync.forEach((inp) => {
+      inp.addEventListener('input', syncSimulator);
+      inp.addEventListener('change', syncSimulator);
+    });
+
+    // Color Pickers 2-way sync with hex text inputs
+    function setupColorSync(colorId, textId) {
+      const c = document.getElementById(colorId);
+      const t = document.getElementById(textId);
+      if (c && t) {
+        c.addEventListener('input', () => { t.value = c.value; syncSimulator(); });
+        t.addEventListener('input', () => { c.value = t.value; syncSimulator(); });
+      }
+    }
+    setupColorSync('in-primaryColor', 'in-primaryColor-txt');
+    setupColorSync('in-secondaryColor', 'in-secondaryColor-txt');
+    setupColorSync('in-accentColor', 'in-accentColor-txt');
+    setupColorSync('in-footerBg', 'in-footerBg-txt');
+
+    // Toast Notification Utility
+    function showToast(msg) {
+      const toast = document.getElementById('studio-toast');
+      if (toast) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 4000);
+      }
+    }
+
+    // Construct full brand data object from inputs
+    function getUpdatedData() {
+      const d = JSON.parse(JSON.stringify(window.CURRENT_BRAND_DATA));
+      d.name = document.getElementById('in-name')?.value || d.name;
+      d.tagline = document.getElementById('in-tagline')?.value || d.tagline;
+      d.description = document.getElementById('in-description')?.value || d.description;
+      d.primaryColor = document.getElementById('in-primaryColor')?.value || d.primaryColor;
+      d.secondaryColor = document.getElementById('in-secondaryColor')?.value || d.secondaryColor;
+      d.accentColor = document.getElementById('in-accentColor')?.value || d.accentColor;
+      d.footerBg = document.getElementById('in-footerBg')?.value || d.footerBg;
+      d.shippingThreshold = parseFloat(document.getElementById('in-shippingThreshold')?.value) || d.shippingThreshold;
+
+      d.announcement = {
+        enabled: document.getElementById('in-announcement-enabled')?.checked ?? true,
+        badge: document.getElementById('in-announcement-badge')?.value || '',
+        message: document.getElementById('in-announcement-message')?.value || '',
+        linkText: document.getElementById('in-announcement-linkText')?.value || 'Order Now',
+        linkUrl: document.getElementById('in-announcement-linkUrl')?.value || '/all-donuts',
+        bgColor: d.secondaryColor,
+        textColor: '#1b1b1b',
+      };
+
+      d.hero = {
+        badge: document.getElementById('in-hero-badge')?.value || '',
+        title: document.getElementById('in-hero-title')?.value || '',
+        subtitle: document.getElementById('in-hero-subtitle')?.value || '',
+        primaryCtaText: document.getElementById('in-hero-primaryCtaText')?.value || 'Shop Now',
+        primaryCtaUrl: '/all-donuts',
+        secondaryCtaText: document.getElementById('in-hero-secondaryCtaText')?.value || 'Explore Flavors',
+        secondaryCtaUrl: '/category/special',
+      };
+
+      d.contactAndHours = {
+        phone: document.getElementById('in-phone')?.value || '',
+        email: document.getElementById('in-email')?.value || '',
+        address: document.getElementById('in-address')?.value || '',
+        weekdayHours: document.getElementById('in-weekdayHours')?.value || '',
+        weekendHours: document.getElementById('in-weekendHours')?.value || '',
+        holidayNotice: document.getElementById('in-holidayNotice')?.value || '',
+      };
+
+      d.promotions = {
+        enabled: document.getElementById('in-promo-enabled')?.checked ?? true,
+        headline: document.getElementById('in-promoHeadline')?.value || '',
+        promoCode: document.getElementById('in-promoCode')?.value || '',
+        discountPercent: parseInt(document.getElementById('in-discountPercent')?.value, 10) || 15,
+        description: document.getElementById('in-promoDescription')?.value || '',
+      };
+
+      d.newsletter = {
+        headline: document.getElementById('in-newsletterHeadline')?.value || '',
+        subtext: document.getElementById('in-newsletterSubtext')?.value || '',
+        buttonText: 'Join the Party',
+        successMessage: "You're in! Welcome to the family.",
+      };
+
+      d.socialLinks = {
+        instagram: document.getElementById('in-instagram')?.value || '',
+        tiktok: document.getElementById('in-tiktok')?.value || '',
+        facebook: 'https://facebook.com',
+        twitter: 'https://x.com',
+      };
+
+      return d;
+    }
+
+    // Copy JSON Button
+    const copyBtn = document.getElementById('btn-copy-json');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        const payload = JSON.stringify(getUpdatedData(), null, 2);
+        navigator.clipboard.writeText(payload).then(() => {
+          showToast('📋 Brand configuration JSON copied to clipboard!');
+        });
+      });
+    }
+
+    // Download JSON Button
+    const dlBtn = document.getElementById('btn-download-json');
+    if (dlBtn) {
+      dlBtn.addEventListener('click', () => {
+        const payload = JSON.stringify(getUpdatedData(), null, 2);
+        const blob = new Blob([payload], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = window.ACTIVE_BRAND_ID + '.json';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('📥 Downloaded ' + window.ACTIVE_BRAND_ID + '.json!');
+      });
+    }
+
+    // Save & Apply Changes Button
+    const saveBtn = document.getElementById('btn-save-changes');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async () => {
+        const updated = getUpdatedData();
+        window.CURRENT_BRAND_DATA = updated;
+        syncSimulator();
+
+        saveBtn.disabled = true;
+        saveBtn.textContent = '⏳ Saving...';
+
+        try {
+          // Attempt POST to local development API
+          const res = await fetch('/api/save-brand', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ brandId: window.ACTIVE_BRAND_ID, data: updated })
+          });
+
+          if (res.ok) {
+            showToast('🎉 Saved directly to brand configuration! Store updated.');
+          } else {
+            showToast('✅ Brand settings applied! Download JSON or commit to master.');
+          }
+        } catch (e) {
+          showToast('✅ Brand settings applied live! Instant preview active.');
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = '💾 Save & Apply Changes';
+        }
       });
     }
   </script>
 
-  <!-- Git CMS Core Script (Sveltia CMS: Decap CMS config.yml compatible with GitHub Token & OAuth login) -->
+  <!-- Git CMS Core Script (Sveltia CMS) -->
   <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
 </body>
 </html>

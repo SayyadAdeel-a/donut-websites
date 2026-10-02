@@ -38,6 +38,32 @@ function createStaticServer(siteDir, brandName, port) {
     const url = new URL(req.url, `http://${req.headers.host}`);
     let pathname = decodeURIComponent(url.pathname);
 
+    // 0. API Route for Direct Brand Settings Saving
+    if (req.method === 'POST' && (pathname === '/api/save-brand' || pathname === '/admin/api/save-brand')) {
+      let body = '';
+      req.on('data', chunk => { body += chunk; });
+      req.on('end', () => {
+        try {
+          const parsed = JSON.parse(body);
+          const targetId = parsed.brandId;
+          const brandData = parsed.data;
+          if (targetId && brandData) {
+            const jsonPath = path.resolve('content/brands', `${targetId}.json`);
+            fs.writeFileSync(jsonPath, JSON.stringify(brandData, null, 2), 'utf8');
+            console.log(`✓ [API] Successfully saved updated brand configuration to ${jsonPath}`);
+            res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+            res.end(JSON.stringify({ ok: true, message: 'Brand configuration saved successfully!' }));
+            return;
+          }
+        } catch (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ ok: false, error: err.message }));
+          return;
+        }
+      });
+      return;
+    }
+
     // 1. Check redirects
     for (const rule of redirects) {
       if (rule.from.endsWith('/*')) {

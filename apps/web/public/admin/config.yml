@@ -7,8 +7,8 @@ backend:
   repo: SayyadAdeel-a/donut-websites
   branch: master
   api_root: https://api.github.com
-  site_domain: site-01-sprinklespree.pages.dev
-  base_url: https://site-01-sprinklespree.pages.dev
+  site_domain: sprinklespree.pages.dev
+  base_url: https://sprinklespree.pages.dev
   auth_endpoint: api/auth
 
 # Enable local backend proxy for instant offline development (npx decap-server)
@@ -19,8 +19,8 @@ publish_mode: editorial_workflow
 media_folder: apps/web/public/uploads/site-01
 public_folder: /uploads/site-01
 
-site_url: https://site-01-sprinklespree.pages.dev
-display_url: https://site-01-sprinklespree.pages.dev
+site_url: https://sprinklespree.pages.dev
+display_url: https://sprinklespree.pages.dev
 
 collections:
   - name: "business_operations"

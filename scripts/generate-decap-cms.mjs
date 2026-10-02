@@ -7,37 +7,47 @@ const brandConfigs = {
     tagline: 'Baking Happiness in Every Bite!',
     primaryColor: '#f54f95',
     secondaryColor: '#eeae23',
-    domain: 'site-01-sprinklespree.pages.dev',
+    domain: 'sprinklespree.pages.dev',
   },
   'site-02': {
     name: 'Glaze & Co.',
     tagline: 'Artisanal Sourdough & Small-Batch Patisserie',
     primaryColor: '#6e2f10',
     secondaryColor: '#eeae23',
-    domain: 'site-02-glaze-and-co.pages.dev',
+    domain: 'glazeandco.pages.dev',
   },
   'site-03': {
-    name: 'PureDonut',
+    name: 'PureDonut / KetoKreme',
     tagline: 'Clean Pastry & Keto Food Science',
     primaryColor: '#1ac500',
     secondaryColor: '#2a3440',
-    domain: 'site-03-puredonut.pages.dev',
+    domain: 'puredonut.pages.dev',
   },
   'site-04': {
     name: 'DoughBoyz',
     tagline: 'Midnight Drops & Streetwear Culture',
     primaryColor: '#f98000',
     secondaryColor: '#1b1b1b',
-    domain: 'site-04-doughboyz.pages.dev',
+    domain: 'doughboyz.pages.dev',
   },
   'site-05': {
     name: 'The Donut Counter',
     tagline: 'Since 1958 — Classic Americana Diner',
     primaryColor: '#3b89ff',
     secondaryColor: '#eeae23',
-    domain: 'site-05-the-donut-counter.pages.dev',
+    domain: 'thedonutcounter.pages.dev',
   },
 };
+
+// Brand slug aliases
+brandConfigs['sprinklespree'] = brandConfigs['site-01'];
+brandConfigs['glaze-and-co'] = brandConfigs['site-02'];
+brandConfigs['glazeandco'] = brandConfigs['site-02'];
+brandConfigs['puredonut'] = brandConfigs['site-03'];
+brandConfigs['doughboyz'] = brandConfigs['site-04'];
+brandConfigs['the-donut-counter'] = brandConfigs['site-05'];
+brandConfigs['thedonutcounter'] = brandConfigs['site-05'];
+brandConfigs['donut-counter'] = brandConfigs['site-05'];
 
 export function generateDecapCms(brandId, targetDir) {
   const brand = brandConfigs[brandId] || {

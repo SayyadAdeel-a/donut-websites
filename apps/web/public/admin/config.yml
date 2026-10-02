@@ -6,9 +6,10 @@ backend:
   name: github
   repo: SayyadAdeel-a/donut-websites
   branch: master
+  api_root: https://api.github.com
   site_domain: site-01-sprinklespree.pages.dev
-  base_url: https://github-oauth.sayyad-studio.workers.dev
-  auth_endpoint: auth
+  base_url: https://site-01-sprinklespree.pages.dev
+  auth_endpoint: api/auth
 
 # Enable local backend proxy for instant offline development (npx decap-server)
 local_backend: true

@@ -62,9 +62,10 @@ backend:
   name: github
   repo: SayyadAdeel-a/donut-websites
   branch: master
+  api_root: https://api.github.com
   site_domain: ${brand.domain}
-  base_url: https://github-oauth.sayyad-studio.workers.dev
-  auth_endpoint: auth
+  base_url: https://${brand.domain}
+  auth_endpoint: api/auth
 
 # Enable local backend proxy for instant offline development (npx decap-server)
 local_backend: true
@@ -188,8 +189,8 @@ collections:
 </head>
 <body>
   <div class="brand-admin-banner"></div>
-  <!-- Decap CMS Core Script -->
-  <script src="https://unpkg.com/decap-cms@^3.1.0/dist/decap-cms.js"></script>
+  <!-- Git CMS Core Script (Sveltia CMS: 100% Decap CMS config.yml compatible with built-in GitHub Token & OAuth login) -->
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
 </body>
 </html>
 `;

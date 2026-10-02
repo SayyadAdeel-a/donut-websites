@@ -10,9 +10,54 @@
   "currencySymbol": "$",
   "shippingThreshold": 45,
   "featuredProductIds": [
+    "prod-01",
     "prod-02",
     "prod-03",
-    "prod-07",
-    "prod-10"
-  ]
+    "prod-05"
+  ],
+  "announcement": {
+    "enabled": true,
+    "badge": "CHEF'S HARVEST",
+    "message": "Autumn Wild Sourdough & Single-Origin Belgian Chocolate Collection now available in limited batches.",
+    "linkText": "Reserve Tasting",
+    "linkUrl": "/all-donuts",
+    "bgColor": "#6e300f",
+    "textColor": "#ffffff"
+  },
+  "hero": {
+    "badge": "Michelin-Trained Pastry Artisans",
+    "title": "CRAFTED WITH SOURDOUGH, GLAZED WITH PASSION",
+    "subtitle": "48-hour cold fermented wild brioche dough, churned Normandy butter, and farm-direct fruit reductions created without artificial compromise.",
+    "primaryCtaText": "Explore Patisserie",
+    "primaryCtaUrl": "/all-donuts",
+    "secondaryCtaText": "Chef's Process",
+    "secondaryCtaUrl": "/why"
+  },
+  "contactAndHours": {
+    "phone": "+1 (555) 452-9326",
+    "email": "concierge@glazeandco.com",
+    "address": "480 Artisanal Boulevard, Suite 10, Portland, OR 97201",
+    "weekdayHours": "Wed – Fri: 6:30 AM – 4:00 PM",
+    "weekendHours": "Sat – Sun: 7:00 AM – 3:00 PM (Or until sold out)",
+    "holidayNotice": "Holiday pre-orders close 48 hours prior to Thanksgiving and Christmas Eve."
+  },
+  "promotions": {
+    "enabled": true,
+    "headline": "Curated Tasting Box: Complimentary Pairing",
+    "promoCode": "PATISSERIE",
+    "discountPercent": 15,
+    "description": "Order any 6-piece Tasting Box and receive complimentary seasonal fruit preserves."
+  },
+  "newsletter": {
+    "headline": "The Artisan's Table Dispatch",
+    "subtext": "Receive monthly tasting notes from Head Chef Paul, secret seasonal flavor releases, and masterclass invitations.",
+    "buttonText": "Subscribe",
+    "successMessage": "Welcome to the Patisserie Dispatch. Your seasonal tasting guide is on its way."
+  },
+  "socialLinks": {
+    "instagram": "https://instagram.com/glazeandco",
+    "tiktok": "https://tiktok.com/@glazeandco",
+    "facebook": "https://facebook.com/glazeandco",
+    "twitter": "https://x.com/glazeandco"
+  }
 }

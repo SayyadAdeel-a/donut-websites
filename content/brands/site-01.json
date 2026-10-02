@@ -14,5 +14,50 @@
     "prod-09",
     "prod-04",
     "prod-01"
-  ]
+  ],
+  "announcement": {
+    "enabled": true,
+    "badge": "PARTY BOX SPECIAL",
+    "message": "Free 2-Day Priority Delivery on all Birthday & Confetti Boxes over $35!",
+    "linkText": "Order Party Box",
+    "linkUrl": "/all-donuts",
+    "bgColor": "#eeae23",
+    "textColor": "#1b1b1b"
+  },
+  "hero": {
+    "badge": "Over 100,000+ Happy Glaze Lovers",
+    "title": "DONUTS OVER EVERYTHING",
+    "subtitle": "Freshly handcrafted artisan sourdough donuts baked with rainbow sprinkles, flying excitement, and pure joy every single morning.",
+    "primaryCtaText": "Shop Now",
+    "primaryCtaUrl": "/all-donuts",
+    "secondaryCtaText": "Party Catering",
+    "secondaryCtaUrl": "/contact"
+  },
+  "contactAndHours": {
+    "phone": "+1 (555) 777-4659",
+    "email": "party@sprinklespree.com",
+    "address": "124 Rainbow Confetti Way, Sugar Valley, CA 90210",
+    "weekdayHours": "Mon – Fri: 7:00 AM – 7:00 PM",
+    "weekendHours": "Sat – Sun: 8:00 AM – 8:30 PM",
+    "holidayNotice": "Open all holidays & birthday weekends!"
+  },
+  "promotions": {
+    "enabled": true,
+    "headline": "Confetti Weekend: 20% Off 2+ Dozen",
+    "promoCode": "SPRINKLE20",
+    "discountPercent": 20,
+    "description": "Add any two dozen donuts to cart and enter code SPRINKLE20 for instant 20% savings."
+  },
+  "newsletter": {
+    "headline": "Join the Sprinkle Birthday Club",
+    "subtext": "Get free donuts on your birthday, invitations to secret flavor drops, and 15% off today.",
+    "buttonText": "Join the Party",
+    "successMessage": "You're in! Check your inbox for your 15% off celebration coupon."
+  },
+  "socialLinks": {
+    "instagram": "https://instagram.com/sprinklespree",
+    "tiktok": "https://tiktok.com/@sprinklespree",
+    "facebook": "https://facebook.com/sprinklespree",
+    "twitter": "https://x.com/sprinklespree"
+  }
 }

@@ -51,10 +51,10 @@ export const GlobalFooter: React.FC<{ config?: FooterConfig }> = ({ config }) =>
                 Fresh From The Oven
               </span>
               <h3 className="font-display text-3xl md:text-5xl font-bold uppercase tracking-tight text-black mb-3">
-                Join the Glaze Club!
+                {brand?.newsletter?.headline || 'Join the Glaze Club!'}
               </h3>
               <p className="font-sans text-sm md:text-base text-gray-700 max-w-[480px]">
-                Subscribe for weekly secret flavors, VIP unboxing boxes, and 15% off your first bakery order.
+                {brand?.newsletter?.subtext || 'Subscribe for weekly secret flavors, VIP unboxing boxes, and 15% off your first bakery order.'}
               </p>
             </div>
 
@@ -62,7 +62,7 @@ export const GlobalFooter: React.FC<{ config?: FooterConfig }> = ({ config }) =>
               {subscribed ? (
                 <div className="flex items-center gap-3 p-4 rounded-[16px] bg-[#1ac500]/10 border-2 border-[#1ac500] text-[#1ac500] font-sans font-bold text-sm">
                   <Check size={20} weight="bold" />
-                  <span>Welcome to the club! Check your inbox for sweet treats.</span>
+                  <span>{brand?.newsletter?.successMessage || 'Welcome to the club! Check your inbox for sweet treats.'}</span>
                 </div>
               ) : (
                 <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
@@ -155,6 +155,12 @@ export const GlobalFooter: React.FC<{ config?: FooterConfig }> = ({ config }) =>
                 Support & Info
               </h5>
               <ul className="space-y-2 font-sans text-xs uppercase tracking-wider opacity-90">
+                {brand.contactAndHours?.phone && (
+                  <li><a href={`tel:${brand.contactAndHours.phone}`} className="hover:underline">{brand.contactAndHours.phone}</a></li>
+                )}
+                {brand.contactAndHours?.weekdayHours && (
+                  <li className="normal-case opacity-75">{brand.contactAndHours.weekdayHours}</li>
+                )}
                 <li><Link href="/contact" className="hover:underline">Contact Support</Link></li>
                 <li><Link href="/checkout" className="hover:underline">Cart & Checkout</Link></li>
                 <li><Link href="/admin/licenses" className="hover:underline">Licenses & Credits</Link></li>

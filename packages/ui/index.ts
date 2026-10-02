@@ -26,6 +26,7 @@ export * from './components/composite/MegaDropdown';
 export * from './components/composite/MobileNav';
 export * from './components/composite/TestimonialMarquee';
 export * from './components/composite/NutritionBadge';
+export * from './components/composite/AnnouncementBar';
 
 // Section Components
 export * from './components/sections/Hero01';

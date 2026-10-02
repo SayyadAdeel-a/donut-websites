@@ -1,18 +1,63 @@
 {
   "id": "site-04",
   "name": "DoughBoyz",
-  "tagline": "Late Night Glaze. Streetwear Appetite.",
-  "description": "Underground garage bakery meets skate and streetwear culture. Midnight drops, heavy offset shadows, grunge stickers, and aggressive flavors.",
-  "primaryColor": "#f21d33",
+  "tagline": "Midnight Drops & Streetwear Culture",
+  "description": "Bold, rebellious, skate-inspired street culture confectionery dropping limited-batch experimental glazes, hot-fried night specials, and apparel collabs.",
+  "primaryColor": "#f98000",
   "secondaryColor": "#1b1b1b",
-  "accentColor": "#f98000",
-  "footerBg": "#000000",
+  "accentColor": "#ffffff",
+  "footerBg": "#1b1b1b",
   "currencySymbol": "$",
-  "shippingThreshold": 40,
+  "shippingThreshold": 50,
   "featuredProductIds": [
-    "prod-01",
-    "prod-03",
     "prod-05",
-    "prod-08"
-  ]
+    "prod-02",
+    "prod-08",
+    "prod-09"
+  ],
+  "announcement": {
+    "enabled": true,
+    "badge": "MIDNIGHT DROP",
+    "message": "Limited Drop 04 drops tonight at 10 PM. Only 300 numbered sneakerhead boxes baked.",
+    "linkText": "Get Early Access",
+    "linkUrl": "/all-donuts",
+    "bgColor": "#f98000",
+    "textColor": "#000000"
+  },
+  "hero": {
+    "badge": "Streetwear Culture & Midnight Drops",
+    "title": "MIDNIGHT DROPS & URBAN STREETWEAR",
+    "subtitle": "Loud flavors, crunchy toppings, and skate-culture hype. Fresh hot batches fried until 2 AM every Friday and Saturday night.",
+    "primaryCtaText": "Cop The Drop",
+    "primaryCtaUrl": "/all-donuts",
+    "secondaryCtaText": "Street Manifesto",
+    "secondaryCtaUrl": "/why"
+  },
+  "contactAndHours": {
+    "phone": "+1 (555) 368-4426",
+    "email": "crew@doughboyz.com",
+    "address": "108 Vandam Street, SoHo, New York, NY 10013",
+    "weekdayHours": "Tue – Thu: 12:00 PM – 11:00 PM",
+    "weekendHours": "Fri – Sat: 12:00 PM – 2:00 AM (Late Night Drops)",
+    "holidayNotice": "Open late on New Year's Eve & Halloween until 4 AM."
+  },
+  "promotions": {
+    "enabled": true,
+    "headline": "Street Squad Bundle: Free Merch Sticker Pack",
+    "promoCode": "DOUGHCREW",
+    "discountPercent": 10,
+    "description": "Order any 12-pack drop and get the exclusive limited edition vinyl sticker pack free."
+  },
+  "newsletter": {
+    "headline": "Join the Midnight Drop List",
+    "subtext": "Don't miss the next numbered release. SMS & email alert 15 minutes before public drop.",
+    "buttonText": "Get Drop Alerts",
+    "successMessage": "Locked in. You'll receive early access SMS and secret link 15 minutes prior."
+  },
+  "socialLinks": {
+    "instagram": "https://instagram.com/doughboyz",
+    "tiktok": "https://tiktok.com/@doughboyz",
+    "facebook": "https://facebook.com/doughboyz",
+    "twitter": "https://x.com/doughboyz"
+  }
 }

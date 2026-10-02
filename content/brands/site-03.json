@@ -1,18 +1,63 @@
 {
   "id": "site-03",
   "name": "PureDonut / KetoKreme",
-  "tagline": "Zero Guilt. 100% Flavor. Keto & Gluten-Free.",
-  "description": "Clean nutrition food science lab. Handcrafted with California almond flour, organic monk fruit, and zero sugar. Made for athletes, diabetics, and keto lifestyles.",
+  "tagline": "Clean Pastry & Keto Food Science",
+  "description": "Functional confectionery laboratory engineering low-carb, keto, and sugar-free protein donuts using clean prebiotic fibers and almond flour.",
   "primaryColor": "#1ac500",
-  "secondaryColor": "#2a3440",
-  "accentColor": "#3898ec",
-  "footerBg": "#2a3440",
+  "secondaryColor": "#eeae23",
+  "accentColor": "#6ce356",
+  "footerBg": "#1b1b1b",
   "currencySymbol": "$",
-  "shippingThreshold": 50,
+  "shippingThreshold": 40,
   "featuredProductIds": [
-    "prod-04",
+    "prod-07",
     "prod-06",
     "prod-10",
-    "prod-02"
-  ]
+    "prod-04"
+  ],
+  "announcement": {
+    "enabled": true,
+    "badge": "ZERO SUGAR",
+    "message": "Certified Keto, Grain-Free & High-Protein Macro Donuts with less than 2g Net Carbs.",
+    "linkText": "View Macros",
+    "linkUrl": "/all-donuts",
+    "bgColor": "#1ac500",
+    "textColor": "#ffffff"
+  },
+  "hero": {
+    "badge": "Third-Party Lab Verified Macros",
+    "title": "CLEAN PASTRY & KETO FOOD SCIENCE",
+    "subtitle": "Zero refined sugar, non-GMO almond flour, and grass-fed collagen peptides. Confectionery performance fuel that tastes like pure indulgence.",
+    "primaryCtaText": "Shop Clean Boxes",
+    "primaryCtaUrl": "/all-donuts",
+    "secondaryCtaText": "Lab Nutrition Facts",
+    "secondaryCtaUrl": "/why"
+  },
+  "contactAndHours": {
+    "phone": "+1 (555) 839-4462",
+    "email": "wellness@puredonut.com",
+    "address": "890 Innovation Park Drive, Boulder, CO 80301",
+    "weekdayHours": "Mon – Fri: 6:00 AM – 6:00 PM",
+    "weekendHours": "Sat – Sun: 7:00 AM – 5:00 PM",
+    "holidayNotice": "Gym delivery partners operate 365 days a year including holidays."
+  },
+  "promotions": {
+    "enabled": true,
+    "headline": "Macro Fuel Starter: 15% Off Your First Keto Dozen",
+    "promoCode": "KETO15",
+    "discountPercent": 15,
+    "description": "Fuel your workout without insulin spikes. 15% off with code KETO15."
+  },
+  "newsletter": {
+    "headline": "The Pure Science Wellness Club",
+    "subtext": "Receive metabolic nutrition breakdowns, macro-friendly diet tips, and new batch alerts.",
+    "buttonText": "Join Wellness Club",
+    "successMessage": "Welcome! Your macro breakdown guide and 15% discount code have been dispatched."
+  },
+  "socialLinks": {
+    "instagram": "https://instagram.com/puredonut",
+    "tiktok": "https://tiktok.com/@puredonut",
+    "facebook": "https://facebook.com/puredonut",
+    "twitter": "https://x.com/puredonut"
+  }
 }

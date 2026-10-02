@@ -9,6 +9,7 @@ import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { useCart } from '../../hooks/useCart';
 import { MegaDropdown, DropdownItem } from '../composite/MegaDropdown';
 import { MobileNav, NavCategory } from '../composite/MobileNav';
+import { AnnouncementBar } from '../composite/AnnouncementBar';
 import { getActiveBrand, BrandConfig } from '../../tokens/brands';
 
 export interface HeaderConfig {
@@ -127,11 +128,15 @@ export const GlobalHeader: React.FC<{ config?: HeaderConfig; activePath?: string
 
   return (
     <>
+      {brand?.announcement?.enabled && (
+        <AnnouncementBar announcement={brand.announcement} />
+      )}
       <header
         className={twMerge(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full',
+          'fixed left-0 right-0 z-50 transition-all duration-300 w-full',
+          brand?.announcement?.enabled ? 'top-10' : 'top-0',
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.08)] py-2 border-b-2 border-black'
+            ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.08)] py-2 border-b-2 border-black !top-0'
             : 'bg-transparent py-4'
         )}
       >

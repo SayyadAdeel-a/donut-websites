@@ -1,18 +1,63 @@
 {
   "id": "site-05",
   "name": "The Donut Counter",
-  "tagline": "Serving American Comfort Since 1958.",
-  "description": "Heritage Americana diner tradition. Classic buttermilk crullers, hot filter coffee, and multi-generation recipe warmth.",
+  "tagline": "Since 1958 — Classic Americana Diner",
+  "description": "Authentic mid-century American diner counter serving nostalgic buttermilk crullers, kettle-boiled glazed rings, and bottomless black drip coffee.",
   "primaryColor": "#3b89ff",
   "secondaryColor": "#eeae23",
-  "accentColor": "#f21d33",
-  "footerBg": "#3b89ff",
+  "accentColor": "#ff5b5b",
+  "footerBg": "#1c355e",
   "currencySymbol": "$",
   "shippingThreshold": 30,
   "featuredProductIds": [
     "prod-06",
-    "prod-10",
-    "prod-05",
-    "prod-01"
-  ]
+    "prod-07",
+    "prod-01",
+    "prod-10"
+  ],
+  "announcement": {
+    "enabled": true,
+    "badge": "SINCE 1958",
+    "message": "Old-fashioned buttermilk crullers & diner filter coffee: Serving our community for over 65 years.",
+    "linkText": "View Diner Menu",
+    "linkUrl": "/all-donuts",
+    "bgColor": "#3b89ff",
+    "textColor": "#ffffff"
+  },
+  "hero": {
+    "badge": "Americana Diner Heritage Since 1958",
+    "title": "SERVED FRESH AT THE COUNTER SINCE 1958",
+    "subtitle": "Crisp golden buttermilk crullers, real kettle-cooked apple fritters, and freshly brewed diner coffee poured with a warm smile.",
+    "primaryCtaText": "Order for Pickup",
+    "primaryCtaUrl": "/all-donuts",
+    "secondaryCtaText": "Our 1958 Heritage",
+    "secondaryCtaUrl": "/about"
+  },
+  "contactAndHours": {
+    "phone": "+1 (555) 195-8001",
+    "email": "counter@thedonutcounter.com",
+    "address": "58 Main Street Historic District, Route 66, Flagstaff, AZ 86001",
+    "weekdayHours": "Mon – Fri: 5:30 AM – 3:00 PM",
+    "weekendHours": "Sat – Sun: 6:00 AM – 4:00 PM",
+    "holidayNotice": "Closed on Christmas Day to let our diner crew celebrate with family."
+  },
+  "promotions": {
+    "enabled": true,
+    "headline": "Counter Classic: Free Large Filter Coffee with Baker's Dozen",
+    "promoCode": "SINCE1958",
+    "discountPercent": 10,
+    "description": "Enjoy an extra 13th donut and complimentary hot coffee with every counter dozen."
+  },
+  "newsletter": {
+    "headline": "The Counter Chronicles Gazette",
+    "subtext": "Stories from our regulars, classic baking history, and monthly counter specials.",
+    "buttonText": "Read the Gazette",
+    "successMessage": "Thank you neighbor! We'll save a fresh cruller and a cup of joe for you."
+  },
+  "socialLinks": {
+    "instagram": "https://instagram.com/thedonutcounter",
+    "tiktok": "https://tiktok.com/@thedonutcounter",
+    "facebook": "https://facebook.com/thedonutcounter",
+    "twitter": "https://x.com/thedonutcounter"
+  }
 }

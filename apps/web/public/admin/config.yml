@@ -1,5 +1,5 @@
 # ==============================================================================
-# Decap CMS Configuration — SprinkleSpree
+# Sveltia / Decap CMS Configuration — SprinkleSpree
 # Generated automatically by scripts/generate-decap-cms.mjs
 # ==============================================================================
 backend:
@@ -23,42 +23,118 @@ site_url: https://site-01-sprinklespree.pages.dev
 display_url: https://site-01-sprinklespree.pages.dev
 
 collections:
-  - name: "brand_settings"
-    label: "Brand Identity & Theme"
+  - name: "business_operations"
+    label: "🏪 Store Operations & Website Content"
+    description: "Manage your top announcement bar, hero headlines, store opening hours, seasonal coupons, newsletter offers, and brand styling."
     delete: false
     files:
       - file: "content/brands/site-01.json"
-        label: "SprinkleSpree Settings"
+        label: "SprinkleSpree — Store & Content Controls"
         name: "settings"
         fields:
-          - { label: "Brand Name", name: "name", widget: "string" }
-          - { label: "Tagline", name: "tagline", widget: "string" }
-          - { label: "Bio / Description", name: "description", widget: "text" }
-          - { label: "Primary Brand Color", name: "primaryColor", widget: "color" }
-          - { label: "Secondary Color", name: "secondaryColor", widget: "color" }
-          - { label: "Accent Color", name: "accentColor", widget: "color" }
-          - { label: "Footer Background", name: "footerBg", widget: "color" }
+          # --- Brand Identity & Theme ---
+          - { label: "Brand Name", name: "name", widget: "string", hint: "The public business name displayed across headers, footers and tabs." }
+          - { label: "Tagline", name: "tagline", widget: "string", hint: "Short brand motto, e.g. 'Baking Happiness in Every Bite!'" }
+          - { label: "Bio / Story Description", name: "description", widget: "text", hint: "Brand story and overview displayed in search results and footer." }
+          - { label: "Primary Brand Color", name: "primaryColor", widget: "color", hint: "Main brand color used for buttons, accents, and hero gradients." }
+          - { label: "Secondary Color", name: "secondaryColor", widget: "color", hint: "Supporting color for badges and decorative elements." }
+          - { label: "Accent Highlight Color", name: "accentColor", widget: "color", hint: "Highlight tint for stickers and rating stars." }
+          - { label: "Footer Background Color", name: "footerBg", widget: "color", hint: "Background color of your website footer." }
           - { label: "Currency Symbol", name: "currencySymbol", widget: "string", default: "$" }
-          - { label: "Free Shipping Threshold ($)", name: "shippingThreshold", widget: "number", value_type: "float" }
+          - { label: "Free Shipping Threshold ($)", name: "shippingThreshold", widget: "number", value_type: "float", hint: "Minimum cart total required to qualify for free shipping." }
+
+          # --- Top Announcement & Promo Bar ---
+          - label: "📢 Top Announcement & Promo Bar"
+            name: "announcement"
+            widget: "object"
+            summary: "{{fields.badge}}: {{fields.message}}"
+            fields:
+              - { label: "Enable Top Banner?", name: "enabled", widget: "boolean", default: true, hint: "Turn on/off to display seasonal alerts, flash sales, or holiday notices." }
+              - { label: "Badge Tag (e.g. SPECIAL OFFER)", name: "badge", widget: "string", hint: "Short pill tag like 'SPRING DROP', 'HOLIDAY HOURS', or 'FLASH SALE'." }
+              - { label: "Announcement Message", name: "message", widget: "string", hint: "Text shown across every page of your store at the very top." }
+              - { label: "Action Link Text", name: "linkText", widget: "string", default: "Order Now", hint: "Clickable button label (e.g. 'Order Now', 'View Specials')." }
+              - { label: "Action Link Destination", name: "linkUrl", widget: "string", default: "/all-donuts", hint: "Where clicking the banner button directs visitors." }
+              - { label: "Banner Background Color", name: "bgColor", widget: "color", required: false, hint: "Custom color for this banner (optional)." }
+              - { label: "Banner Text Color", name: "textColor", widget: "color", default: "#ffffff" }
+
+          # --- Homepage Hero Section & Value Proposition ---
+          - label: "🏠 Homepage Hero & Campaign Pitch"
+            name: "hero"
+            widget: "object"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Eyebrow Badge / Quote", name: "badge", widget: "string", hint: "Social proof badge e.g. 'Over 100,000+ Happy Glaze Lovers'." }
+              - { label: "Main Bold Headline", name: "title", widget: "string", hint: "The large primary headline greeting visitors on your homepage." }
+              - { label: "Supporting Value Proposition", name: "subtitle", widget: "text", hint: "Describe what makes your donuts unique and irresistible." }
+              - { label: "Primary Button Label", name: "primaryCtaText", widget: "string", default: "Shop Now" }
+              - { label: "Primary Button Link", name: "primaryCtaUrl", widget: "string", default: "/all-donuts" }
+              - { label: "Secondary Button Label", name: "secondaryCtaText", widget: "string", default: "Explore Flavors" }
+              - { label: "Secondary Button Link", name: "secondaryCtaUrl", widget: "string", default: "/category/special" }
+
+          # --- Store Hours & Contact Operations ---
+          - label: "⏰ Store Hours, Contact & Location"
+            name: "contactAndHours"
+            widget: "object"
+            summary: "Hours: {{fields.weekdayHours}}"
+            fields:
+              - { label: "Store Phone Number", name: "phone", widget: "string", hint: "Orders and catering telephone number displayed in footer and contact page." }
+              - { label: "Customer Inquiries Email", name: "email", widget: "string", hint: "Email address for general customer support and wholesale inquiries." }
+              - { label: "Bakery Physical Address", name: "address", widget: "string", hint: "Physical storefront address shown in store locator and footer." }
+              - { label: "Weekday Opening Hours", name: "weekdayHours", widget: "string", hint: "e.g. Mon – Fri: 7:00 AM – 7:00 PM" }
+              - { label: "Weekend Opening Hours", name: "weekendHours", widget: "string", hint: "e.g. Sat – Sun: 8:00 AM – 8:30 PM" }
+              - { label: "Holiday Hours / Special Notice", name: "holidayNotice", widget: "string", hint: "Seasonal notes (e.g. 'Open 4th of July 8 AM – 2 PM! Pre-orders recommended')." }
+
+          # --- Seasonal Promotions & Coupon Codes ---
+          - label: "🎁 Seasonal Promotions & Coupon Codes"
+            name: "promotions"
+            widget: "object"
+            summary: "{{fields.promoCode}} ({{fields.discountPercent}}% Off)"
+            fields:
+              - { label: "Activate Promotion?", name: "enabled", widget: "boolean", default: true }
+              - { label: "Promo Headline", name: "headline", widget: "string", hint: "e.g. 'Confetti Weekend: 20% Off 2+ Dozen'" }
+              - { label: "Coupon Code (e.g. SPRINKLE20)", name: "promoCode", widget: "string", hint: "Code customers can use at checkout for instant savings." }
+              - { label: "Discount Percentage (%)", name: "discountPercent", widget: "number", default: 15 }
+              - { label: "Terms & Conditions / Details", name: "description", widget: "text", hint: "Rules, minimum purchase amount, or expiration date." }
+
+          # --- VIP Club & Newsletter Copy ---
+          - label: "💌 VIP Club & Newsletter Lead Magnet"
+            name: "newsletter"
+            widget: "object"
+            summary: "{{fields.headline}}"
+            fields:
+              - { label: "Club / Newsletter Headline", name: "headline", widget: "string", hint: "Headline on the newsletter box in your footer, e.g. 'Join the Sprinkle VIP Club'." }
+              - { label: "Incentive / Offer Copy", name: "subtext", widget: "text", hint: "Copy explaining what subscribers get (e.g. secret menu drops, free birthday donuts)." }
+              - { label: "Button Text", name: "buttonText", widget: "string", default: "Get Started" }
+              - { label: "Confirmation Success Message", name: "successMessage", widget: "string", hint: "Notification displayed immediately after a user subscribes." }
+
+          # --- Social Media Channels ---
+          - label: "📱 Social Media Profiles"
+            name: "socialLinks"
+            widget: "object"
+            fields:
+              - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+              - { label: "TikTok URL", name: "tiktok", widget: "string", required: false }
+              - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
+              - { label: "Twitter / X URL", name: "twitter", widget: "string", required: false }
 
   - name: "products"
-    label: "Donut Menu & Products"
-    label_singular: "Product"
+    label: "🍩 Donut Menu & Catalog"
+    label_singular: "Donut Item"
     folder: "content/products/site-01"
     create: true
     slug: "{{slug}}"
     format: "json"
     fields:
-      - { label: "Product ID", name: "id", widget: "string" }
-      - { label: "Product Name", name: "name", widget: "string" }
-      - { label: "URL Slug", name: "slug", widget: "string" }
+      - { label: "Product ID", name: "id", widget: "string", hint: "Unique code e.g. prod-11" }
+      - { label: "Donut Name", name: "name", widget: "string" }
+      - { label: "URL Slug", name: "slug", widget: "string", hint: "Web address identifier (e.g. 'strawberry-confetti')" }
       - { label: "Price ($)", name: "price", widget: "number", value_type: "float" }
-      - { label: "Original Price ($)", name: "originalPrice", widget: "number", value_type: "float", required: false }
+      - { label: "Original Price ($)", name: "originalPrice", widget: "number", value_type: "float", required: false, hint: "Optional: set higher than price to show a discount strike-through." }
       - { label: "Category", name: "category", widget: "select", options: ["Crunch Series", "Chocolate Series", "Gourmet", "Fruit Glaze", "Filled Series", "Traditional", "Party Series"] }
-      - { label: "Badge", name: "badge", widget: "string", required: false }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Product Image", name: "image", widget: "image" }
-      - { label: "Card Background Tint", name: "bgColor", widget: "color" }
+      - { label: "Badge Tag", name: "badge", widget: "string", required: false, hint: "Sticker tag like 'New', 'Bestseller', or 'Chef Choice'." }
+      - { label: "Product Description", name: "description", widget: "text" }
+      - { label: "Donut Image", name: "image", widget: "image" }
+      - { label: "Card Background Tint", name: "bgColor", widget: "color", hint: "Subtle background color for this donut's menu card." }
       - { label: "Customer Rating (1.0 - 5.0)", name: "rating", widget: "number", value_type: "float", default: 5.0 }
       - { label: "Review Count", name: "reviewCount", widget: "number", default: 100 }
       - label: "Nutritional Information"
@@ -73,7 +149,7 @@ collections:
       - { label: "Ingredients List", name: "ingredients", widget: "list" }
 
   - name: "articles"
-    label: "Stories & Articles"
+    label: "📰 Bakery Stories & Blog"
     label_singular: "Article"
     folder: "content/articles/site-01"
     create: true
@@ -82,10 +158,10 @@ collections:
     fields:
       - { label: "Article Title", name: "title", widget: "string" }
       - { label: "URL Slug", name: "slug", widget: "string" }
-      - { label: "Excerpt Summary", name: "excerpt", widget: "text" }
-      - { label: "Category", name: "category", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "string" }
-      - { label: "Read Time", name: "readTime", widget: "string" }
+      - { label: "Excerpt Summary", name: "excerpt", widget: "text", hint: "1-2 sentence preview displayed on the blog catalog." }
+      - { label: "Category", name: "category", widget: "string", hint: "e.g. 'Baking Guide', 'Events', 'Behind The Scenes'" }
+      - { label: "Publish Date", name: "date", widget: "string", hint: "e.g. 'Oct 2, 2026'" }
+      - { label: "Read Time", name: "readTime", widget: "string", hint: "e.g. '4 min read'" }
       - { label: "Cover Photo", name: "image", widget: "image" }
       - label: "Author Details"
         name: "author"

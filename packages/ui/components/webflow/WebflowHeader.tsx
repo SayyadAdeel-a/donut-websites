@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import { useCart } from '../../hooks/useCart';
 import { getActiveBrand, BrandConfig } from '../../tokens/brands';
+import { AnnouncementBar } from '../composite/AnnouncementBar';
 
 export interface WebflowHeaderProps {
   activePath?: string;
@@ -114,17 +115,27 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({
   ];
 
   return (
-    <nav
-      className="header-navigation"
+    <div
+      className="header-navigation-wrapper"
       style={{
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         zIndex: 100,
-        backgroundColor: 'transparent',
       }}
     >
+      {brand?.announcement?.enabled && (
+        <AnnouncementBar announcement={brand.announcement} />
+      )}
+      <nav
+        className="header-navigation"
+        style={{
+          position: 'relative',
+          width: '100%',
+          backgroundColor: 'transparent',
+        }}
+      >
       <div
         data-collapse="medium"
         data-animation="default"
@@ -426,5 +437,6 @@ export const WebflowHeader: React.FC<WebflowHeaderProps> = ({
         </AnimatePresence>
       </div>
     </nav>
+  </div>
   );
 };

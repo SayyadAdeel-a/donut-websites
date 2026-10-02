@@ -91,11 +91,16 @@ export const WebflowFooter: React.FC<WebflowFooterProps> = ({
             <div className="w-layout-grid footer-grid">
               <div id="w-node-d35bb152-d1f6-b81f-38a9-59f376088355-7608834f" className="footer-block-small">
                 <div id="Footer-Contact-Form" className="footer-contact-form-container w-form">
-                  <div className="footer-title">Newsletter</div>
+                  <div className="footer-title">{brand?.newsletter?.headline || 'Newsletter'}</div>
+                  {brand?.newsletter?.subtext && (
+                    <p className="text-white/80 text-sm mb-3">
+                      {brand.newsletter.subtext}
+                    </p>
+                  )}
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
-                      alert('Thank you! Your submission has been received!');
+                      alert(brand?.newsletter?.successMessage || 'Thank you! Your submission has been received!');
                     }}
                     className="footer-contact-form-wrapper"
                   >
@@ -113,7 +118,7 @@ export const WebflowFooter: React.FC<WebflowFooterProps> = ({
                       <input
                         type="submit"
                         className="cta-sign-up footer-form w-button cursor-pointer"
-                        value="Get Started"
+                        value={brand?.newsletter?.buttonText || "Get Started"}
                       />
                     </div>
                   </form>
@@ -165,16 +170,59 @@ export const WebflowFooter: React.FC<WebflowFooterProps> = ({
 
               <div className="footer-links-wrapper">
                 <div className="footer-column">
-                  <div className="footer-title">Stories &amp; News</div>
+                  <div className="footer-title">Visit &amp; Hours</div>
+                  {brand.contactAndHours?.weekdayHours && (
+                    <div className="footer-link w-inline-block mb-1">
+                      <div className="footer-text-block text-white/90 text-sm font-semibold">
+                        {brand.contactAndHours.weekdayHours}
+                      </div>
+                    </div>
+                  )}
+                  {brand.contactAndHours?.weekendHours && (
+                    <div className="footer-link w-inline-block mb-1">
+                      <div className="footer-text-block text-white/80 text-sm">
+                        {brand.contactAndHours.weekendHours}
+                      </div>
+                    </div>
+                  )}
+                  {brand.contactAndHours?.phone && (
+                    <a href={`tel:${brand.contactAndHours.phone}`} className="footer-link w-inline-block mb-1">
+                      <div className="footer-text-block text-white/90 text-sm underline">
+                        {brand.contactAndHours.phone}
+                      </div>
+                    </a>
+                  )}
+                  {brand.contactAndHours?.address && (
+                    <div className="footer-link w-inline-block">
+                      <div className="footer-text-block text-white/70 text-xs">
+                        {brand.contactAndHours.address}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="footer-links-wrapper">
+                <div className="footer-column">
+                  <div className="footer-title">Stories &amp; Social</div>
                   <Link href="/all-blogs" className="footer-link w-inline-block">
-                    <div className="footer-text-block">All Stories</div>
+                    <div className="footer-text-block">Bakery Stories</div>
                   </Link>
-                  <Link href="/blog-article/our-top-five-best-selling-donuts" className="footer-link w-inline-block">
-                    <div className="footer-text-block">Featured Article</div>
-                  </Link>
-                  <Link href="/blog-category/event" className="footer-link w-inline-block">
-                    <div className="footer-text-block">Events &amp; Community</div>
-                  </Link>
+                  {brand.socialLinks?.instagram && (
+                    <a href={brand.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="footer-link w-inline-block">
+                      <div className="footer-text-block">Instagram</div>
+                    </a>
+                  )}
+                  {brand.socialLinks?.tiktok && (
+                    <a href={brand.socialLinks.tiktok} target="_blank" rel="noopener noreferrer" className="footer-link w-inline-block">
+                      <div className="footer-text-block">TikTok</div>
+                    </a>
+                  )}
+                  {brand.socialLinks?.facebook && (
+                    <a href={brand.socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="footer-link w-inline-block">
+                      <div className="footer-text-block">Facebook</div>
+                    </a>
+                  )}
                 </div>
               </div>
 

@@ -24,12 +24,12 @@ display_url: https://sprinklespree.pages.dev
 
 collections:
   - name: "business_operations"
-    label: "🏪 Store Operations & Website Content"
+    label: "🏪 Store & Operations"
     description: "Manage your top announcement bar, hero headlines, store opening hours, seasonal coupons, newsletter offers, and brand styling."
     delete: false
     files:
       - file: "content/brands/site-01.json"
-        label: "SprinkleSpree — Store & Content Controls"
+        label: "⚙️ Edit SprinkleSpree Website & Store Operations"
         name: "settings"
         fields:
           # --- Brand Identity & Theme ---

@@ -1,0 +1,19 @@
+{
+  "id": "art-02",
+  "slug": "donut-recipes-to-try-at-home",
+  "title": "Donut Recipes To Try At Home: The Baker’s Essential Guide",
+  "excerpt": "Master the art of pillowy brioche dough, yeast temperature control, and hand-dipped fruit reductions in your home kitchen.",
+  "category": "Recipes",
+  "date": "Jan 20, 2026",
+  "readTime": "6 min read",
+  "author": {
+    "name": "Claire Fontaine",
+    "role": "Pastry Instructor"
+  },
+  "image": "https://cdn.prod.website-files.com/6569d73055568668783bf587/6585edc578c5b243fc3bcf18_donutland.webflow.io_homepages_home-03%20(1).webp",
+  "content": [
+    "Baking artisanal donuts at home begins with respecting the yeast fermentation window. Cold overnight proofing in the refrigerator slows gas production, allowing the gluten network to soften.",
+    "For our signature glaze, reduce fresh crushed raspberries with cane sugar and a hint of lemon juice until it coats the back of a wooden spoon. Dip while the donut is just warm to the touch.",
+    "Remember: maintain your frying oil temperature strictly at 360°F (182°C) to ensure a golden exterior without oil absorption."
+  ]
+}

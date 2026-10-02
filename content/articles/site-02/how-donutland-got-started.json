@@ -1,0 +1,19 @@
+{
+  "id": "art-01",
+  "slug": "how-donutland-got-started",
+  "title": "How Donutland Got Started: The Flour, The Fire & The Frosting",
+  "excerpt": "The journey of reviving 1950s heritage sourdough baking in the heart of modern patisserie culture.",
+  "category": "Story",
+  "date": "Jan 12, 2026",
+  "readTime": "4 min read",
+  "author": {
+    "name": "Chef Marcus Glaze",
+    "role": "Master Baker & Co-Founder"
+  },
+  "image": "https://cdn.prod.website-files.com/6569d73055568668783bf587/6586df2876a064d502edb815_donutland-home-02.webp",
+  "content": [
+    "It began with a century-old cast iron kettle and a wild sourdough starter saved from an old roadside bakery in rural Maine.",
+    "We spent fourteen months testing fermentation curves, flour moisture absorption, and single-origin chocolate varieties before our very first test donut emerged with the perfect airy honeycomb structure.",
+    "Today, every single batch continues to rest for 48 full hours in humidity-controlled proofing chambers before meeting our signature fruit-infused glazes."
+  ]
+}

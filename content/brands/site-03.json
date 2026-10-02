@@ -1,0 +1,18 @@
+{
+  "id": "site-03",
+  "name": "PureDonut / KetoKreme",
+  "tagline": "Zero Guilt. 100% Flavor. Keto & Gluten-Free.",
+  "description": "Clean nutrition food science lab. Handcrafted with California almond flour, organic monk fruit, and zero sugar. Made for athletes, diabetics, and keto lifestyles.",
+  "primaryColor": "#1ac500",
+  "secondaryColor": "#2a3440",
+  "accentColor": "#3898ec",
+  "footerBg": "#2a3440",
+  "currencySymbol": "$",
+  "shippingThreshold": 50,
+  "featuredProductIds": [
+    "prod-04",
+    "prod-06",
+    "prod-10",
+    "prod-02"
+  ]
+}

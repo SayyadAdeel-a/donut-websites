@@ -1,0 +1,25 @@
+{
+  "id": "prod-05",
+  "slug": "jelipowder",
+  "name": "Jelipowder Burst",
+  "price": 4.25,
+  "category": "Filled Series",
+  "description": "Pillow brioche filled to bursting with house-made raspberry jam and dusted in snow-white confectioners sugar.",
+  "image": "https://cdn.prod.website-files.com/6569d73055568668783bf587/6571f30f53d3ee5637a07ced_single-angled-donut.webp",
+  "bgColor": "#fdf0f5",
+  "rating": 4.7,
+  "reviewCount": 84,
+  "nutrition": {
+    "calories": 280,
+    "protein": "5g",
+    "carbs": "30g",
+    "fat": "11g",
+    "sugar": "14g"
+  },
+  "ingredients": [
+    "Wild Raspberry Jam",
+    "Unbleached Flour",
+    "Powdered Confectionery Sugar",
+    "Vanilla Extract"
+  ]
+}

@@ -1,0 +1,95 @@
+# ==============================================================================
+# Decap CMS Configuration — SprinkleSpree
+# Generated automatically by scripts/generate-decap-cms.mjs
+# ==============================================================================
+backend:
+  name: github
+  repo: SayyadAdeel-a/donut-websites
+  branch: master
+  site_domain: site-01-sprinklespree.pages.dev
+  base_url: https://github-oauth.sayyad-studio.workers.dev
+  auth_endpoint: auth
+
+# Enable local backend proxy for instant offline development (npx decap-server)
+local_backend: true
+
+publish_mode: editorial_workflow
+
+media_folder: apps/web/public/uploads/site-01
+public_folder: /uploads/site-01
+
+site_url: https://site-01-sprinklespree.pages.dev
+display_url: https://site-01-sprinklespree.pages.dev
+
+collections:
+  - name: "brand_settings"
+    label: "Brand Identity & Theme"
+    delete: false
+    files:
+      - file: "content/brands/site-01.json"
+        label: "SprinkleSpree Settings"
+        name: "settings"
+        fields:
+          - { label: "Brand Name", name: "name", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Bio / Description", name: "description", widget: "text" }
+          - { label: "Primary Brand Color", name: "primaryColor", widget: "color" }
+          - { label: "Secondary Color", name: "secondaryColor", widget: "color" }
+          - { label: "Accent Color", name: "accentColor", widget: "color" }
+          - { label: "Footer Background", name: "footerBg", widget: "color" }
+          - { label: "Currency Symbol", name: "currencySymbol", widget: "string", default: "$" }
+          - { label: "Free Shipping Threshold ($)", name: "shippingThreshold", widget: "number", value_type: "float" }
+
+  - name: "products"
+    label: "Donut Menu & Products"
+    label_singular: "Product"
+    folder: "content/products/site-01"
+    create: true
+    slug: "{{slug}}"
+    format: "json"
+    fields:
+      - { label: "Product ID", name: "id", widget: "string" }
+      - { label: "Product Name", name: "name", widget: "string" }
+      - { label: "URL Slug", name: "slug", widget: "string" }
+      - { label: "Price ($)", name: "price", widget: "number", value_type: "float" }
+      - { label: "Original Price ($)", name: "originalPrice", widget: "number", value_type: "float", required: false }
+      - { label: "Category", name: "category", widget: "select", options: ["Crunch Series", "Chocolate Series", "Gourmet", "Fruit Glaze", "Filled Series", "Traditional", "Party Series"] }
+      - { label: "Badge", name: "badge", widget: "string", required: false }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Product Image", name: "image", widget: "image" }
+      - { label: "Card Background Tint", name: "bgColor", widget: "color" }
+      - { label: "Customer Rating (1.0 - 5.0)", name: "rating", widget: "number", value_type: "float", default: 5.0 }
+      - { label: "Review Count", name: "reviewCount", widget: "number", default: 100 }
+      - label: "Nutritional Information"
+        name: "nutrition"
+        widget: "object"
+        fields:
+          - { label: "Calories", name: "calories", widget: "number" }
+          - { label: "Protein", name: "protein", widget: "string" }
+          - { label: "Carbohydrates", name: "carbs", widget: "string" }
+          - { label: "Fat", name: "fat", widget: "string" }
+          - { label: "Sugar", name: "sugar", widget: "string" }
+      - { label: "Ingredients List", name: "ingredients", widget: "list" }
+
+  - name: "articles"
+    label: "Stories & Articles"
+    label_singular: "Article"
+    folder: "content/articles/site-01"
+    create: true
+    slug: "{{slug}}"
+    format: "json"
+    fields:
+      - { label: "Article Title", name: "title", widget: "string" }
+      - { label: "URL Slug", name: "slug", widget: "string" }
+      - { label: "Excerpt Summary", name: "excerpt", widget: "text" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "string" }
+      - { label: "Read Time", name: "readTime", widget: "string" }
+      - { label: "Cover Photo", name: "image", widget: "image" }
+      - label: "Author Details"
+        name: "author"
+        widget: "object"
+        fields:
+          - { label: "Author Name", name: "name", widget: "string" }
+          - { label: "Author Role", name: "role", widget: "string" }
+      - { label: "Article Paragraphs", name: "content", widget: "list" }

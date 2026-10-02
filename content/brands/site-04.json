@@ -1,0 +1,18 @@
+{
+  "id": "site-04",
+  "name": "DoughBoyz",
+  "tagline": "Late Night Glaze. Streetwear Appetite.",
+  "description": "Underground garage bakery meets skate and streetwear culture. Midnight drops, heavy offset shadows, grunge stickers, and aggressive flavors.",
+  "primaryColor": "#f21d33",
+  "secondaryColor": "#1b1b1b",
+  "accentColor": "#f98000",
+  "footerBg": "#000000",
+  "currencySymbol": "$",
+  "shippingThreshold": 40,
+  "featuredProductIds": [
+    "prod-01",
+    "prod-03",
+    "prod-05",
+    "prod-08"
+  ]
+}

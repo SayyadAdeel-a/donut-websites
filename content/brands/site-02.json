@@ -1,0 +1,18 @@
+{
+  "id": "site-02",
+  "name": "Glaze & Co.",
+  "tagline": "Crafted with Sourdough, Glazed with Passion.",
+  "description": "Gourmet artisanal patisserie specializing in 48-hour wild sourdough brioche, single-origin Belgian chocolate ganache, and chef seasonal pairings.",
+  "primaryColor": "#6e2f10",
+  "secondaryColor": "#945439",
+  "accentColor": "#ffb769",
+  "footerBg": "#6e2f10",
+  "currencySymbol": "$",
+  "shippingThreshold": 45,
+  "featuredProductIds": [
+    "prod-02",
+    "prod-03",
+    "prod-07",
+    "prod-10"
+  ]
+}

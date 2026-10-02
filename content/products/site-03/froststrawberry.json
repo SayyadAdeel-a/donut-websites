@@ -1,0 +1,26 @@
+{
+  "id": "prod-04",
+  "slug": "froststrawberry",
+  "name": "Frostberry Delight",
+  "price": 4,
+  "category": "Fruit Glaze",
+  "badge": "Popular",
+  "description": "Infused with fresh organic Oregon strawberry reduction glaze and dusted with freeze-dried strawberry powder.",
+  "image": "https://cdn.prod.website-files.com/6569d73055568668783bf587/656a263a0e562be7548600e8_donut-2.webp",
+  "bgColor": "#ffdede",
+  "rating": 4.9,
+  "reviewCount": 112,
+  "nutrition": {
+    "calories": 240,
+    "protein": "4g",
+    "carbs": "24g",
+    "fat": "10g",
+    "sugar": "9g"
+  },
+  "ingredients": [
+    "Organic Strawberries",
+    "Pure Cane Glaze",
+    "Pasture-Raised Eggs",
+    "Lemon Zest"
+  ]
+}

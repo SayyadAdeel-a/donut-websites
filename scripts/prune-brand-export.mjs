@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { generateDecapCms } from './generate-decap-cms.mjs';
 
 // Determine outDir whether run from repo root or apps/web
 const candidateOutDirs = [
@@ -67,6 +68,11 @@ for (const relPath of filesToRemove) {
     fs.rmSync(filePath, { recursive: true, force: true });
     console.log(`✓ Pruned unwanted file: /${relPath}`);
   }
+}
+
+// 2.5 Generate Brand-Specific Decap CMS Admin Portal
+if (brandId && brandId !== 'master' && brandId !== 'none') {
+  generateDecapCms(brandId, path.join(outDir, 'admin'));
 }
 
 // 3. Write Cloudflare Pages _redirects file

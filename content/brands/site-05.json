@@ -1,0 +1,18 @@
+{
+  "id": "site-05",
+  "name": "The Donut Counter",
+  "tagline": "Serving American Comfort Since 1958.",
+  "description": "Heritage Americana diner tradition. Classic buttermilk crullers, hot filter coffee, and multi-generation recipe warmth.",
+  "primaryColor": "#3b89ff",
+  "secondaryColor": "#eeae23",
+  "accentColor": "#f21d33",
+  "footerBg": "#3b89ff",
+  "currencySymbol": "$",
+  "shippingThreshold": 30,
+  "featuredProductIds": [
+    "prod-06",
+    "prod-10",
+    "prod-05",
+    "prod-01"
+  ]
+}

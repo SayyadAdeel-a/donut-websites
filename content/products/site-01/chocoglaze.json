@@ -1,0 +1,26 @@
+{
+  "id": "prod-02",
+  "slug": "chocoglaze",
+  "name": "Chocoglaze Deluxe",
+  "price": 4.25,
+  "category": "Chocolate Series",
+  "badge": "Artisan",
+  "description": "Double dark Belgian chocolate glaze over our signature 48-hour fermented sourdough brioche ring. Decadent, rich, and unforgettable.",
+  "image": "https://cdn.prod.website-files.com/6569d73055568668783bf587/656a263aac3297a804a0be99_donut-1.webp",
+  "bgColor": "#f2e8dc",
+  "rating": 5,
+  "reviewCount": 98,
+  "nutrition": {
+    "calories": 275,
+    "protein": "5g",
+    "carbs": "26g",
+    "fat": "13g",
+    "sugar": "11g"
+  },
+  "ingredients": [
+    "Sourdough Starter",
+    "Single-Origin Cacao (72%)",
+    "Grass-Fed Butter",
+    "Madagascar Vanilla Bean"
+  ]
+}

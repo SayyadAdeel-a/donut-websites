@@ -1,0 +1,26 @@
+{
+  "id": "prod-07",
+  "slug": "raspberry-flake",
+  "name": "Raspberry Flake",
+  "price": 4.5,
+  "category": "Fruit Glaze",
+  "badge": "Seasonal",
+  "description": "Vibrant ruby red raspberry glaze accented with white chocolate curls and crisp wafer flakes.",
+  "image": "https://cdn.prod.website-files.com/656a2e8a88537d8c45eeab81/6574d4619f60d7965dc151a6_pdp-image-2.webp",
+  "bgColor": "#fbe9eb",
+  "rating": 4.8,
+  "reviewCount": 76,
+  "nutrition": {
+    "calories": 260,
+    "protein": "4g",
+    "carbs": "27g",
+    "fat": "12g",
+    "sugar": "10g"
+  },
+  "ingredients": [
+    "Ruby Raspberry Puree",
+    "Belgian White Chocolate",
+    "Wafer Crumbs",
+    "Sea Salt"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "art-07",
+  "slug": "our-top-five-best-selling-donuts",
+  "title": "Our Top Five Best Selling Donuts: Customer Favorites Ranked",
+  "excerpt": "From Peanut Mcrunch to Strawsprinkle Royale, discover the iconic recipes our guests order time and time again.",
+  "category": "Highlights",
+  "date": "Mar 02, 2026",
+  "readTime": "5 min read",
+  "author": {
+    "name": "Chef Marcus Glaze",
+    "role": "Master Baker"
+  },
+  "image": "https://cdn.prod.website-files.com/6569d73055568668783bf587/656a26b714ecd5c5b17edb33_donut.webp",
+  "content": [
+    "With thousands of donuts fried fresh each week, certain creations have cemented their status as all-time classics.",
+    "Taking the #1 spot is Peanut Mcrunch, beloved for its contrast of crunchy roasted nuts and silky dark chocolate glaze. Close behind is Frostberry Delight, made with real wild strawberry reduction.",
+    "Rounding out the top five are Chocoglaze Deluxe, Jelipowder Burst with homemade jam, and the festive Sprinkle Party Blast."
+  ]
+}

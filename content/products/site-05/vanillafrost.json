@@ -1,0 +1,25 @@
+{
+  "id": "prod-10",
+  "slug": "vanillafrost",
+  "name": "Vanilla Frost Cloud",
+  "price": 3.95,
+  "category": "Traditional",
+  "description": "Silky smooth Tahitian vanilla bean buttercream glaze on a light, golden yeast ring.",
+  "image": "https://cdn.prod.website-files.com/6569d73055568668783bf587/6571f30f53d3ee5637a07ced_single-angled-donut.webp",
+  "bgColor": "#fff8ee",
+  "rating": 4.8,
+  "reviewCount": 89,
+  "nutrition": {
+    "calories": 245,
+    "protein": "4g",
+    "carbs": "23g",
+    "fat": "10g",
+    "sugar": "8g"
+  },
+  "ingredients": [
+    "Tahitian Vanilla Pods",
+    "Cultured Sweet Butter",
+    "Sea Salt Flakes",
+    "Pure Cane Sugar"
+  ]
+}

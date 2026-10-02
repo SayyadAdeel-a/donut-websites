@@ -1,0 +1,19 @@
+{
+  "id": "art-03",
+  "slug": "donutland-just-opened-5-new-stores",
+  "title": "Donutland Just Opened 5 New Stores Across The Northeast!",
+  "excerpt": "Expanding our small-batch kitchens to Brooklyn, Philadelphia, Boston, Providence, and Portland.",
+  "category": "News",
+  "date": "Feb 01, 2026",
+  "readTime": "3 min read",
+  "author": {
+    "name": "Marcus Glaze",
+    "role": "Founder & CEO"
+  },
+  "image": "https://cdn.prod.website-files.com/6569d73055568668783bf587/6585eccf8e807ceb0ff1741c_donutland.webflow.io_homepages_home-04.webp",
+  "content": [
+    "We are thrilled to bring authentic 48-hour slow proofed sourdough donuts to five new neighborhood communities this month.",
+    "Each new location features an open viewing kitchen where visitors can watch dough kneading, proofing, and hand-glazing in real time every morning.",
+    "Stop by during opening week to receive a complimentary box of our signature Sprinkle Blast minis with any specialty coffee purchase."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "prod-08",
+  "slug": "sprinkstrawey",
+  "name": "Sprinkle Party Blast",
+  "price": 4.25,
+  "category": "Party Series",
+  "badge": "Kids Fave",
+  "description": "Hot pink bubblegum glaze overloaded with rainbow confetti sprinkles. Pure festive birthday happiness!",
+  "image": "https://cdn.prod.website-files.com/656a2e8a88537d8c45eeab81/656b5d82ccb09777ebd75c88_pdp-image-3.webp",
+  "bgColor": "#ffe6f0",
+  "rating": 5,
+  "reviewCount": 230,
+  "nutrition": {
+    "calories": 250,
+    "protein": "4g",
+    "carbs": "25g",
+    "fat": "11g",
+    "sugar": "11g"
+  },
+  "ingredients": [
+    "All-Natural Rainbow Sprinkles",
+    "Strawberry Cream Glaze",
+    "Organic Cane Sugar",
+    "Butter"
+  ]
+}

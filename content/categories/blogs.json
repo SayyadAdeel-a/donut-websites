@@ -1,0 +1,20 @@
+[
+  {
+    "id": "bcat-01",
+    "slug": "event",
+    "name": "Events & Drops",
+    "description": "Bakery openings, pop-up truck stops, and midnight drop club releases."
+  },
+  {
+    "id": "bcat-02",
+    "slug": "craft",
+    "name": "Baking Craft",
+    "description": "Deep dives into sourdough fermentation, dough hydrology, and glazes."
+  },
+  {
+    "id": "bcat-03",
+    "slug": "nutrition",
+    "name": "Health & Science",
+    "description": "Macro nutritional breakdowns, keto flour science, and allergen safety."
+  }
+]

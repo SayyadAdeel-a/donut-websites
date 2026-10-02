@@ -1,0 +1,28 @@
+{
+  "id": "prod-01",
+  "slug": "peanut-mcrunch",
+  "name": "Peanut Mcrunch",
+  "price": 4.5,
+  "originalPrice": 5.5,
+  "category": "Crunch Series",
+  "badge": "Bestseller",
+  "description": "A crunchy indulgence dipped in artisan milk chocolate glaze and topped with crushed roasted peanuts and golden toffee crunch bits.",
+  "image": "https://cdn.prod.website-files.com/6569d73055568668783bf587/656a26b714ecd5c5b17edb33_donut.webp",
+  "bgColor": "#ffeedd",
+  "rating": 4.9,
+  "reviewCount": 142,
+  "nutrition": {
+    "calories": 290,
+    "protein": "6g",
+    "carbs": "28g",
+    "fat": "14g",
+    "sugar": "12g"
+  },
+  "ingredients": [
+    "Enriched Wheat Flour",
+    "Cultured Butter",
+    "Roasted Peanuts",
+    "Belgian Milk Chocolate",
+    "Pure Cane Sugar"
+  ]
+}

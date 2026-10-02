@@ -1,0 +1,27 @@
+{
+  "id": "prod-03",
+  "slug": "chocolate-marsh",
+  "name": "Chocomarsh Dream",
+  "price": 4.75,
+  "originalPrice": 5.25,
+  "category": "Gourmet",
+  "badge": "New",
+  "description": "Smoked chocolate ganache with pillowy toasted marshmallow cream drizzle and graham cracker crumb crown.",
+  "image": "https://cdn.prod.website-files.com/656a2e8a88537d8c45eeab81/6574d4a02a805304abd2cdb8_pdp-image-1.webp",
+  "bgColor": "#ede3db",
+  "rating": 4.8,
+  "reviewCount": 67,
+  "nutrition": {
+    "calories": 310,
+    "protein": "5g",
+    "carbs": "32g",
+    "fat": "15g",
+    "sugar": "16g"
+  },
+  "ingredients": [
+    "Dark Chocolate Ganache",
+    "Toasted Marshmallow Mousse",
+    "Graham Flour",
+    "Organic Honey"
+  ]
+}

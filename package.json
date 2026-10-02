@@ -24,11 +24,13 @@
     "export:site-02": "cross-env NEXT_PUBLIC_BRAND_ID=site-02 NEXT_EXPORT=true pnpm --filter web build",
     "export:site-03": "cross-env NEXT_PUBLIC_BRAND_ID=site-03 NEXT_EXPORT=true pnpm --filter web build",
     "export:site-04": "cross-env NEXT_PUBLIC_BRAND_ID=site-04 NEXT_EXPORT=true pnpm --filter web build",
-    "export:site-05": "cross-env NEXT_PUBLIC_BRAND_ID=site-05 NEXT_EXPORT=true pnpm --filter web build"
+    "export:site-05": "cross-env NEXT_PUBLIC_BRAND_ID=site-05 NEXT_EXPORT=true pnpm --filter web build",
+    "cms:proxy": "decap-server"
   },
   "packageManager": "pnpm@11.5.2",
   "devDependencies": {
     "cross-env": "^10.1.0",
+    "decap-server": "^3.1.2",
     "tsx": "^4.23.15",
     "typescript": "^5.7.3"
   }

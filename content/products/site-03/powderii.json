@@ -1,0 +1,26 @@
+{
+  "id": "prod-06",
+  "slug": "powderii",
+  "name": "Powderii Classic",
+  "price": 3.75,
+  "category": "Traditional",
+  "description": "Old-fashioned buttermilk donut gently fried and heavily dusted with triple-sifted powdered sugar.",
+  "image": "https://cdn.prod.website-files.com/6569d73055568668783bf587/6571f30f2a42b97d799d9ff7_single-angled-donut-1.webp",
+  "bgColor": "#f8f8f8",
+  "rating": 4.6,
+  "reviewCount": 53,
+  "nutrition": {
+    "calories": 230,
+    "protein": "4g",
+    "carbs": "22g",
+    "fat": "9g",
+    "sugar": "7g"
+  },
+  "ingredients": [
+    "Cultured Buttermilk",
+    "Nutmeg",
+    "Cinnamon",
+    "Pastry Flour",
+    "Powdered Sugar"
+  ]
+}

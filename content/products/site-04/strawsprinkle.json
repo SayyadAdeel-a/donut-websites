@@ -1,0 +1,25 @@
+{
+  "id": "prod-09",
+  "slug": "strawsprinkle",
+  "name": "Strawsprinkle Royale",
+  "price": 4.5,
+  "category": "Party Series",
+  "description": "Sweet strawberry glaze with golden star sprinkles and white cream filled core.",
+  "image": "https://cdn.prod.website-files.com/6569d73055568668783bf587/656a26b714ecd5c5b17edb33_donut.webp",
+  "bgColor": "#ffebf3",
+  "rating": 4.9,
+  "reviewCount": 165,
+  "nutrition": {
+    "calories": 270,
+    "protein": "5g",
+    "carbs": "28g",
+    "fat": "12g",
+    "sugar": "13g"
+  },
+  "ingredients": [
+    "Vanilla Custard Cream",
+    "Fresh Strawberry Glaze",
+    "Star Sprinkles",
+    "Enriched Brioche"
+  ]
+}
